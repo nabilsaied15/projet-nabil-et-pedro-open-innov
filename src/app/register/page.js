@@ -97,7 +97,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="bg-[#121826] p-8 rounded-2xl shadow-xl w-full max-w-md">
         <h1 className="text-2xl font-bold text-white text-center mb-8">Inscription</h1>
         
@@ -118,7 +118,7 @@ export default function RegisterPage() {
               type="text"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-blue-500 focus:outline-none"
+              className="w-full p-3 rounded-lg border focus:outline-none"
               required
               minLength={2}
             />
@@ -134,7 +134,7 @@ export default function RegisterPage() {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-blue-500 focus:outline-none"
+              className="w-full p-3 rounded-lg border focus:outline-none"
               required
             />
           </div>
@@ -149,7 +149,7 @@ export default function RegisterPage() {
               type="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-blue-500 focus:outline-none"
+              className="w-full p-3 rounded-lg border focus:outline-none"
               required
               minLength={6}
             />
@@ -166,7 +166,7 @@ export default function RegisterPage() {
               type="password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-blue-500 focus:outline-none"
+              className="w-full p-3 rounded-lg border focus:outline-none"
               required
               minLength={6}
             />
@@ -175,7 +175,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50"
+            className="w-full button font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50"
           >
             {loading ? 'Inscription en cours...' : 'S\'inscrire'}
           </button>

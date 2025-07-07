@@ -97,22 +97,20 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-
-
+    <div className="min-h-screen">
       <div className="p-10">
         <h2 className="text-2xl font-bold mb-6 text-center">Tableau de bord 👋</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div className="bg-gray-800 text-white rounded-xl shadow-md p-6 text-center border border-gray-700">
+          <div className="rounded-xl shadow-md p-6 text-center border">
             <p className="text-4xl font-bold mb-2 text-blue-400">{userCount}</p>
             <p className="text-lg font-semibold">Utilisateurs</p>
           </div>
-          <div className="bg-gray-800 text-white rounded-xl shadow-md p-6 text-center border border-gray-700">
+          <div className="rounded-xl shadow-md p-6 text-center border">
             <p className="text-4xl font-bold mb-2 text-blue-400">{courseCount}</p>
             <p className="text-lg font-semibold">Cours</p>
           </div>
-          <div className="bg-gray-800 text-white rounded-xl shadow-md p-6 text-center border border-gray-700">
+          <div className="rounded-xl shadow-md p-6 text-center border">
             <p className="text-4xl font-bold mb-2 text-blue-400">{videoCount}</p>
             <p className="text-lg font-semibold">Vidéos</p>
           </div>
@@ -122,7 +120,7 @@ export default function Dashboard() {
         <div className="flex justify-center mb-6">
           <button
             onClick={() => setShowAddUserTableForm(f => !f)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+            className="button px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
           >
             {showAddUserTableForm ? '– Fermer le formulaire' : '➕ Ajouter un utilisateur'}
           </button>

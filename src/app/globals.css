@@ -1,23 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --secondary: #7c3aed;
-  --background: #0f172a;
-  --foreground: #fff;
-  --accent: #f59e0b;
-  --success: #10b981;
-  --error: #ef4444;
-  --gray-100: #1e293b;
-  --gray-200: #334155;
-  --gray-300: #475569;
-  --gray-400: #64748b;
-  --gray-500: #94a3b8;
-  --gray-600: #cbd5e1;
-  --gray-700: #e5e7eb;
-  --gray-800: #f3f4f6;
-  --gray-900: #f9fafb;
+  --primary: #232946;           /* Bleu nuit profond pour titres/boutons */
+  --primary-dark: #121629;      /* Encore plus foncé */
+  --secondary: #eebbc3;         /* Rose poudré pour éléments secondaires */
+  --background: #f4faff;        /* Fond général très clair, bleuté */
+  --foreground: #232946;        /* Texte principal (bleu nuit) */
+  --accent: #3da9fc;            /* Bleu clair moderne pour les accents */
+  --success: #2ec4b6;           /* Vert turquoise pour succès */
+  --error: #ef476f;             /* Rose vif pour erreurs */
+  --gray-100: #f4faff;
+  --gray-200: #eaeaea;
+  --gray-300: #d6d6e7;
+  --gray-400: #b8c1ec;
+  --gray-500: #a1a6b4;
+  --gray-600: #6e7280;
+  --gray-700: #393e46;
+  --gray-800: #232946;
+  --gray-900: #121629;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 @theme inline {
@@ -38,13 +40,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Styles de base */
-h1, h2, h3, h4, h5, h6 {
-  color: #fff;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
+
 
 h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; }
@@ -54,7 +50,7 @@ h5 { font-size: 1.25rem; }
 h6 { font-size: 1rem; }
 
 a {
-  color: #fff;
+  color: var(--accent);
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -65,7 +61,7 @@ a:hover {
 
 /* Boutons */
 button, .button {
-  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  background: var(--accent);
   color: #fff;
   padding: 0.75rem 1.5rem;
   border-radius: 0.75rem;
@@ -90,18 +86,18 @@ button:hover, .button:hover {
 }
 .button-secondary:hover {
   background: var(--primary);
-  color: #fff;
+  color: var(--secondary);
   border-color: var(--primary-dark);
 }
 
 .button-danger {
   background: #ef4444;
-  color: #fff;
+  color: var(--secondary);
   border: none;
 }
 .button-danger:hover {
   background: #b91c1c;
-  color: #fff;
+  color: var(--secondary);
 }
 
 /* Cartes et conteneurs */
@@ -127,7 +123,7 @@ input, textarea, select {
   width: 100%;
   transition: all 0.3s ease;
   font-size: 1rem;
-  color: #fff;
+  color: var(--foreground);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -149,7 +145,7 @@ label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #fff;
+  color: var(--foreground);
   transition: color 0.3s ease;
 }
 
@@ -313,4 +309,33 @@ input:focus + label, textarea:focus + label {
   .container {
     padding: 0 0.5rem;
   }
+}
+
+.bg-primary { background: var(--primary); }
+.text-foreground { color: var(--foreground); }
+
+/* Navbar styling */
+.navbar {
+  background: var(--primary);
+  color: var(--foreground);
+  box-shadow: 0 4px 24px 0 rgba(35, 41, 70, 0.08);
+  border-radius: 0 0 1.5rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+.navbar a {
+  color: var(--foreground);
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.navbar a:hover {
+  color: var(--accent);
+}
+
+.navbar .button {
+  background: var(--accent);
+  color: var(--secondary);
+  border: none;
+  box-shadow: 0 2px 8px 0 rgba(61, 169, 252, 0.10);
 }

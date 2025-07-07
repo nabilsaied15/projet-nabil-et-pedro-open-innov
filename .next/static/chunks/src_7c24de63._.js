@@ -108,70 +108,35 @@ function AddItemPage({ table, onItemAdded }) {
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        style: {
-            padding: '1rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
+        className: "flex justify-center items-center p-4",
         children: user?.role === 'admin' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
             onSubmit: handleSubmit,
-            style: {
-                padding: '1.2rem',
-                backgroundColor: '#1f2937',
-                color: 'white',
-                borderRadius: '18px',
-                border: '1px solid #374151',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1.1rem',
-                width: '100%',
-                maxWidth: 320,
-                alignItems: 'center'
-            },
+            className: "flex flex-col gap-4 w-full max-w-md bg-white text-primary rounded-3xl border-2 border-blue-100 shadow-2xl p-8",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                    style: {
-                        textAlign: 'center',
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        color: '#e0e7ff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '0.5rem',
-                        marginBottom: '0.5rem'
-                    },
+                    className: "text-xl font-bold text-blue-900 text-center flex items-center justify-center gap-2 mb-2",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaPlus"], {}, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 100,
+                            lineNumber: 75,
                             columnNumber: 13
                         }, this),
                         " Ajouter un cours"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 87,
+                    lineNumber: 74,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        width: '100%'
-                    },
+                    className: "w-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                            style: {
-                                fontWeight: '600',
-                                marginBottom: '0.3rem',
-                                display: 'block',
-                                textAlign: 'left'
-                            },
+                            className: "font-semibold mb-1 block text-left",
                             children: "Titre du cours"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 103,
+                            lineNumber: 78,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -180,42 +145,27 @@ function AddItemPage({ table, onItemAdded }) {
                             value: title,
                             onChange: (e)=>setTitle(e.target.value),
                             required: true,
-                            style: {
-                                padding: '0.5rem',
-                                borderRadius: '10px',
-                                width: '100%',
-                                border: '1px solid #6b7280',
-                                backgroundColor: '#111827',
-                                color: 'white',
-                                fontSize: '0.95rem'
-                            }
+                            className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 106,
+                            lineNumber: 79,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 102,
+                    lineNumber: 77,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        width: '100%'
-                    },
+                    className: "w-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                            style: {
-                                fontWeight: '600',
-                                marginBottom: '0.3rem',
-                                display: 'block',
-                                textAlign: 'left'
-                            },
+                            className: "font-semibold mb-1 block text-left",
                             children: "Image du cours"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 124,
+                            lineNumber: 89,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -223,42 +173,27 @@ function AddItemPage({ table, onItemAdded }) {
                             accept: "image/*",
                             onChange: (e)=>setFile(e.target.files[0]),
                             required: true,
-                            style: {
-                                padding: '0.5rem',
-                                borderRadius: '10px',
-                                width: '100%',
-                                border: '1px solid #6b7280',
-                                backgroundColor: '#111827',
-                                color: 'white',
-                                fontSize: '0.95rem'
-                            }
+                            className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 127,
+                            lineNumber: 90,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 123,
+                    lineNumber: 88,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        width: '100%'
-                    },
+                    className: "w-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                            style: {
-                                fontWeight: '600',
-                                marginBottom: '0.3rem',
-                                display: 'block',
-                                textAlign: 'left'
-                            },
+                            className: "font-semibold mb-1 block text-left",
                             children: "Nombre de vidéos"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 144,
+                            lineNumber: 99,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -266,42 +201,27 @@ function AddItemPage({ table, onItemAdded }) {
                             min: "0",
                             value: nombreVideos,
                             onChange: (e)=>setNombreVideos(e.target.value),
-                            style: {
-                                padding: '0.5rem',
-                                borderRadius: '10px',
-                                width: '100%',
-                                border: '1px solid #6b7280',
-                                backgroundColor: '#111827',
-                                color: 'white',
-                                fontSize: '0.95rem'
-                            }
+                            className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 147,
+                            lineNumber: 100,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 143,
+                    lineNumber: 98,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        width: '100%'
-                    },
+                    className: "w-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                            style: {
-                                fontWeight: '600',
-                                marginBottom: '0.3rem',
-                                display: 'block',
-                                textAlign: 'left'
-                            },
+                            className: "font-semibold mb-1 block text-left",
                             children: "Nombre de PDF"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 164,
+                            lineNumber: 109,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -309,56 +229,33 @@ function AddItemPage({ table, onItemAdded }) {
                             min: "0",
                             value: nombrePdfs,
                             onChange: (e)=>setNombrePdfs(e.target.value),
-                            style: {
-                                padding: '0.5rem',
-                                borderRadius: '10px',
-                                width: '100%',
-                                border: '1px solid #6b7280',
-                                backgroundColor: '#111827',
-                                color: 'white',
-                                fontSize: '0.95rem'
-                            }
+                            className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 167,
+                            lineNumber: 110,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 163,
+                    lineNumber: 108,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     type: "submit",
-                    style: {
-                        padding: '0.7rem 1.2rem',
-                        backgroundColor: '#3b82f6',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        borderRadius: '12px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '1rem',
-                        width: '100%',
-                        transition: 'background-color 0.3s ease'
-                    },
+                    className: "py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl w-full text-lg transition",
                     children: "➕ Ajouter"
                 }, void 0, false, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 183,
+                    lineNumber: 118,
                     columnNumber: 11
                 }, this),
-                message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    style: {
-                        textAlign: 'center',
-                        color: '#10b981',
-                        fontWeight: 'bold'
-                    },
+                message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: message.startsWith('✅') ? 'text-green-600 font-semibold text-center mt-2' : 'text-red-600 font-semibold text-center mt-2',
                     children: message
                 }, void 0, false, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 201,
+                    lineNumber: 125,
                     columnNumber: 13
                 }, this)
             ]
@@ -463,13 +360,13 @@ function CoursPage() {
         window.location.reload();
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-900 text-white",
+        className: "min-h-screen",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "p-10",
             children: user?.role === 'admin' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                        className: "text-xl font-bold mb-6 text-center",
+                        className: "font-bold mb-6 text-center",
                         children: "Ajouter un cours"
                     }, void 0, false, {
                         fileName: "[project]/src/app/cours/page.js",
@@ -494,7 +391,7 @@ function CoursPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6",
                         children: courses.map((course)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-[#121826] border border-white rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center",
+                                className: "rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center border border-primary",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-16 h-16 rounded-full overflow-hidden mb-4",
@@ -513,7 +410,7 @@ function CoursPage() {
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                        className: "font-semibold text-base text-white mb-2 cursor-pointer hover:text-blue-400",
+                                        className: "font-semibold text-base mb-2 cursor-pointer",
                                         onClick: ()=>router.push(`/admin/cours/${course.id}`),
                                         children: course.title
                                     }, void 0, false, {
@@ -522,7 +419,7 @@ function CoursPage() {
                                         columnNumber: 19
                                     }, this),
                                     course.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-400 text-sm mb-2",
+                                        className: "text-sm mb-2",
                                         children: course.description
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cours/page.js",
@@ -530,7 +427,7 @@ function CoursPage() {
                                         columnNumber: 21
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-2 text-gray-400 text-sm mb-2",
+                                        className: "flex items-center gap-2 text-sm mb-2",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: "🎥"
@@ -559,7 +456,7 @@ function CoursPage() {
                                         href: course.lien,
                                         target: "_blank",
                                         rel: "noopener noreferrer",
-                                        className: "text-blue-400 hover:underline text-sm mb-2",
+                                        className: "hover:underline text-sm mb-2",
                                         children: "Accéder au cours"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cours/page.js",
@@ -581,7 +478,7 @@ function CoursPage() {
             }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                        className: "text-xl font-bold mt-4 mb-6 text-center",
+                        className: "font-bold mt-4 mb-6 text-center",
                         children: "Cours disponibles en direct 📱"
                     }, void 0, false, {
                         fileName: "[project]/src/app/cours/page.js",
@@ -591,7 +488,7 @@ function CoursPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6",
                         children: courses.map((course)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-[#121826] border border-white rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center",
+                                className: "rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center border border-primary",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-16 h-16 rounded-full overflow-hidden mb-4",
@@ -610,7 +507,7 @@ function CoursPage() {
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                        className: "font-semibold text-base text-white mb-2 cursor-pointer hover:text-blue-400",
+                                        className: "font-semibold text-base mb-2 cursor-pointer",
                                         onClick: ()=>router.push(`/cours/${course.id}`),
                                         children: course.title
                                     }, void 0, false, {
@@ -619,7 +516,7 @@ function CoursPage() {
                                         columnNumber: 19
                                     }, this),
                                     course.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-400 text-sm mb-2",
+                                        className: "text-sm mb-2",
                                         children: course.description
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cours/page.js",
@@ -627,7 +524,7 @@ function CoursPage() {
                                         columnNumber: 21
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-2 text-gray-400 text-sm mb-2",
+                                        className: "flex items-center gap-2 text-sm mb-2",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: "🎥"
@@ -656,7 +553,7 @@ function CoursPage() {
                                         href: course.lien,
                                         target: "_blank",
                                         rel: "noopener noreferrer",
-                                        className: "text-blue-400 hover:underline text-sm mb-2",
+                                        className: "hover:underline text-sm mb-2",
                                         children: "Accéder au cours"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cours/page.js",

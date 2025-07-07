@@ -378,7 +378,7 @@ function AdminPage() {
     const refusees = candidatures.filter((c)=>c.statut === 'Refusé').length;
     const entretiens = candidatures.filter((c)=>c.statut === 'Entretien').length;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-900 text-white",
+        className: "min-h-screen bg-white p-10 text-primary",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "p-10",
             children: [
@@ -395,7 +395,7 @@ function AdminPage() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('users'),
-                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'users' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
+                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'users' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
                             children: "Utilisateurs"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
@@ -404,7 +404,7 @@ function AdminPage() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('courses'),
-                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'courses' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
+                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'courses' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
                             children: "Cours"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
@@ -413,7 +413,7 @@ function AdminPage() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('dossiers'),
-                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'dossiers' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
+                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'dossiers' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
                             children: [
                                 "Dossiers",
                                 dossiersCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -432,7 +432,7 @@ function AdminPage() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('candidatures'),
-                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'candidatures' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
+                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'candidatures' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
                             children: [
                                 "Candidatures",
                                 candidaturesPending > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -451,7 +451,7 @@ function AdminPage() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('contacts'),
-                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'contacts' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
+                            className: `px-5 py-2 rounded-full text-sm font-semibold transition ${activeTab === 'contacts' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'}`,
                             children: "Contacts"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
@@ -470,7 +470,7 @@ function AdminPage() {
                             className: "flex justify-center mb-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setShowAddUserForm(!showAddUserForm),
-                                className: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                                className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
                                 children: showAddUserForm ? '– Fermer le formulaire' : '➕ Ajouter un utilisateur'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/page.js",
@@ -576,7 +576,7 @@ function AdminPage() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: handleAddUser,
-                                    className: "mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors",
+                                    className: "mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors",
                                     children: "Ajouter"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
@@ -835,7 +835,7 @@ function AdminPage() {
                             className: "flex justify-center mb-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setShowAddCourseForm(!showAddCourseForm),
-                                className: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                                className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
                                 children: showAddCourseForm ? '– Fermer le formulaire' : '➕ Ajouter un cours'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/page.js",
@@ -897,7 +897,7 @@ function AdminPage() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: handleAddCourse,
-                                    className: "mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors",
+                                    className: "mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors",
                                     children: "Ajouter"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
@@ -1227,7 +1227,7 @@ function AdminPage() {
                             className: "flex justify-center mb-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setShowAddDossierForm(!showAddDossierForm),
-                                className: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                                className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
                                 children: showAddDossierForm ? '– Fermer le formulaire' : '➕ Ajouter un dossier'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/page.js",
@@ -1289,7 +1289,7 @@ function AdminPage() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: handleAddDossier,
-                                    className: "mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors",
+                                    className: "mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors",
                                     children: "Ajouter"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
@@ -1527,7 +1527,7 @@ function AdminPage() {
                             className: "flex justify-center mb-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setShowAddCandidatureForm(!showAddCandidatureForm),
-                                className: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                                className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
                                 children: showAddCandidatureForm ? '– Fermer le formulaire' : '➕ Ajouter une candidature'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/page.js",
@@ -1694,7 +1694,7 @@ function AdminPage() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: handleAddCandidature,
-                                    className: "mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors",
+                                    className: "mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors",
                                     children: "Ajouter"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
@@ -2053,7 +2053,7 @@ function AdminPage() {
         columnNumber: 5
     }, this);
 }
-_s(AdminPage, "/F3FI8dP9iO/d7eY7WxpVbmsubk=", false, function() {
+_s(AdminPage, "9Pjd15SDlyrPs7PYOzIgLLiNnIU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];

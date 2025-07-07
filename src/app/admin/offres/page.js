@@ -28,6 +28,15 @@ export default function AdminOffresPage() {
 
   const [posteFilter, setPosteFilter] = useState("");
 
+  const [user, setUser] = useState(null);
+
+  const [postuleStatus, setPostuleStatus] = useState({});
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
   useEffect(() => {
     fetchOffres();
   }, []);
@@ -135,7 +144,7 @@ export default function AdminOffresPage() {
   // TODO: Add admin navigation bar here
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen  p-10 text-primary">
       <h1 className="text-3xl font-bold mb-6">Gestion des Offres</h1>
 
       <button
@@ -150,72 +159,74 @@ export default function AdminOffresPage() {
       {message && <p className="text-green-500">{message}</p>}
 
       {showAddForm && (
-        <form onSubmit={handleAddOffre} className="bg-gray-800 p-6 rounded-lg shadow-md mb-8 space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-300">Poste</label>
-            <input
-              type="text"
-              name="poste"
-              value={formData.poste}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
-              required
-            />
+        <form onSubmit={handleAddOffre} className="mb-8 flex justify-center">
+          <div className="bg-gray-100 border border-primary shadow-md rounded-2xl p-8 w-full max-w-lg">
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Poste</label>
+              <input
+                type="text"
+                name="poste"
+                value={formData.poste}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-lg  border border-primary text-primary px-4 py-2 focus:border-accent mb-4"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Entreprise</label>
+              <input
+                type="text"
+                name="entreprise"
+                value={formData.entreprise}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-lg  border border-primary text-primary px-4 py-2 focus:border-accent mb-4"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Profil Recherché</label>
+              <input
+                type="text"
+                name="profil_recherche"
+                value={formData.profil_recherche}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-lg  border border-primary text-primary px-4 py-2 focus:border-accent mb-4"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Durée</label>
+              <input
+                type="text"
+                name="duree"
+                value={formData.duree}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-lg  border border-primary text-primary px-4 py-2 focus:border-accent mb-4"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Localisation</label>
+              <input
+                type="text"
+                name="localisation"
+                value={formData.localisation}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-lg  border border-primary text-primary px-4 py-2 focus:border-accent mb-4"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Lien de l'offre</label>
+              <input
+                type="url"
+                name="lien"
+                value={formData.lien}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-lg  border border-primary text-primary px-4 py-2 focus:border-accent mb-4"
+              />
+            </div>
+            <button type="submit" disabled={loading} className="w-full bg-primary text-white rounded-lg font-semibold px-6 py-2 mt-4 hover:bg-accent transition">
+              {loading ? 'Ajout en cours...' : 'Ajouter'}
+            </button>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300">Entreprise</label>
-            <input
-              type="text"
-              name="entreprise"
-              value={formData.entreprise}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300">Profil Recherché</label>
-            <input
-              type="text"
-              name="profil_recherche"
-              value={formData.profil_recherche}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300">Durée</label>
-            <input
-              type="text"
-              name="duree"
-              value={formData.duree}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300">Localisation</label>
-            <input
-              type="text"
-              name="localisation"
-              value={formData.localisation}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300">Lien de l'offre</label>
-            <input
-              type="url"
-              name="lien"
-              value={formData.lien}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
-            />
-          </div>
-          <button type="submit" disabled={loading} className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:opacity-50">
-            {loading ? 'Ajout en cours...' : 'Ajouter'}
-          </button>
         </form>
       )}
 
@@ -264,39 +275,53 @@ export default function AdminOffresPage() {
               (!niveau || (offre.profil_recherche && offre.profil_recherche.toLowerCase().includes(niveau)))
               && (!posteFilter || offre.poste === posteFilter)
             )
-            .map((offre) => (
-              <div key={offre.id} className="bg-gray-800 rounded-xl shadow flex flex-col justify-between p-4">
-                {editId === offre.id ? (
-                  <>
-                    <input type="text" name="poste" value={editData.poste || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Poste" />
-                    <input type="text" name="entreprise" value={editData.entreprise || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Entreprise" />
-                    <input type="text" name="profil_recherche" value={editData.profil_recherche || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Profil recherché" />
-                    <input type="text" name="duree" value={editData.duree || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Durée" />
-                    <input type="text" name="localisation" value={editData.localisation || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Localisation" />
-                    <input type="url" name="lien" value={editData.lien || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Lien de l'offre" />
-                    <div className="flex gap-2 mt-2">
-                      <button onClick={handleEditSave} className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded">Enregistrer</button>
-                      <button onClick={() => setEditId(null)} className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-1 rounded">Annuler</button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-xl font-semibold">{offre.poste} à {offre.entreprise}</h3>
-                    <p className="text-gray-400 text-sm">Localisation: {offre.localisation}</p>
-                    <p className="text-gray-400 text-sm">Durée: {offre.duree}</p>
-                    <p className="text-gray-400 text-sm">Profil recherché: {offre.profil_recherche}</p>
-                    {offre.lien && (
-                      <a href={offre.lien} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline text-sm">Voir l'offre</a>
-                    )}
-                    <p className="text-gray-500 text-xs mt-2">Créé le: {new Date(offre.created_at).toLocaleString()}</p>
-                    <div className="flex gap-2 mt-2">
-                      <button onClick={() => handleEditClick(offre)} className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded">Modifier</button>
-                      <button onClick={() => handleDelete(offre.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded">Supprimer</button>
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
+            .map((offre) => {
+              const statusClass = user && postuleStatus[offre.id] === 'yes'
+                ? 'bg-success/10 ring-4 ring-success'
+                : user && postuleStatus[offre.id] === 'no'
+                ? 'bg-error/10 ring-4 ring-error'
+                : '';
+              return (
+                <div
+                  key={offre.id}
+                  className={`bg-white border border-primary rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center ${statusClass}`}
+                  style={!statusClass ? {background:'white'} : {}}
+                >
+                  {editId === offre.id ? (
+                    <>
+                      <input type="text" name="poste" value={editData.poste || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded-lg bg-white border border-primary text-primary" placeholder="Poste" />
+                      <input type="text" name="entreprise" value={editData.entreprise || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded-lg bg-white border border-primary text-primary" placeholder="Entreprise" />
+                      <input type="text" name="profil_recherche" value={editData.profil_recherche || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded-lg bg-white border border-primary text-primary" placeholder="Profil recherché" />
+                      <input type="text" name="duree" value={editData.duree || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded-lg bg-white border border-primary text-primary" placeholder="Durée" />
+                      <input type="text" name="localisation" value={editData.localisation || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded-lg bg-white border border-primary text-primary" placeholder="Localisation" />
+                      <input type="url" name="lien" value={editData.lien || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded-lg bg-white border border-primary text-primary" placeholder="Lien de l'offre" />
+                      <div className="flex gap-2 mt-2">
+                        <button onClick={handleEditSave} className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold transition">Enregistrer</button>
+                        <button onClick={() => setEditId(null)} className="bg-gray-300 hover:bg-gray-400 text-primary px-4 py-2 rounded-lg font-semibold transition">Annuler</button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <h3 className="text-xl font-semibold text-primary">{offre.poste} à {offre.entreprise}</h3>
+                      <p className="text-sm text-primary">Localisation: {offre.localisation}</p>
+                      <p className="text-sm text-primary">Durée: {offre.duree}</p>
+                      <p className="text-sm text-primary">Profil recherché: {offre.profil_recherche}</p>
+                      {offre.lien && (
+                        <a href={offre.lien} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 mt-4 px-5 py-2 rounded-full font-bold shadow-lg transition-all duration-200 button text-base hover:underline" style={{ minWidth: '160px' }}>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 3h7m0 0v7m0-7L10 14m-7 7h7a2 2 0 002-2v-7" /></svg>
+                          Voir l'offre
+                        </a>
+                      )}
+                      <p className="text-xs mt-2 text-primary">Créé le: {new Date(offre.created_at).toLocaleString()}</p>
+                      <div className="flex gap-2 mt-2">
+                        <button onClick={() => handleEditClick(offre)} className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold transition">Modifier</button>
+                        <button onClick={() => handleDelete(offre.id)} className="bg-error hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition">Supprimer</button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

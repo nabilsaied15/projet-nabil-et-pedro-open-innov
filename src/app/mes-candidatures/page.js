@@ -28,6 +28,7 @@ export default function MesCandidaturesPage() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [isAiResponding, setIsAiResponding] = useState(false);
+  const [popup, setPopup] = useState({ show: false, type: '', message: '' });
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -185,6 +186,12 @@ export default function MesCandidaturesPage() {
         setCandidatures(candidatures.map(c => 
           c.id === editingCandidature.id ? data[0] : c
         ));
+        // Afficher la popup si statut Accepté ou Refusé
+        if (data[0].statut === 'Accepté') {
+          setPopup({ show: true, type: 'success', message: 'Candidature acceptée !' });
+        } else if (data[0].statut === 'Refusé') {
+          setPopup({ show: true, type: 'error', message: 'Candidature refusée. Pleure pas ' });
+        }
       } else {
         // Création d'une nouvelle candidature
         const { data, error } = await supabase
@@ -200,6 +207,12 @@ export default function MesCandidaturesPage() {
         if (error) throw error;
 
         setCandidatures([...candidatures, data[0]]);
+        // Afficher la popup si statut Accepté ou Refusé
+        if (data[0].statut === 'Accepté') {
+          setPopup({ show: true, type: 'success', message: 'Candidature acceptée !' });
+        } else if (data[0].statut === 'Refusé') {
+          setPopup({ show: true, type: 'error', message: 'Candidature refusée.' });
+        }
       }
 
       setNewCandidature({
@@ -387,16 +400,40 @@ export default function MesCandidaturesPage() {
     filterStatut === 'Tous' || candidature.statut === filterStatut
   );
 
+  useEffect(() => {
+    if (popup.show) {
+      const timer = setTimeout(() => {
+        setPopup({ show: false, type: '', message: '' });
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [popup]);
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen">
+      {/* POPUP MODAL */}
+      {popup.show && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className={`p-8 rounded-xl shadow-lg text-2xl font-bold transition-all
+            ${popup.type === 'success' ? 'bg-green-500 text-white' : ''}
+            ${popup.type === 'error' ? 'bg-red-500 text-white' : ''}
+          `}>
+            {popup.message}
+          </div>
+          <div
+            className="fixed inset-0 bg-black opacity-30"
+            onClick={() => setPopup({ show: false, type: '', message: '' })}
+          />
+        </div>
+      )}
       <div className="p-10">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -409,7 +446,7 @@ export default function MesCandidaturesPage() {
             <select
               value={filterStatut}
               onChange={(e) => setFilterStatut(e.target.value)}
-              className="bg-gray-700 text-white px-4 py-2 rounded-md border border-gray-600 focus:border-blue-500 focus:outline-none"
+              className="px-4 py-2 rounded-md border focus:outline-none"
             >
               <option value="Tous">Tous les statuts</option>
               <option value="En attente">En attente</option>
@@ -431,7 +468,7 @@ export default function MesCandidaturesPage() {
                   });
                 }
               }}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200"
+              className="button px-4 py-2 rounded-md transition duration-200"
             >
               {showForm ? 'Annuler' : 'Ajouter une candidature'}
             </button>
@@ -439,7 +476,7 @@ export default function MesCandidaturesPage() {
         </div>
 
         {showForm && (
-          <div className="bg-gray-800 rounded-lg p-6 mb-8">
+          <div className="rounded-lg p-6 mb-8">
             <h3 className="text-xl font-semibold mb-4">
               {editingCandidature ? 'Modifier la candidature' : 'Nouvelle Candidature'}
             </h3>
@@ -452,7 +489,7 @@ export default function MesCandidaturesPage() {
                   type="text"
                   value={newCandidature.entreprise}
                   onChange={(e) => setNewCandidature({ ...newCandidature, entreprise: e.target.value })}
-                  className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  className="w-full p-2 rounded border focus:outline-none"
                   required
                 />
               </div>
@@ -464,7 +501,7 @@ export default function MesCandidaturesPage() {
                   type="text"
                   value={newCandidature.poste}
                   onChange={(e) => setNewCandidature({ ...newCandidature, poste: e.target.value })}
-                  className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  className="w-full p-2 rounded border focus:outline-none"
                   required
                 />
               </div>
@@ -476,7 +513,7 @@ export default function MesCandidaturesPage() {
                   type="date"
                   value={newCandidature.date_candidature}
                   onChange={(e) => setNewCandidature({ ...newCandidature, date_candidature: e.target.value })}
-                  className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  className="w-full p-2 rounded border focus:outline-none"
                   required
                 />
               </div>
@@ -487,7 +524,7 @@ export default function MesCandidaturesPage() {
                 <select
                   value={newCandidature.statut}
                   onChange={(e) => setNewCandidature({ ...newCandidature, statut: e.target.value })}
-                  className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  className="w-full p-2 rounded border focus:outline-none"
                   required
                 >
                   <option value="En attente">En attente</option>
@@ -503,13 +540,13 @@ export default function MesCandidaturesPage() {
                 <textarea
                   value={newCandidature.notes}
                   onChange={(e) => setNewCandidature({ ...newCandidature, notes: e.target.value })}
-                  className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  className="w-full p-2 rounded border focus:outline-none"
                   rows="3"
                 />
               </div>
               <button
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200"
+                className="button px-4 py-2 rounded-md transition duration-200"
               >
                 {editingCandidature ? 'Modifier' : 'Ajouter'} la candidature
               </button>
@@ -521,17 +558,14 @@ export default function MesCandidaturesPage() {
           {filteredCandidatures.map((candidature) => (
             <div
               key={candidature.id}
-              className={`bg-[#121826] border ${
-                candidature.statut === 'Accepté' 
-                ? 'border-green-500 animate-pulse shadow-lg shadow-green-500/20' 
-                : 'border-white'
-              } rounded-2xl p-4 shadow-md hover:shadow-xl transition relative overflow-hidden`}
+              className={`rounded-2xl p-4 shadow-md hover:shadow-xl transition relative overflow-hidden border border-primary
+                ${candidature.statut === 'Accepté' ? 'bg-green-200 ring-4 ring-success' : ''}
+                ${candidature.statut === 'Refusé' ? 'bg-red-200' : ''}
+                ${candidature.statut !== 'Accepté' && candidature.statut !== 'Refusé' ? 'bg-white' : ''}
+              `}
             >
-              {candidature.statut === 'Accepté' && (
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-500/10 to-transparent animate-shine" />
-              )}
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-lg text-white">{candidature.entreprise}</h3>
+                <h3 className="font-semibold text-lg text-primary">{candidature.entreprise}</h3>
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEdit(candidature)}
@@ -547,11 +581,11 @@ export default function MesCandidaturesPage() {
                   </button>
                 </div>
               </div>
-              <p className="text-gray-400 text-sm mb-1">Poste : {candidature.poste}</p>
-              <p className="text-gray-400 text-sm mb-1">
+              <p className="text-sm mb-1">Poste : {candidature.poste}</p>
+              <p className="text-sm mb-1">
                 Date : {new Date(candidature.date_candidature).toLocaleDateString()}
               </p>
-              <p className="text-gray-400 text-sm mb-1">
+              <p className="text-sm mb-1">
                 Statut : <span className={`${
                   candidature.statut === 'Accepté' ? 'text-green-400 font-bold animate-bounce' :
                   candidature.statut === 'Refusé' ? 'text-red-400' :
@@ -560,7 +594,7 @@ export default function MesCandidaturesPage() {
                 }`}>{candidature.statut}</span>
               </p>
               {candidature.notes && (
-                <p className="text-gray-400 text-sm mt-2 border-t border-gray-700 pt-2">
+                <p className="text-sm mt-2 border-t border-primary pt-2">
                   {candidature.notes}
                 </p>
               )}
@@ -581,10 +615,10 @@ export default function MesCandidaturesPage() {
         {/* Section CV et Conversation */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Section Téléversement CV */}
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+          <div className="rounded-xl p-6 border border-primary bg-gray-100">
             <h3 className="text-xl font-semibold mb-4">📄 CV pour {currentDossier?.nom}</h3>
             <div className="space-y-4">
-              <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-primary rounded-lg p-6 text-center bg-white">
                 <input
                   type="file"
                   accept=".pdf,.doc,.docx"
@@ -606,22 +640,22 @@ export default function MesCandidaturesPage() {
                 </label>
               </div>
               {cvFile && (
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-primary">
                   Fichier sélectionné : {cvFile.name}
                 </div>
               )}
               {cvError && (
-                <div className="text-sm text-red-400">
+                <div className="text-sm text-error">
                   {cvError}
                 </div>
               )}
               {cvSuccess && (
-                <div className="text-sm text-green-400">
+                <div className="text-sm text-success">
                   {cvSuccess}
                 </div>
               )}
               <button
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+                className="button px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
                 onClick={uploadCv}
                 disabled={!cvFile || cvUploading}
               >
@@ -634,24 +668,24 @@ export default function MesCandidaturesPage() {
                   <h4 className="text-lg font-semibold mb-3">CVs téléversés</h4>
                   <div className="space-y-3">
                     {uploadedCvs.map((cv) => (
-                      <div key={cv.id} className="bg-gray-700 rounded-lg p-3 flex items-center justify-between">
+                      <div key={cv.id} className="bg-gray-200 rounded-lg p-3 flex items-center justify-between border border-primary">
                         <div className="flex-1">
-                          <p className="text-sm font-medium">{cv.file_name}</p>
-                          <p className="text-xs text-gray-400">
+                          <p className="text-sm font-medium text-primary">{cv.file_name}</p>
+                          <p className="text-xs text-primary/70">
                             Téléversé le {new Date(cv.created_at).toLocaleDateString()}
                           </p>
                         </div>
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleDownloadCv(cv)}
-                            className="text-blue-400 hover:text-blue-300"
+                            className="text-accent hover:text-accent/80"
                             title="Télécharger"
                           >
                             ⬇️
                           </button>
                           <button
                             onClick={() => handleDeleteCv(cv.id, cv.file_path)}
-                            className="text-red-400 hover:text-red-300"
+                            className="text-error hover:text-error/80"
                             title="Supprimer"
                           >
                             🗑️
@@ -666,12 +700,12 @@ export default function MesCandidaturesPage() {
           </div>
 
           {/* Section Conversation */}
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+          <div className="rounded-xl p-6 border border-primary bg-gray-100">
             <h3 className="text-xl font-semibold mb-4">💬 Messages pour {currentDossier?.nom}</h3>
-            <div className="flex flex-col h-[600px] bg-gray-900 rounded-lg">
+            <div className="flex flex-col h-[600px] bg-white rounded-lg border border-primary">
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.length === 0 ? (
-                  <div className="text-center text-gray-400 py-8">
+                  <div className="text-center text-primary/60 py-8">
                     <p>Aucun message</p>
                     <p className="text-sm mt-2">Envoyez un message pour commencer la conversation</p>
                   </div>
@@ -687,10 +721,10 @@ export default function MesCandidaturesPage() {
                         className={`w-full flex ${isMessageFromAdmin ? 'justify-start' : 'justify-end'}`}
                       >
                         <div
-                          className={`max-w-[80%] p-4 rounded-lg ${
+                          className={`max-w-[80%] p-4 rounded-lg border ${
                             isMessageFromAdmin
-                              ? 'bg-gray-700 text-white rounded-tl-none'
-                              : 'bg-blue-600 text-white rounded-tr-none'
+                              ? 'bg-gray-200 text-primary rounded-tl-none border-primary'
+                              : 'bg-accent text-white rounded-tr-none border-accent'
                           }`}
                         >
                           <p className="text-xs font-semibold mb-1">
@@ -706,18 +740,18 @@ export default function MesCandidaturesPage() {
                   })
                 )}
               </div>
-              <div className="border-t border-gray-700 p-4">
+              <div className="border-t border-primary p-4 bg-white">
                 <form onSubmit={handleSendMessage} className="flex gap-2">
                   <input
                     type="text"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     placeholder="Écrivez votre message..."
-                    className="flex-1 bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 bg-gray-100 text-primary rounded-lg px-4 py-2 border border-primary focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                   <button
                     type="submit"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+                    className="button px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
                     disabled={!newMessage.trim()}
                   >
                     Envoyer

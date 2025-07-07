@@ -51,6 +51,8 @@ function AddItemPage({ table, onItemAdded }) {
     }
     const [title, setTitle] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [file, setFile] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [nombreVideos, setNombreVideos] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [nombrePdfs, setNombrePdfs] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     const [message, setMessage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [items, setItems] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [user, setUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
@@ -82,7 +84,9 @@ function AddItemPage({ table, onItemAdded }) {
         const { error } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["supabase"].from(table).insert([
             {
                 title,
-                image_url
+                image_url,
+                nombre_videos: Number(nombreVideos) || 0,
+                nombre_pdfs: Number(nombrePdfs) || 0
             }
         ]);
         if (error) {
@@ -91,6 +95,8 @@ function AddItemPage({ table, onItemAdded }) {
             setMessage('✅ Cours ajouté !');
             setTitle('');
             setFile(null);
+            setNombreVideos(0);
+            setNombrePdfs(0);
             fetchItems();
             if (typeof onItemAdded === 'function') {
                 onItemAdded();
@@ -102,70 +108,35 @@ function AddItemPage({ table, onItemAdded }) {
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        style: {
-            padding: '1rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
+        className: "flex justify-center items-center p-4",
         children: user?.role === 'admin' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
             onSubmit: handleSubmit,
-            style: {
-                padding: '1.2rem',
-                backgroundColor: '#1f2937',
-                color: 'white',
-                borderRadius: '18px',
-                border: '1px solid #374151',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1.1rem',
-                width: '100%',
-                maxWidth: 320,
-                alignItems: 'center'
-            },
+            className: "flex flex-col gap-4 w-full max-w-md bg-white text-primary rounded-3xl border-2 border-blue-100 shadow-2xl p-8",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                    style: {
-                        textAlign: 'center',
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        color: '#e0e7ff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '0.5rem',
-                        marginBottom: '0.5rem'
-                    },
+                    className: "text-xl font-bold text-blue-900 text-center flex items-center justify-center gap-2 mb-2",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaPlus"], {}, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 94,
+                            lineNumber: 75,
                             columnNumber: 13
                         }, this),
                         " Ajouter un cours"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 81,
+                    lineNumber: 74,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        width: '100%'
-                    },
+                    className: "w-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                            style: {
-                                fontWeight: '600',
-                                marginBottom: '0.3rem',
-                                display: 'block',
-                                textAlign: 'left'
-                            },
+                            className: "font-semibold mb-1 block text-left",
                             children: "Titre du cours"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 97,
+                            lineNumber: 78,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -174,15 +145,63 @@ function AddItemPage({ table, onItemAdded }) {
                             value: title,
                             onChange: (e)=>setTitle(e.target.value),
                             required: true,
-                            style: {
-                                padding: '0.5rem',
-                                borderRadius: '10px',
-                                width: '100%',
-                                border: '1px solid #6b7280',
-                                backgroundColor: '#111827',
-                                color: 'white',
-                                fontSize: '0.95rem'
-                            }
+                            className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/AddItemPage.js",
+                            lineNumber: 79,
+                            columnNumber: 13
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/AddItemPage.js",
+                    lineNumber: 77,
+                    columnNumber: 11
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "w-full",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                            className: "font-semibold mb-1 block text-left",
+                            children: "Image du cours"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/AddItemPage.js",
+                            lineNumber: 89,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                            type: "file",
+                            accept: "image/*",
+                            onChange: (e)=>setFile(e.target.files[0]),
+                            required: true,
+                            className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/AddItemPage.js",
+                            lineNumber: 90,
+                            columnNumber: 13
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/AddItemPage.js",
+                    lineNumber: 88,
+                    columnNumber: 11
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "w-full",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                            className: "font-semibold mb-1 block text-left",
+                            children: "Nombre de vidéos"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/AddItemPage.js",
+                            lineNumber: 99,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                            type: "number",
+                            min: "0",
+                            value: nombreVideos,
+                            onChange: (e)=>setNombreVideos(e.target.value),
+                            className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
                             lineNumber: 100,
@@ -191,97 +210,67 @@ function AddItemPage({ table, onItemAdded }) {
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 96,
+                    lineNumber: 98,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        width: '100%'
-                    },
+                    className: "w-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                            style: {
-                                fontWeight: '600',
-                                marginBottom: '0.3rem',
-                                display: 'block',
-                                textAlign: 'left'
-                            },
-                            children: "Image du cours"
+                            className: "font-semibold mb-1 block text-left",
+                            children: "Nombre de PDF"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 118,
+                            lineNumber: 109,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                            type: "file",
-                            accept: "image/*",
-                            onChange: (e)=>setFile(e.target.files[0]),
-                            required: true,
-                            style: {
-                                padding: '0.5rem',
-                                borderRadius: '10px',
-                                width: '100%',
-                                border: '1px solid #6b7280',
-                                backgroundColor: '#111827',
-                                color: 'white',
-                                fontSize: '0.95rem'
-                            }
+                            type: "number",
+                            min: "0",
+                            value: nombrePdfs,
+                            onChange: (e)=>setNombrePdfs(e.target.value),
+                            className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 121,
+                            lineNumber: 110,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 117,
+                    lineNumber: 108,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     type: "submit",
-                    style: {
-                        padding: '0.7rem 1.2rem',
-                        backgroundColor: '#3b82f6',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        borderRadius: '12px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '1rem',
-                        width: '100%',
-                        transition: 'background-color 0.3s ease'
-                    },
+                    className: "py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl w-full text-lg transition",
                     children: "➕ Ajouter"
                 }, void 0, false, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 137,
+                    lineNumber: 118,
                     columnNumber: 11
                 }, this),
-                message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    style: {
-                        textAlign: 'center',
-                        color: '#10b981',
-                        fontWeight: 'bold'
-                    },
+                message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: message.startsWith('✅') ? 'text-green-600 font-semibold text-center mt-2' : 'text-red-600 font-semibold text-center mt-2',
                     children: message
                 }, void 0, false, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 155,
+                    lineNumber: 125,
                     columnNumber: 13
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/AddItemPage.js",
-            lineNumber: 64,
+            lineNumber: 70,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/AddItemPage.js",
-        lineNumber: 62,
+        lineNumber: 68,
         columnNumber: 5
     }, this);
 }
-_s(AddItemPage, "k7lgzkuotdiVBObSAm9WsFrOKWc=");
+_s(AddItemPage, "SVLH9isLXQx5+jgwziC+tt/sJuk=");
 _c = AddItemPage;
 var _c;
 __turbopack_context__.k.register(_c, "AddItemPage");
@@ -408,118 +397,129 @@ function CoursPage() {
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-900 text-white",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "p-10",
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex justify-between items-center mb-6",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-xl font-bold text-center",
-                            children: "Gestion des cours"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/admin/cours/page.js",
-                            lineNumber: 130,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: ()=>setShowAddForm(!showAddForm),
-                            className: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
-                            children: showAddForm ? '– Fermer le formulaire' : '➕ Ajouter un cours'
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/admin/cours/page.js",
-                            lineNumber: 131,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/app/admin/cours/page.js",
-                    lineNumber: 129,
-                    columnNumber: 9
-                }, this),
-                showAddForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "mb-8",
+        className: "min-h-screen  p-10 text-primary",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex justify-between items-center mb-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                        className: "text-xl font-bold text-center text-primary",
+                        children: "Gestion des cours"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/admin/cours/page.js",
+                        lineNumber: 127,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setShowAddForm(!showAddForm),
+                        className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                        children: showAddForm ? '– Fermer le formulaire' : '➕ Ajouter un cours'
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/admin/cours/page.js",
+                        lineNumber: 128,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/admin/cours/page.js",
+                lineNumber: 126,
+                columnNumber: 7
+            }, this),
+            showAddForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-8 flex justify-center",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "bg-gray-100 border border-primary shadow-md rounded-2xl p-8 w-full max-w-lg",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$AddItemPage$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                         table: "cours",
                         title: "Ajouter un cours",
                         fields: courseFields,
                         onSubmit: handleAddCourse,
-                        onCancel: ()=>setShowAddForm(false)
+                        onCancel: ()=>setShowAddForm(false),
+                        inputClassName: "bg-white border border-primary text-primary rounded-lg px-4 py-2 focus:border-accent mb-4 w-full",
+                        labelClassName: "text-primary font-semibold mb-2",
+                        buttonClassName: "bg-primary text-white rounded-lg font-semibold px-6 py-2 mt-4 hover:bg-accent transition"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/cours/page.js",
-                        lineNumber: 141,
+                        lineNumber: 139,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/admin/cours/page.js",
-                    lineNumber: 140,
+                    lineNumber: 138,
                     columnNumber: 11
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6",
-                    children: courses.map((course)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-[#121826] border border-white rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "w-16 h-16 rounded-full overflow-hidden mb-4",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                        src: course.image_url,
-                                        alt: course.title,
-                                        className: "w-full h-full object-contain"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/admin/cours/page.js",
-                                        lineNumber: 158,
-                                        columnNumber: 17
-                                    }, this)
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/app/admin/cours/page.js",
+                lineNumber: 137,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6",
+                children: courses.map((course)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "bg-white border border-primary rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "w-16 h-16 rounded-full overflow-hidden mb-4",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                    src: course.image_url,
+                                    alt: course.title,
+                                    className: "w-full h-full object-contain"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/cours/page.js",
-                                    lineNumber: 157,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                    className: "font-semibold text-base text-white cursor-pointer hover:text-blue-400",
-                                    onClick: ()=>router.push(`/admin/cours/${course.id}`),
-                                    children: course.title
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/admin/cours/page.js",
-                                    lineNumber: 164,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "mt-2",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                        onClick: ()=>router.push(`/admin/cours/${course.id}`),
-                                        className: "text-blue-400 hover:text-blue-300",
-                                        children: "Gérer les ressources"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/admin/cours/page.js",
-                                        lineNumber: 171,
-                                        columnNumber: 17
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/admin/cours/page.js",
-                                    lineNumber: 170,
+                                    lineNumber: 160,
                                     columnNumber: 15
                                 }, this)
-                            ]
-                        }, course.id, true, {
-                            fileName: "[project]/src/app/admin/cours/page.js",
-                            lineNumber: 153,
-                            columnNumber: 13
-                        }, this))
-                }, void 0, false, {
-                    fileName: "[project]/src/app/admin/cours/page.js",
-                    lineNumber: 151,
-                    columnNumber: 9
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/app/admin/cours/page.js",
-            lineNumber: 128,
-            columnNumber: 7
-        }, this)
-    }, void 0, false, {
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/admin/cours/page.js",
+                                lineNumber: 159,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold text-base mb-2 cursor-pointer text-primary hover:underline",
+                                onClick: ()=>router.push(`/admin/cours/${course.id}`),
+                                children: course.title
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/admin/cours/page.js",
+                                lineNumber: 166,
+                                columnNumber: 13
+                            }, this),
+                            course.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-sm mb-2 text-primary",
+                                children: course.description
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/admin/cours/page.js",
+                                lineNumber: 173,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "mt-2",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>router.push(`/admin/cours/${course.id}`),
+                                    className: "bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-accent transition",
+                                    children: "Gérer les ressources"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/admin/cours/page.js",
+                                    lineNumber: 176,
+                                    columnNumber: 15
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/admin/cours/page.js",
+                                lineNumber: 175,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, course.id, true, {
+                        fileName: "[project]/src/app/admin/cours/page.js",
+                        lineNumber: 155,
+                        columnNumber: 11
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/src/app/admin/cours/page.js",
+                lineNumber: 153,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "[project]/src/app/admin/cours/page.js",
         lineNumber: 125,
         columnNumber: 5

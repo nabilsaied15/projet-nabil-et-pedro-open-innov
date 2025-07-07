@@ -354,25 +354,25 @@ export default function CourseResourcesPage({ params }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen bg-background text-foreground flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="p-8">
-        <h1 className="text-3xl font-bold mb-8 text-center">{course?.title}</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center text-primary">{course?.title}</h1>
 
         {message && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+          <div className="bg-success/10 border border-success text-success px-4 py-3 rounded mb-4">
             {message}
           </div>
         )}
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-error/10 border border-error text-error px-4 py-3 rounded mb-4">
             {error}
           </div>
         )}
@@ -426,7 +426,7 @@ export default function CourseResourcesPage({ params }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pdfs.map((pdf) => (
-              <div key={pdf.id} className="bg-[#121826] border border-white rounded-2xl p-6 shadow-md hover:shadow-xl transition">
+              <div key={pdf.id} className="rounded-2xl p-6 shadow-md hover:shadow-xl transition border border-primary bg-white">
                 {editingPdfId === pdf.id ? (
                   <div className="mb-4">
                     <div className="mb-4">
@@ -476,7 +476,7 @@ export default function CourseResourcesPage({ params }) {
                   href={pdf.pdf_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:underline mb-4 block"
+                  className="text-accent hover:underline mb-4 block"
                 >
                   Voir le PDF
                 </a>
@@ -487,13 +487,13 @@ export default function CourseResourcesPage({ params }) {
                         setEditingPdfId(pdf.id);
                         setEditPdfTitle(pdf.title);
                       }}
-                      className="text-blue-400 hover:text-blue-300 transition duration-200"
+                      className="button"
                     >
                       Modifier
                     </button>
                     <button
                       onClick={() => handleDeletePdf(pdf.id)}
-                      className="text-red-400 hover:text-red-300 transition duration-200"
+                      className="button-danger"
                     >
                       Supprimer
                     </button>
@@ -587,7 +587,7 @@ export default function CourseResourcesPage({ params }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {videos.map((video) => (
-              <div key={video.id} className="bg-[#121826] border border-white rounded-2xl p-6 shadow-md hover:shadow-xl transition">
+              <div key={video.id} className="rounded-2xl p-6 shadow-md hover:shadow-xl transition border border-primary bg-white">
                 {editingVideoId === video.id ? (
                   <div className="mb-4">
                     <div className="mb-4">
@@ -636,7 +636,7 @@ export default function CourseResourcesPage({ params }) {
                   href={video.youtube_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:underline mb-4 block"
+                  className="text-accent hover:underline mb-4 block"
                 >
                   Voir la vidéo
                 </a>
@@ -648,13 +648,13 @@ export default function CourseResourcesPage({ params }) {
                         setEditVideoTitle(video.title);
                         setEditVideoUrl(video.youtube_url);
                       }}
-                      className="text-blue-400 hover:text-blue-300 transition duration-200"
+                      className="button"
                     >
                       Modifier
                     </button>
                     <button
                       onClick={() => handleDeleteVideo(video.id)}
-                      className="text-red-400 hover:text-red-300 transition duration-200"
+                      className="button-danger"
                     >
                       Supprimer
                     </button>

@@ -77,7 +77,7 @@ export default function CoursPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen">
       {/* NAVBAR */}
 
 
@@ -85,7 +85,7 @@ export default function CoursPage() {
       <div className="p-10">
         {user?.role === 'admin' ? (
           <>
-            <h2 className="text-xl font-bold mb-6 text-center">Ajouter un cours</h2>
+            <h2 className="font-bold mb-6 text-center">Ajouter un cours</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
               <AddItemPage table="cours" onItemAdded={handleCourseAdded} />
             </div>
@@ -93,7 +93,7 @@ export default function CoursPage() {
               {courses.map((course) => (
                 <div
                   key={course.id}
-                  className="bg-[#121826] border border-white rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                  className="rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center border border-primary"
                 >
                   <div className="w-16 h-16 rounded-full overflow-hidden mb-4">
                     <img
@@ -103,15 +103,15 @@ export default function CoursPage() {
                     />
                   </div>
                   <h4 
-                    className="font-semibold text-base text-white mb-2 cursor-pointer hover:text-blue-400"
+                    className="font-semibold text-base mb-2 cursor-pointer"
                     onClick={() => router.push(`/admin/cours/${course.id}`)}
                   >
                     {course.title}
                   </h4>
                   {course.description && (
-                    <p className="text-gray-400 text-sm mb-2">{course.description}</p>
+                    <p className="text-sm mb-2">{course.description}</p>
                   )}
-                  <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
+                  <div className="flex items-center gap-2 text-sm mb-2">
                     <span>🎥</span>
                     <span>{course.nombre_videos || 0} vidéos</span>
                   </div>
@@ -120,7 +120,7 @@ export default function CoursPage() {
                       href={course.lien}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline text-sm mb-2"
+                      className="hover:underline text-sm mb-2"
                     >
                       Accéder au cours
                     </a>
@@ -131,12 +131,12 @@ export default function CoursPage() {
           </>
         ) : (
           <>
-            <h3 className="text-xl font-bold mt-4 mb-6 text-center">Cours disponibles en direct 📱</h3>
+            <h3 className="font-bold mt-4 mb-6 text-center">Cours disponibles en direct 📱</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {courses.map((course) => (
                 <div
                   key={course.id}
-                  className="bg-[#121826] border border-white rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                  className="rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center border border-primary"
                 >
                   <div className="w-16 h-16 rounded-full overflow-hidden mb-4">
                     <img
@@ -146,15 +146,15 @@ export default function CoursPage() {
                     />
                   </div>
                   <h4 
-                    className="font-semibold text-base text-white mb-2 cursor-pointer hover:text-blue-400"
+                    className="font-semibold text-base mb-2 cursor-pointer"
                     onClick={() => router.push(`/cours/${course.id}`)}
                   >
                     {course.title}
                   </h4>
                   {course.description && (
-                    <p className="text-gray-400 text-sm mb-2">{course.description}</p>
+                    <p className="text-sm mb-2">{course.description}</p>
                   )}
-                  <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
+                  <div className="flex items-center gap-2 text-sm mb-2">
                     <span>🎥</span>
                     <span>{course.nombre_videos || 0} vidéos</span>
                   </div>
@@ -163,7 +163,7 @@ export default function CoursPage() {
                       href={course.lien}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline text-sm mb-2"
+                      className="hover:underline text-sm mb-2"
                     >
                       Accéder au cours
                     </a>

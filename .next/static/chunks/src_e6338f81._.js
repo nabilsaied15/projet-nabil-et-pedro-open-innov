@@ -176,14 +176,11 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-gray-900 rounded-2xl p-8 shadow-xl w-full max-w-md relative",
+            className: "rounded-2xl p-8 shadow-xl w-full max-w-md relative",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     onClick: onClose,
-                    className: "absolute -top-5 right-4 bg-blue-600 hover:bg-blue-700 text-white hover:text-white text-4xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg transition-all border-4 border-white",
-                    style: {
-                        boxShadow: '0 4px 24px 0 rgba(0,0,0,0.25)'
-                    },
+                    className: "absolute -top-5 right-4 button text-4xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg transition-all border-4",
                     "aria-label": "Fermer",
                     children: "×"
                 }, void 0, false, {
@@ -199,20 +196,20 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 150,
+                    lineNumber: 149,
                     columnNumber: 9
                 }, this),
                 confirmed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "fixed inset-0 flex items-center justify-center z-50",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-green-700 text-white px-8 py-6 rounded-xl shadow-lg text-center",
+                        className: "px-8 py-6 rounded-xl shadow-lg text-center",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "text-3xl mb-2",
                                 children: "✔"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 154,
+                                lineNumber: 153,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -220,7 +217,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                                 children: "RDV confirmé !"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 155,
+                                lineNumber: 154,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -228,31 +225,31 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                                 children: "Votre rendez-vous a bien été enregistré."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 156,
+                                lineNumber: 155,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 153,
+                        lineNumber: 152,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 152,
+                    lineNumber: 151,
                     columnNumber: 11
                 }, this),
                 rdvPrisPopup && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "fixed inset-0 flex items-center justify-center z-50",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-red-700 text-white px-8 py-6 rounded-xl shadow-lg text-center",
+                        className: "px-8 py-6 rounded-xl shadow-lg text-center",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "text-3xl mb-2",
                                 children: "⛔"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 163,
+                                lineNumber: 162,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -260,27 +257,27 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                                 children: "Ce créneau est déjà pris !"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 164,
+                                lineNumber: 163,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                className: "mt-4 px-4 py-2 bg-white text-red-700 rounded font-bold",
+                                className: "mt-4 px-4 py-2 rounded font-bold",
                                 onClick: ()=>setRdvPrisPopup(false),
                                 children: "Fermer"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 165,
+                                lineNumber: 164,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 162,
+                        lineNumber: 161,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 161,
+                    lineNumber: 160,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -296,7 +293,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             children: "◀"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 175,
+                            lineNumber: 174,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -307,7 +304,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             })
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 176,
+                            lineNumber: 175,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -320,13 +317,13 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             children: "▶"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 177,
+                            lineNumber: 176,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 174,
+                    lineNumber: 173,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -336,35 +333,35 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             children: "Lun"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 180,
+                            lineNumber: 179,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             children: "Mar"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 180,
+                            lineNumber: 179,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             children: "Mer"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 180,
+                            lineNumber: 179,
                             columnNumber: 39
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             children: "Jeu"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 180,
+                            lineNumber: 179,
                             columnNumber: 53
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             children: "Ven"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 180,
+                            lineNumber: 179,
                             columnNumber: 67
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -372,7 +369,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             children: "Sam"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 180,
+                            lineNumber: 179,
                             columnNumber: 81
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -380,13 +377,13 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             children: "Dim"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 180,
+                            lineNumber: 179,
                             columnNumber: 120
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 179,
+                    lineNumber: 178,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -394,7 +391,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                     children: [
                         Array(firstDay === 0 ? 6 : firstDay - 1).fill(null).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {}, i, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 184,
+                                lineNumber: 183,
                                 columnNumber: 13
                             }, this)),
                         days.map((date)=>{
@@ -404,20 +401,20 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             const isDispo = dispos[key];
                             let btnClass = '';
                             if (isIndispo) {
-                                btnClass = 'bg-red-700 text-white cursor-not-allowed';
+                                btnClass = 'cursor-not-allowed';
                             } else if (!available && (date.getDay() === 6 || date.getDay() === 0)) {
-                                btnClass = 'bg-red-900 text-red-300 cursor-not-allowed';
+                                btnClass = 'cursor-not-allowed';
                             } else if (available && isDispo) {
-                                btnClass = 'bg-green-500 text-white hover:bg-green-600';
+                                btnClass = '';
                             } else if (available) {
-                                btnClass = 'bg-red-600 text-white hover:bg-red-700';
+                                btnClass = '';
                             } else {
-                                btnClass = 'bg-gray-700 text-gray-400 cursor-not-allowed';
+                                btnClass = 'cursor-not-allowed';
                             }
                             const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 disabled: !available || isIndispo,
-                                className: `rounded-lg py-2 text-sm font-semibold transition w-full ${btnClass} ${isSelected ? 'ring-2 ring-yellow-400 bg-yellow-700 text-white' : ''}`,
+                                className: `rounded-lg py-2 text-sm font-semibold transition w-full ${btnClass} ${isSelected ? 'ring-2 ring-yellow-400' : ''}`,
                                 onClick: ()=>{
                                     setSelectedDate(date);
                                     setSelectedHour(null);
@@ -427,14 +424,14 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                                 children: date.getDate()
                             }, date.toISOString(), false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 205,
+                                lineNumber: 204,
                                 columnNumber: 15
                             }, this);
                         })
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 182,
+                    lineNumber: 181,
                     columnNumber: 9
                 }, this),
                 selectedDate && selectedDate.getDay() !== 0 && selectedDate.getDay() !== 6 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -448,7 +445,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 223,
+                            lineNumber: 222,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -456,7 +453,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             children: "Matin"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 224,
+                            lineNumber: 223,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -471,12 +468,12 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                                     ]
                                 }, h, true, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 229,
+                                    lineNumber: 228,
                                     columnNumber: 19
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 225,
+                            lineNumber: 224,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -484,7 +481,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                             children: "Après-midi"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 242,
+                            lineNumber: 241,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -499,27 +496,27 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                                     ]
                                 }, h, true, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 247,
+                                    lineNumber: 246,
                                     columnNumber: 19
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 243,
+                            lineNumber: 242,
                             columnNumber: 13
                         }, this),
                         selectedHour && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            className: "mt-6 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg shadow-lg transition",
+                            className: "mt-6 w-full font-bold py-3 rounded-lg shadow-lg transition",
                             onClick: handleValidate,
                             children: "Confirmer"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 261,
+                            lineNumber: 260,
                             columnNumber: 15
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 222,
+                    lineNumber: 221,
                     columnNumber: 11
                 }, this),
                 selectedDate && (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -527,7 +524,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
                     children: "On ne travaille pas, c'est le weekend !"
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 271,
+                    lineNumber: 270,
                     columnNumber: 11
                 }, this)
             ]
@@ -573,30 +570,27 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
     ]);
     if (!open) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
-            className: "bg-[#1e293b] text-white rounded-2xl p-8 shadow-xl w-full max-w-md relative border border-[#334155]",
-            onSubmit: async (e)=>{
-                e.preventDefault();
-                await onSave(form, file);
-            },
+        className: "fixed inset-0 z-50 flex items-center justify-center bg-white/80",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 transition-all duration-300 border-2 border-blue-100",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                    className: "absolute top-3 right-3 text-2xl font-bold text-blue-400 hover:text-blue-700 transition",
                     type: "button",
                     onClick: onClose,
-                    className: "absolute -top-5 right-4 bg-blue-600 hover:bg-blue-700 text-white text-4xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg border-4 border-white",
+                    "aria-label": "Fermer",
                     children: "×"
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 297,
+                    lineNumber: 290,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                    className: "text-xl font-bold mb-4 text-center",
+                    className: "text-xl font-bold text-blue-900 text-center mb-4",
                     children: initial ? "Modifier le contact" : "Ajouter un contact"
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 304,
+                    lineNumber: 298,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -607,11 +601,11 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             ...form,
                             name: e.target.value
                         }),
-                    className: "rounded p-2 bg-[#334155] border border-[#475569] w-full mb-2 text-white placeholder-gray-400 focus:border-blue-500 focus:bg-[#1e293b] transition",
+                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition",
                     required: true
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 307,
+                    lineNumber: 299,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -622,11 +616,11 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             ...form,
                             company: e.target.value
                         }),
-                    className: "rounded p-2 bg-[#334155] border border-[#475569] w-full mb-2 text-white placeholder-gray-400 focus:border-blue-500 focus:bg-[#1e293b] transition",
+                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition",
                     required: true
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 315,
+                    lineNumber: 307,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -637,11 +631,11 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             ...form,
                             role: e.target.value
                         }),
-                    className: "rounded p-2 bg-[#334155] border border-[#475569] w-full mb-2 text-white placeholder-gray-400 focus:border-blue-500 focus:bg-[#1e293b] transition",
+                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition",
                     required: true
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 323,
+                    lineNumber: 315,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -652,11 +646,11 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             ...form,
                             email: e.target.value
                         }),
-                    className: "rounded p-2 bg-[#334155] border border-[#475569] w-full mb-2 text-white placeholder-gray-400 focus:border-blue-500 focus:bg-[#1e293b] transition",
+                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition",
                     required: true
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 331,
+                    lineNumber: 323,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -667,11 +661,11 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             ...form,
                             phone: e.target.value
                         }),
-                    className: "rounded p-2 bg-[#334155] border border-[#475569] w-full mb-2 text-white placeholder-gray-400 focus:border-blue-500 focus:bg-[#1e293b] transition",
+                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition",
                     required: true
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 339,
+                    lineNumber: 331,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -684,7 +678,7 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             className: "block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 348,
+                            lineNumber: 340,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -692,7 +686,7 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             children: "Photo (jpg/png, max 2Mo)"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 354,
+                            lineNumber: 346,
                             columnNumber: 11
                         }, this),
                         form.photo_url && !file && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -701,7 +695,7 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             className: "mt-2 w-20 h-20 object-cover rounded-full mx-auto"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 356,
+                            lineNumber: 348,
                             columnNumber: 13
                         }, this),
                         file && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -709,34 +703,34 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
                             children: file.name
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 359,
+                            lineNumber: 351,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 347,
+                    lineNumber: 339,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     type: "submit",
-                    className: "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-lg transition mb-2",
+                    className: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-lg transition mb-2",
                     disabled: loading,
                     children: loading ? "Enregistrement..." : initial ? "Enregistrer" : "Ajouter"
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 362,
+                    lineNumber: 354,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/contacts/page.js",
-            lineNumber: 290,
+            lineNumber: 289,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/contacts/page.js",
-        lineNumber: 289,
+        lineNumber: 288,
         columnNumber: 5
     }, this);
 }
@@ -747,15 +741,15 @@ function ConfirmModal({ open, onClose, onConfirm, text, loading }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-white text-gray-900 rounded-2xl p-8 shadow-xl w-full max-w-md relative",
+            className: "rounded-2xl p-8 shadow-xl w-full max-w-md relative",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     onClick: onClose,
-                    className: "absolute -top-5 right-4 bg-blue-600 hover:bg-blue-700 text-white text-4xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg border-4 border-white",
+                    className: "absolute -top-5 right-4 button text-4xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg border-4",
                     children: "×"
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 379,
+                    lineNumber: 371,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -763,7 +757,7 @@ function ConfirmModal({ open, onClose, onConfirm, text, loading }) {
                     children: text
                 }, void 0, false, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 385,
+                    lineNumber: 377,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -771,39 +765,39 @@ function ConfirmModal({ open, onClose, onConfirm, text, loading }) {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onClose,
-                            className: "bg-gray-300 hover:bg-gray-400 text-gray-900 px-4 py-2 rounded",
+                            className: "px-4 py-2 rounded",
                             disabled: loading,
                             children: "Annuler"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 387,
+                            lineNumber: 379,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onConfirm,
-                            className: "bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded",
+                            className: "px-4 py-2 rounded",
                             disabled: loading,
                             children: loading ? "Suppression..." : "Supprimer"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 394,
+                            lineNumber: 386,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 386,
+                    lineNumber: 378,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/contacts/page.js",
-            lineNumber: 378,
+            lineNumber: 370,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/contacts/page.js",
-        lineNumber: 377,
+        lineNumber: 369,
         columnNumber: 5
     }, this);
 }
@@ -1087,30 +1081,30 @@ function ContactsPage() {
         setAvailabilityTextContact(null);
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-900 text-white p-8",
+        className: "min-h-screen p-10",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                className: "text-3xl font-bold mb-6",
+                className: "text-2xl font-bold mb-6",
                 children: "Gestion des Contacts"
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 633,
+                lineNumber: 625,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex justify-center items-center gap-8 mb-8",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        className: "bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold shadow transition-colors",
+                        className: "button px-4 py-2 rounded-md transition duration-200",
                         onClick: ()=>setShowRdvModal(true),
                         children: "Prendre un RDV"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 636,
+                        lineNumber: 628,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        className: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow transition-colors",
+                        className: "button px-4 py-2 rounded-md transition duration-200",
                         onClick: ()=>{
                             setShowForm((f)=>!f);
                             if (showForm) {
@@ -1129,29 +1123,29 @@ function ContactsPage() {
                         children: showForm ? 'Annuler' : 'Ajouter un contact'
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 642,
+                        lineNumber: 634,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 635,
+                lineNumber: 627,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "h-4"
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 656,
+                lineNumber: 648,
                 columnNumber: 7
             }, this),
             showForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60",
+                className: "fixed inset-0 z-50 flex items-center justify-center bg-white/80",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "relative bg-[#1e293b] p-8 rounded-2xl shadow-2xl w-full max-w-md mx-4 animate-fadeIn",
+                    className: "relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 transition-all duration-300 border-2 border-blue-100",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            className: "absolute top-3 right-3 text-gray-400 hover:text-white text-2xl font-bold",
+                            className: "absolute top-3 right-3 text-2xl font-bold text-blue-400 hover:text-blue-700 transition",
                             type: "button",
                             onClick: ()=>{
                                 setShowForm(false);
@@ -1170,13 +1164,21 @@ function ContactsPage() {
                             children: "×"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 662,
+                            lineNumber: 654,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                             onSubmit: handleSubmit,
                             className: "flex flex-col gap-3",
                             children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                    className: "text-xl font-bold text-blue-900 text-center mb-4",
+                                    children: editingId ? 'Modifier le contact' : 'Ajouter un contact'
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/contacts/page.js",
+                                    lineNumber: 663,
+                                    columnNumber: 15
+                                }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "text",
                                     placeholder: "Nom",
@@ -1185,11 +1187,11 @@ function ContactsPage() {
                                                 ...f,
                                                 name: e.target.value
                                             })),
-                                    className: "rounded p-2 bg-[#334155] border border-[#475569] text-white",
+                                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition",
                                     required: true
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 671,
+                                    lineNumber: 664,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1200,10 +1202,10 @@ function ContactsPage() {
                                                 ...f,
                                                 company: e.target.value
                                             })),
-                                    className: "rounded p-2 bg-[#334155] border border-[#475569] text-white"
+                                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 672,
+                                    lineNumber: 665,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1214,10 +1216,10 @@ function ContactsPage() {
                                                 ...f,
                                                 role: e.target.value
                                             })),
-                                    className: "rounded p-2 bg-[#334155] border border-[#475569] text-white"
+                                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 673,
+                                    lineNumber: 666,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1228,10 +1230,10 @@ function ContactsPage() {
                                                 ...f,
                                                 email: e.target.value
                                             })),
-                                    className: "rounded p-2 bg-[#334155] border border-[#475569] text-white"
+                                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 674,
+                                    lineNumber: 667,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1242,10 +1244,10 @@ function ContactsPage() {
                                                 ...f,
                                                 phone: e.target.value
                                             })),
-                                    className: "rounded p-2 bg-[#334155] border border-[#475569] text-white"
+                                    className: "rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 675,
+                                    lineNumber: 668,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1255,7 +1257,7 @@ function ContactsPage() {
                                     className: "text-sm text-gray-300"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 676,
+                                    lineNumber: 669,
                                     columnNumber: 15
                                 }, this),
                                 form.photo_url && !file && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -1264,17 +1266,16 @@ function ContactsPage() {
                                     className: "w-16 h-16 object-cover rounded-full mx-auto"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 677,
+                                    lineNumber: 670,
                                     columnNumber: 43
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     type: "submit",
-                                    className: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg mt-2",
-                                    disabled: loading,
+                                    className: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl mt-2 transition-all duration-200 shadow",
                                     children: editingId ? 'Enregistrer les modifications' : 'Ajouter le contact'
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 678,
+                                    lineNumber: 671,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1292,28 +1293,28 @@ function ContactsPage() {
                                         });
                                         setFile(null);
                                     },
-                                    className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 rounded-lg",
+                                    className: "font-bold py-2 rounded-xl text-blue-700 hover:bg-blue-50 transition",
                                     children: "Annuler"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 681,
+                                    lineNumber: 672,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 670,
+                            lineNumber: 662,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 661,
+                    lineNumber: 653,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 660,
+                lineNumber: 652,
                 columnNumber: 9
             }, this),
             loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1321,13 +1322,13 @@ function ContactsPage() {
                 children: "Chargement..."
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 689,
+                lineNumber: 678,
                 columnNumber: 19
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8",
                 children: contacts.map((contact)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center",
+                        className: "rounded-2xl p-6 bg-white border border-primary shadow-md flex flex-col items-center transition hover:shadow-xl",
                         children: [
                             contact.photo_url ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                 src: contact.photo_url,
@@ -1335,30 +1336,30 @@ function ContactsPage() {
                                 className: "w-16 h-16 rounded-full object-cover mb-4 shadow-md"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 695,
+                                lineNumber: 684,
                                 columnNumber: 17
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-2xl font-bold mb-4 shadow-md",
+                                className: "w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-4 shadow-md bg-gray-200 text-primary",
                                 children: contact.name?.[0]
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 696,
+                                lineNumber: 685,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-lg font-semibold mb-1",
+                                className: "text-lg font-semibold mb-1 text-primary",
                                 children: contact.name
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 698,
+                                lineNumber: 687,
                                 columnNumber: 13
                             }, this),
                             contact.role && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mb-1 px-2 py-1 rounded-full bg-blue-700 text-xs font-semibold text-blue-100 inline-block",
+                                className: "mb-1 px-2 py-1 rounded-full text-xs font-semibold inline-block bg-gray-100 text-primary border border-primary",
                                 children: contact.role
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 699,
+                                lineNumber: 688,
                                 columnNumber: 30
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1366,23 +1367,23 @@ function ContactsPage() {
                                 children: contact.company
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 700,
+                                lineNumber: 689,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-gray-300 text-sm mb-1",
+                                className: "text-gray-500 text-sm mb-1",
                                 children: contact.email
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 701,
+                                lineNumber: 690,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-gray-300 text-sm mb-4",
+                                className: "text-gray-500 text-sm mb-4",
                                 children: contact.phone
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 702,
+                                lineNumber: 691,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1390,82 +1391,71 @@ function ContactsPage() {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>handleEdit(contact),
-                                        className: "flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded font-semibold",
+                                        className: "flex-1 flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold",
                                         children: "Modifier"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/contacts/page.js",
-                                        lineNumber: 704,
+                                        lineNumber: 693,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>handleDelete(contact.id),
-                                        className: "flex-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded font-semibold",
+                                        className: "flex-1 flex items-center gap-2 bg-white border-2 border-red-400 text-red-500 px-4 py-2 rounded-xl shadow hover:bg-red-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold",
                                         children: "Supprimer"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/contacts/page.js",
-                                        lineNumber: 705,
+                                        lineNumber: 696,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 703,
+                                lineNumber: 692,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                className: "mt-3 w-full bg-purple-700 hover:bg-purple-800 text-white px-3 py-2 rounded font-semibold",
+                                className: "mt-3 w-full flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold",
                                 onClick: ()=>openAvailabilityModal(contact),
                                 children: "Ajouter les horaires de disponibilité"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 707,
+                                lineNumber: 700,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                className: "mt-2 w-full bg-blue-700 hover:bg-blue-800 text-white px-3 py-2 rounded font-semibold",
+                                className: "mt-2 w-full flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold",
                                 onClick: ()=>openAvailabilityTextModal(contact),
                                 children: "Voir les disponibilités (lettres)"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 713,
+                                lineNumber: 706,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, contact.id, true, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 693,
+                        lineNumber: 682,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 691,
+                lineNumber: 680,
                 columnNumber: 7
             }, this),
             showAvailabilityModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60",
+                className: "fixed inset-0 z-50 flex items-center justify-center bg-white/80",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "relative bg-[#1e293b] text-white p-8 rounded-2xl shadow-2xl w-full max-w-2xl mx-4 animate-fadeIn border-2 border-blue-800",
+                    className: "relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-2xl mx-4 transition-all duration-300 border-2 border-blue-100",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            className: "absolute top-3 right-3 text-blue-200 hover:text-white text-2xl font-bold",
-                            type: "button",
-                            onClick: closeAvailabilityModal,
-                            "aria-label": "Fermer",
-                            children: "×"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 727,
-                            columnNumber: 13
-                        }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-xl font-bold mb-4 bg-[#2563eb] text-white rounded-lg px-4 py-2 text-center shadow",
+                            className: "text-xl font-bold text-blue-900 text-center mb-4 rounded-lg px-4 py-2 shadow",
                             children: [
                                 "Disponibilités de ",
                                 selectedContact?.name
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 735,
+                            lineNumber: 720,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1480,7 +1470,7 @@ function ContactsPage() {
                                                     className: "p-2 border-b border-[#2563eb]"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/contacts/page.js",
-                                                    lineNumber: 740,
+                                                    lineNumber: 725,
                                                     columnNumber: 21
                                                 }, this),
                                                 HOURS.map((h)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1491,18 +1481,18 @@ function ContactsPage() {
                                                         ]
                                                     }, h, true, {
                                                         fileName: "[project]/src/app/contacts/page.js",
-                                                        lineNumber: 742,
+                                                        lineNumber: 727,
                                                         columnNumber: 23
                                                     }, this))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 739,
+                                            lineNumber: 724,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/contacts/page.js",
-                                        lineNumber: 738,
+                                        lineNumber: 723,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -1513,7 +1503,7 @@ function ContactsPage() {
                                                         children: day
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/contacts/page.js",
-                                                        lineNumber: 749,
+                                                        lineNumber: 734,
                                                         columnNumber: 23
                                                     }, this),
                                                     HOURS.map((hour)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1525,34 +1515,34 @@ function ContactsPage() {
                                                                 className: "accent-[#22c55e] w-5 h-5 rounded focus:ring-2 focus:ring-[#22c55e]"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/contacts/page.js",
-                                                                lineNumber: 752,
+                                                                lineNumber: 737,
                                                                 columnNumber: 27
                                                             }, this)
                                                         }, hour, false, {
                                                             fileName: "[project]/src/app/contacts/page.js",
-                                                            lineNumber: 751,
+                                                            lineNumber: 736,
                                                             columnNumber: 25
                                                         }, this))
                                                 ]
                                             }, day, true, {
                                                 fileName: "[project]/src/app/contacts/page.js",
-                                                lineNumber: 748,
+                                                lineNumber: 733,
                                                 columnNumber: 21
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/contacts/page.js",
-                                        lineNumber: 746,
+                                        lineNumber: 731,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 737,
+                                lineNumber: 722,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 736,
+                            lineNumber: 721,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1560,64 +1550,53 @@ function ContactsPage() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: closeAvailabilityModal,
-                                    className: "bg-[#334155] hover:bg-[#1e293b] text-white font-bold py-2 px-4 rounded-lg transition",
-                                    children: "Annuler"
+                                    className: "font-bold py-2 px-4 rounded-xl text-blue-700 hover:bg-blue-50 transition",
+                                    children: "Fermer"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 766,
+                                    lineNumber: 751,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: handleSaveAvailability,
-                                    className: "bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold py-2 px-4 rounded-lg transition",
+                                    className: "font-bold py-2 px-4 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition",
                                     children: "Enregistrer"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 767,
+                                    lineNumber: 752,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 765,
+                            lineNumber: 750,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 726,
+                    lineNumber: 719,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 725,
+                lineNumber: 718,
                 columnNumber: 9
             }, this),
             showAvailabilityTextModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60",
+                className: "fixed inset-0 z-50 flex items-center justify-center bg-white/80",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "relative bg-blue-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-md mx-4 animate-fadeIn border-2 border-blue-700",
+                    className: "relative bg-white text-blue-900 p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 transition-all duration-300 border-2 border-blue-100",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            className: "absolute top-3 right-3 text-blue-200 hover:text-white text-2xl font-bold",
-                            type: "button",
-                            onClick: closeAvailabilityTextModal,
-                            "aria-label": "Fermer",
-                            children: "×"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 777,
-                            columnNumber: 13
-                        }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-xl font-bold mb-4 text-blue-200",
+                            className: "text-xl font-bold text-blue-900 text-center mb-4",
                             children: [
                                 "Disponibilités de ",
                                 availabilityTextContact?.name
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 785,
+                            lineNumber: 762,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CalendarAvailability, {
@@ -1626,58 +1605,58 @@ function ContactsPage() {
                             rdvs: rdvs
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 786,
+                            lineNumber: 763,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex justify-end mt-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: closeAvailabilityTextModal,
-                                className: "bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg",
+                                className: "font-bold py-2 px-4 rounded-xl text-blue-700 hover:bg-blue-50 transition",
                                 children: "Fermer"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 792,
+                                lineNumber: 769,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 791,
+                            lineNumber: 768,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 776,
+                    lineNumber: 761,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 775,
+                lineNumber: 760,
                 columnNumber: 9
             }, this),
             showRdvModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60",
+                className: "fixed inset-0 z-50 flex items-center justify-center bg-white/80",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "relative bg-blue-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-lg mx-4 animate-fadeIn border-2 border-blue-700",
+                    className: "relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg mx-4 transition-all duration-300 border-2 border-blue-100",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            className: "absolute top-3 right-3 text-blue-200 hover:text-white text-2xl font-bold",
+                            className: "absolute top-3 right-3 text-2xl font-bold text-blue-400 hover:text-blue-700 transition",
                             type: "button",
                             onClick: ()=>setShowRdvModal(false),
                             "aria-label": "Fermer",
                             children: "×"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 802,
+                            lineNumber: 779,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-xl font-bold mb-4 text-blue-200",
+                            className: "text-xl font-bold text-blue-900 text-center mb-4",
                             children: "Prendre un rendez-vous"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 810,
+                            lineNumber: 787,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1688,24 +1667,24 @@ function ContactsPage() {
                                     children: "Avec qui ?"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 812,
+                                    lineNumber: 789,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "text",
-                                    className: "w-full p-2 rounded border border-blue-700 bg-blue-950 text-white mb-2 placeholder-blue-300",
+                                    className: "w-full p-2 rounded border mb-2 placeholder-blue-300",
                                     placeholder: "Rechercher un contact...",
                                     value: rdvSearchContact,
                                     onChange: (e)=>setRdvSearchContact(e.target.value)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 813,
+                                    lineNumber: 790,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "max-h-32 overflow-y-auto bg-blue-950 border border-blue-700 rounded shadow text-white",
+                                    className: "max-h-32 overflow-y-auto border rounded shadow",
                                     children: contacts.filter((c)=>c.name.toLowerCase().includes(rdvSearchContact.toLowerCase())).map((c)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: `px-3 py-2 cursor-pointer hover:bg-blue-800 ${rdvContact?.id === c.id ? 'bg-blue-700 font-bold' : ''}`,
+                                            className: `px-3 py-2 cursor-pointer ${rdvContact?.id === c.id ? 'font-bold' : ''}`,
                                             onClick: ()=>{
                                                 setRdvContact(c);
                                                 setRdvSearchContact(c.name);
@@ -1718,18 +1697,18 @@ function ContactsPage() {
                                             ]
                                         }, c.id, true, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 822,
+                                            lineNumber: 799,
                                             columnNumber: 19
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 820,
+                                    lineNumber: 797,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 811,
+                            lineNumber: 788,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1740,24 +1719,24 @@ function ContactsPage() {
                                     children: "Nom de l'étudiant"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 833,
+                                    lineNumber: 810,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "text",
-                                    className: "w-full p-2 rounded border border-blue-700 bg-blue-950 text-white mb-2 placeholder-blue-300",
+                                    className: "w-full p-2 rounded border mb-2 placeholder-blue-300",
                                     placeholder: "Rechercher un utilisateur...",
                                     value: rdvSearchUser,
                                     onChange: (e)=>setRdvSearchUser(e.target.value)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 834,
+                                    lineNumber: 811,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "max-h-32 overflow-y-auto bg-blue-950 border border-blue-700 rounded shadow text-white",
+                                    className: "max-h-32 overflow-y-auto border rounded shadow",
                                     children: users.filter((u)=>u.name?.toLowerCase().includes(rdvSearchUser.toLowerCase())).map((u)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: `px-3 py-2 cursor-pointer hover:bg-green-800 ${rdvUser?.id === u.id ? 'bg-green-700 font-bold' : ''}`,
+                                            className: `px-3 py-2 cursor-pointer ${rdvUser?.id === u.id ? 'font-bold' : ''}`,
                                             onClick: ()=>{
                                                 setRdvUser(u);
                                                 setRdvSearchUser(u.name);
@@ -1770,18 +1749,18 @@ function ContactsPage() {
                                             ]
                                         }, u.id, true, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 843,
+                                            lineNumber: 820,
                                             columnNumber: 19
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 841,
+                                    lineNumber: 818,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 832,
+                            lineNumber: 809,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1795,23 +1774,23 @@ function ContactsPage() {
                                             children: "Jour"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 855,
+                                            lineNumber: 832,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "date",
-                                            className: "w-full p-2 rounded border border-blue-700 bg-blue-950 text-white",
+                                            className: "w-full p-2 rounded border mb-2 placeholder-blue-300",
                                             value: rdvDate,
                                             onChange: (e)=>setRdvDate(e.target.value)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 856,
+                                            lineNumber: 833,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 854,
+                                    lineNumber: 831,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1822,11 +1801,11 @@ function ContactsPage() {
                                             children: "Heure"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 864,
+                                            lineNumber: 841,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                                            className: "w-full p-2 rounded border border-blue-700 bg-blue-950 text-white",
+                                            className: "w-full p-2 rounded border mb-2",
                                             value: rdvHour,
                                             onChange: (e)=>setRdvHour(e.target.value),
                                             disabled: !rdvContact || !rdvDate,
@@ -1836,7 +1815,7 @@ function ContactsPage() {
                                                     children: "Choisir..."
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/contacts/page.js",
-                                                    lineNumber: 871,
+                                                    lineNumber: 848,
                                                     columnNumber: 19
                                                 }, this),
                                                 (()=>{
@@ -1861,26 +1840,26 @@ function ContactsPage() {
                                                             ]
                                                         }, h, true, {
                                                             fileName: "[project]/src/app/contacts/page.js",
-                                                            lineNumber: 885,
+                                                            lineNumber: 862,
                                                             columnNumber: 25
                                                         }, this));
                                                 })()
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 865,
+                                            lineNumber: 842,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 863,
+                                    lineNumber: 840,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 853,
+                            lineNumber: 830,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1891,11 +1870,11 @@ function ContactsPage() {
                                     children: "Motif du RDV"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 899,
+                                    lineNumber: 876,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                                    className: "w-full p-2 rounded border border-blue-700 bg-blue-950 text-white mb-2",
+                                    className: "w-full p-2 rounded border mb-2",
                                     value: selectedMotifId1,
                                     onChange: (e)=>setSelectedMotifId(e.target.value),
                                     required: true,
@@ -1905,7 +1884,7 @@ function ContactsPage() {
                                             children: "Sélectionner un motif"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 906,
+                                            lineNumber: 883,
                                             columnNumber: 17
                                         }, this),
                                         motifs1.map((motif)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1913,31 +1892,31 @@ function ContactsPage() {
                                                 children: motif.label
                                             }, motif.id, false, {
                                                 fileName: "[project]/src/app/contacts/page.js",
-                                                lineNumber: 908,
+                                                lineNumber: 885,
                                                 columnNumber: 19
                                             }, this))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 900,
+                                    lineNumber: 877,
                                     columnNumber: 15
                                 }, this),
                                 motifs1.find((m)=>m.id == selectedMotifId1)?.label === 'Autre' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "text",
-                                    className: "w-full p-2 rounded border border-blue-700 bg-blue-950 text-white mb-2",
+                                    className: "w-full p-2 rounded border mb-2",
                                     placeholder: "Précisez le motif",
                                     value: customMotif1,
                                     onChange: (e)=>setCustomMotif(e.target.value),
                                     required: true
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 912,
+                                    lineNumber: 889,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 898,
+                            lineNumber: 875,
                             columnNumber: 13
                         }, this),
                         rdvError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1945,7 +1924,7 @@ function ContactsPage() {
                             children: rdvError
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 922,
+                            lineNumber: 899,
                             columnNumber: 26
                         }, this),
                         rdvConfirmed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1953,7 +1932,7 @@ function ContactsPage() {
                             children: "RDV enregistré (démo) !"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 923,
+                            lineNumber: 900,
                             columnNumber: 30
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1961,11 +1940,11 @@ function ContactsPage() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>setShowRdvModal(false),
-                                    className: "bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg",
+                                    className: "font-bold py-2 px-4 rounded-lg",
                                     children: "Annuler"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 925,
+                                    lineNumber: 902,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2014,28 +1993,28 @@ function ContactsPage() {
                                             setRdvError('');
                                         }, 1200);
                                     },
-                                    className: "bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg",
+                                    className: "font-bold py-2 px-4 rounded-lg",
                                     children: "Confirmer"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 926,
+                                    lineNumber: 903,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 924,
+                            lineNumber: 901,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 801,
+                    lineNumber: 778,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 800,
+                lineNumber: 777,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2046,7 +2025,7 @@ function ContactsPage() {
                         children: "RDV pris"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 976,
+                        lineNumber: 953,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2055,105 +2034,104 @@ function ContactsPage() {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                 type: "text",
                                 placeholder: "Filtrer par contact...",
-                                className: "p-2 rounded border border-blue-700 bg-blue-950 text-white placeholder-blue-300",
+                                className: "p-2 rounded border mb-2 placeholder-blue-300",
                                 value: filterContact,
                                 onChange: (e)=>setFilterContact(e.target.value)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 978,
+                                lineNumber: 955,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                 type: "text",
                                 placeholder: "Filtrer par étudiant...",
-                                className: "p-2 rounded border border-blue-700 bg-blue-950 text-white placeholder-blue-300",
+                                className: "p-2 rounded border mb-2 placeholder-blue-300",
                                 value: filterUser,
                                 onChange: (e)=>setFilterUser(e.target.value)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 985,
+                                lineNumber: 962,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 977,
+                        lineNumber: 954,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "overflow-x-auto rounded-xl shadow-xl",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                            className: "w-full text-sm text-left border border-blue-700",
+                            className: "w-full text-sm text-left border border-primary bg-white rounded-xl overflow-hidden",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                                    className: "bg-blue-900 text-white",
+                                    className: "bg-gray-100 text-primary",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "px-4 py-2 border-b border-blue-700",
+                                                className: "px-4 py-2 border-b border-primary",
                                                 children: "Contact"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/contacts/page.js",
-                                                lineNumber: 997,
+                                                lineNumber: 974,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "px-4 py-2 border-b border-blue-700",
+                                                className: "px-4 py-2 border-b border-primary",
                                                 children: "Étudiant"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/contacts/page.js",
-                                                lineNumber: 998,
+                                                lineNumber: 975,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "px-4 py-2 border-b border-blue-700",
+                                                className: "px-4 py-2 border-b border-primary",
                                                 children: "Date"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/contacts/page.js",
-                                                lineNumber: 999,
+                                                lineNumber: 976,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "px-4 py-2 border-b border-blue-700",
+                                                className: "px-4 py-2 border-b border-primary",
                                                 children: "Heure"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/contacts/page.js",
-                                                lineNumber: 1000,
+                                                lineNumber: 977,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "px-4 py-2 border-b border-blue-700",
+                                                className: "px-4 py-2 border-b border-primary",
                                                 children: "Motif"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/contacts/page.js",
-                                                lineNumber: 1001,
+                                                lineNumber: 978,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/contacts/page.js",
-                                        lineNumber: 996,
+                                        lineNumber: 973,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 995,
+                                    lineNumber: 972,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                                    className: "bg-blue-950 text-white",
-                                    children: rdvs.filter((r)=>r.contactName?.toLowerCase().includes(filterContact.toLowerCase())).filter((r)=>r.userName?.toLowerCase().includes(filterUser.toLowerCase())).map((r)=>{
+                                    children: rdvs.filter((r)=>r.contactName?.toLowerCase().includes(filterContact.toLowerCase())).filter((r)=>r.userName?.toLowerCase().includes(filterUser.toLowerCase())).map((r, idx)=>{
                                         const motif = motifs1.find((m)=>m.id === r.motif_id);
                                         const motifLabel = motif?.label === 'Autre' && r.motif_custom ? r.motif_custom : motif?.label;
                                         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                            className: "hover:bg-blue-800 border-b border-blue-700",
+                                            className: `${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-gray-100 border-b border-primary text-gray-700`,
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                     className: "px-4 py-2",
                                                     children: r.contactName
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/contacts/page.js",
-                                                    lineNumber: 1013,
+                                                    lineNumber: 990,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -2161,7 +2139,7 @@ function ContactsPage() {
                                                     children: r.userName
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/contacts/page.js",
-                                                    lineNumber: 1014,
+                                                    lineNumber: 991,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -2169,7 +2147,7 @@ function ContactsPage() {
                                                     children: r.date
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/contacts/page.js",
-                                                    lineNumber: 1015,
+                                                    lineNumber: 992,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -2180,7 +2158,7 @@ function ContactsPage() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/contacts/page.js",
-                                                    lineNumber: 1016,
+                                                    lineNumber: 993,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -2188,49 +2166,49 @@ function ContactsPage() {
                                                     children: motifLabel
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/contacts/page.js",
-                                                    lineNumber: 1017,
+                                                    lineNumber: 994,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, r.id, true, {
                                             fileName: "[project]/src/app/contacts/page.js",
-                                            lineNumber: 1012,
+                                            lineNumber: 989,
                                             columnNumber: 21
                                         }, this);
                                     })
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/contacts/page.js",
-                                    lineNumber: 1004,
+                                    lineNumber: 981,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 994,
+                            lineNumber: 971,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 993,
+                        lineNumber: 970,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 975,
+                lineNumber: 952,
                 columnNumber: 7
             }, this),
             message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "fixed inset-0 flex items-center justify-center z-50",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-green-700 text-white px-8 py-6 rounded-xl shadow-lg text-center animate-fadeIn",
+                    className: "px-8 py-6 rounded-xl shadow-lg text-center animate-fadeIn",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "text-3xl mb-2",
                             children: "✔"
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 1030,
+                            lineNumber: 1007,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2238,24 +2216,24 @@ function ContactsPage() {
                             children: message
                         }, void 0, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 1031,
+                            lineNumber: 1008,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/contacts/page.js",
-                    lineNumber: 1029,
+                    lineNumber: 1006,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 1028,
+                lineNumber: 1005,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/contacts/page.js",
-        lineNumber: 632,
+        lineNumber: 624,
         columnNumber: 5
     }, this);
 }
@@ -2303,7 +2281,7 @@ function CalendarAvailability({ contact, availabilityMap, rdvs }) {
                         children: "◀"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1074,
+                        lineNumber: 1051,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2314,7 +2292,7 @@ function CalendarAvailability({ contact, availabilityMap, rdvs }) {
                         })
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1075,
+                        lineNumber: 1052,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2323,13 +2301,13 @@ function CalendarAvailability({ contact, availabilityMap, rdvs }) {
                         children: "▶"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1076,
+                        lineNumber: 1053,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 1073,
+                lineNumber: 1050,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2339,55 +2317,55 @@ function CalendarAvailability({ contact, availabilityMap, rdvs }) {
                         children: "Lun"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1079,
+                        lineNumber: 1056,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: "Mar"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1079,
+                        lineNumber: 1056,
                         columnNumber: 23
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: "Mer"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1079,
+                        lineNumber: 1056,
                         columnNumber: 37
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: "Jeu"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1079,
+                        lineNumber: 1056,
                         columnNumber: 51
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: "Ven"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1079,
+                        lineNumber: 1056,
                         columnNumber: 65
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: "Sam"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1079,
+                        lineNumber: 1056,
                         columnNumber: 79
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: "Dim"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1079,
+                        lineNumber: 1056,
                         columnNumber: 93
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 1078,
+                lineNumber: 1055,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2395,7 +2373,7 @@ function CalendarAvailability({ contact, availabilityMap, rdvs }) {
                 children: [
                     Array(firstDay === 0 ? 6 : firstDay - 1).fill(null).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {}, i, false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 1083,
+                            lineNumber: 1060,
                             columnNumber: 11
                         }, this)),
                     days.map((date)=>{
@@ -2413,14 +2391,14 @@ function CalendarAvailability({ contact, availabilityMap, rdvs }) {
                             children: date.getDate()
                         }, date.toISOString(), false, {
                             fileName: "[project]/src/app/contacts/page.js",
-                            lineNumber: 1088,
+                            lineNumber: 1065,
                             columnNumber: 13
                         }, this);
                     })
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 1081,
+                lineNumber: 1058,
                 columnNumber: 7
             }, this),
             selectedDate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2434,7 +2412,7 @@ function CalendarAvailability({ contact, availabilityMap, rdvs }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1103,
+                        lineNumber: 1080,
                         columnNumber: 11
                     }, this),
                     selectedHours.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2447,31 +2425,31 @@ function CalendarAvailability({ contact, availabilityMap, rdvs }) {
                                 ]
                             }, h, true, {
                                 fileName: "[project]/src/app/contacts/page.js",
-                                lineNumber: 1107,
+                                lineNumber: 1084,
                                 columnNumber: 17
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1105,
+                        lineNumber: 1082,
                         columnNumber: 13
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-center text-blue-300",
                         children: "Aucune disponibilité ce jour"
                     }, void 0, false, {
                         fileName: "[project]/src/app/contacts/page.js",
-                        lineNumber: 1111,
+                        lineNumber: 1088,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/contacts/page.js",
-                lineNumber: 1102,
+                lineNumber: 1079,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/contacts/page.js",
-        lineNumber: 1072,
+        lineNumber: 1049,
         columnNumber: 5
     }, this);
 }

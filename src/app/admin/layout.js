@@ -7,10 +7,8 @@ export const metadata = {
 
 export default function AdminLayout({ children }) {
   return (
-    <html lang="fr">
-      <body className="bg-gradient-to-br from-blue-900 via-purple-900 to-fuchsia-900 text-white min-h-screen">
-        {children}
-      </body>
-    </html>
+    <div className=" text-primary min-h-screen">
+      {children}
+    </div>
   );
 } 

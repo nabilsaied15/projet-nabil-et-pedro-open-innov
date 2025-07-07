@@ -157,7 +157,7 @@ function DossiersPage() {
     };
     if (loading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "min-h-screen bg-gray-900 flex items-center justify-center",
+            className: "min-h-screen flex items-center justify-center",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"
             }, void 0, false, {
@@ -172,7 +172,7 @@ function DossiersPage() {
         }, this);
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-900 text-white",
+        className: "min-h-screen bg-background text-foreground",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "p-10",
             children: [
@@ -189,7 +189,7 @@ function DossiersPage() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setShowAddDossierForm(!showAddDossierForm),
-                            className: "bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
+                            className: "button px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
                             children: showAddDossierForm ? 'Annuler' : 'Créer un dossier'
                         }, void 0, false, {
                             fileName: "[project]/src/app/dossiers/page.js",
@@ -203,7 +203,7 @@ function DossiersPage() {
                     columnNumber: 9
                 }, this),
                 showAddDossierForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-gray-800 rounded-xl p-6 mb-8 border border-gray-700",
+                    className: "rounded-xl p-6 mb-8 border border-primary bg-white",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                             className: "text-xl font-semibold mb-4",
@@ -219,7 +219,7 @@ function DossiersPage() {
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                            className: "block text-sm font-medium text-gray-300 mb-2",
+                                            className: "block text-sm font-medium text-primary mb-2",
                                             children: "Nom du dossier"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dossiers/page.js",
@@ -233,7 +233,7 @@ function DossiersPage() {
                                                     ...newDossier,
                                                     nom: e.target.value
                                                 }),
-                                            className: "w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none",
+                                            className: "w-full p-2 rounded border border-primary focus:outline-none",
                                             placeholder: "Ex: Recherche emploi 2024",
                                             required: true
                                         }, void 0, false, {
@@ -250,7 +250,7 @@ function DossiersPage() {
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                            className: "block text-sm font-medium text-gray-300 mb-2",
+                                            className: "block text-sm font-medium text-primary mb-2",
                                             children: "Mot de passe (optionnel)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dossiers/page.js",
@@ -264,7 +264,7 @@ function DossiersPage() {
                                                     ...newDossier,
                                                     mot_de_passe: e.target.value
                                                 }),
-                                            className: "w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none",
+                                            className: "w-full p-2 rounded border border-primary focus:outline-none",
                                             placeholder: "Laissez vide pour un accès sans mot de passe"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dossiers/page.js",
@@ -279,7 +279,7 @@ function DossiersPage() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: handleAddDossier,
-                                    className: "bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
+                                    className: "button px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
                                     children: "Créer le dossier"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dossiers/page.js",
@@ -301,7 +301,7 @@ function DossiersPage() {
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6",
                     children: dossiers.map((dossier)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-gray-800 rounded-xl p-6 border border-gray-700",
+                            className: "rounded-xl p-6 border border-primary bg-white",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                     className: "text-xl font-semibold mb-2",
@@ -312,7 +312,7 @@ function DossiersPage() {
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-gray-400 text-sm mb-2",
+                                    className: "text-sm mb-2",
                                     children: [
                                         "Créé le ",
                                         new Date(dossier.created_at).toLocaleDateString()
@@ -326,7 +326,7 @@ function DossiersPage() {
                                     className: "mb-4",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                            className: "text-sm font-semibold text-gray-300 mb-2",
+                                            className: "text-sm font-semibold text-primary mb-2",
                                             children: "Offres likées :"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dossiers/page.js",
@@ -336,7 +336,7 @@ function DossiersPage() {
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "space-y-2",
                                             children: dossierOffres[dossier.id].map((offre)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "bg-gray-700 rounded p-2 text-sm",
+                                                    className: "rounded p-2 text-sm border border-primary bg-gray-100",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                             className: "font-medium",
@@ -347,7 +347,7 @@ function DossiersPage() {
                                                             columnNumber: 25
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "text-gray-400",
+                                                            className: "text-sm",
                                                             children: offre.entreprise
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/dossiers/page.js",
@@ -358,7 +358,7 @@ function DossiersPage() {
                                                             href: offre.lien,
                                                             target: "_blank",
                                                             rel: "noopener noreferrer",
-                                                            className: "text-blue-400 hover:underline text-xs",
+                                                            className: "text-accent hover:underline text-xs",
                                                             children: "Voir l'offre"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/dossiers/page.js",
@@ -384,7 +384,7 @@ function DossiersPage() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>handleAccess(dossier),
-                                    className: "w-full bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
+                                    className: "button px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
                                     children: user?.role === 'admin' ? 'Accéder' : 'Ouvrir'
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dossiers/page.js",
@@ -405,7 +405,7 @@ function DossiersPage() {
                 selectedDossier && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-gray-800 p-6 rounded-xl w-96",
+                        className: "p-6 rounded-xl w-96 bg-white border border-primary",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                 className: "text-xl font-semibold mb-4",
@@ -425,7 +425,7 @@ function DossiersPage() {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                         type: "password",
                                         placeholder: "Mot de passe",
-                                        className: "w-full bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
+                                        className: "w-full border px-3 py-2 rounded",
                                         value: passwordInput,
                                         onChange: (e)=>setPasswordInput(e.target.value)
                                     }, void 0, false, {
@@ -434,7 +434,7 @@ function DossiersPage() {
                                         columnNumber: 17
                                     }, this),
                                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-red-400 text-sm",
+                                        className: "text-error text-sm",
                                         children: error
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dossiers/page.js",
@@ -446,7 +446,7 @@ function DossiersPage() {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 type: "submit",
-                                                className: "flex-1 bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
+                                                className: "flex-1 button px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
                                                 children: "Accéder"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/dossiers/page.js",
@@ -456,7 +456,7 @@ function DossiersPage() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 type: "button",
                                                 onClick: ()=>setSelectedDossier(null),
-                                                className: "flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs",
+                                                className: "flex-1 px-2 py-1 rounded-full font-bold shadow transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 text-xs border border-primary",
                                                 children: "Annuler"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/dossiers/page.js",

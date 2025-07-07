@@ -155,78 +155,78 @@ export default function AdminOffresPage() {
   // TODO: Add admin navigation bar here
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen p-8 bg-background text-foreground">
 
 
       {loading && <p>Chargement...</p>}
-      {error && <p className="text-red-500">{error}</p>}
-      {message && <p className="text-green-500">{message}</p>}
+      {error && <p className="text-error">{error}</p>}
+      {message && <p className="text-success">{message}</p>}
 
       {showAddForm && (
-        <form onSubmit={handleAddOffre} className="bg-gray-800 p-6 rounded-lg shadow-md mb-8 space-y-4">
+        <form onSubmit={handleAddOffre} className="p-6 rounded-lg shadow-md mb-8 space-y-4 bg-white border border-primary">
           <div>
-            <label className="block text-sm font-medium text-gray-300">Poste</label>
+            <label className="block text-sm font-medium text-primary">Poste</label>
             <input
               type="text"
               name="poste"
               value={formData.poste}
               onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+              className="mt-1 block w-full rounded-md border border-primary shadow-sm"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300">Entreprise</label>
+            <label className="block text-sm font-medium text-primary">Entreprise</label>
             <input
               type="text"
               name="entreprise"
               value={formData.entreprise}
               onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+              className="mt-1 block w-full rounded-md border border-primary shadow-sm"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300">Profil Recherché</label>
+            <label className="block text-sm font-medium text-primary">Profil Recherché</label>
             <input
               type="text"
               name="profil_recherche"
               value={formData.profil_recherche}
               onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+              className="mt-1 block w-full rounded-md border border-primary shadow-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300">Durée</label>
+            <label className="block text-sm font-medium text-primary">Durée</label>
             <input
               type="text"
               name="duree"
               value={formData.duree}
               onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+              className="mt-1 block w-full rounded-md border border-primary shadow-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300">Localisation</label>
+            <label className="block text-sm font-medium text-primary">Localisation</label>
             <input
               type="text"
               name="localisation"
               value={formData.localisation}
               onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+              className="mt-1 block w-full rounded-md border border-primary shadow-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300">Lien de l'offre</label>
+            <label className="block text-sm font-medium text-primary">Lien de l'offre</label>
             <input
               type="url"
               name="lien"
               value={formData.lien}
               onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+              className="mt-1 block w-full rounded-md border border-primary shadow-sm"
             />
           </div>
-          <button type="submit" disabled={loading} className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:opacity-50">
+          <button type="submit" disabled={loading} className="w-full button">
             {loading ? 'Ajout en cours...' : 'Ajouter'}
           </button>
         </form>
@@ -238,12 +238,12 @@ export default function AdminOffresPage() {
           placeholder="Rechercher une offre..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none w-full md:w-1/2"
+          className="px-4 py-2 rounded border border-primary focus:outline-none w-full md:w-1/2"
         />
         <select
           value={niveau}
           onChange={e => setNiveau(e.target.value)}
-          className="px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none w-full md:w-1/4"
+          className="px-4 py-2 rounded border border-primary focus:outline-none w-full md:w-1/4"
         >
           <option value="">Tous niveaux</option>
           <option value="bachelor">Bachelor</option>
@@ -253,7 +253,7 @@ export default function AdminOffresPage() {
         <select
           value={posteFilter}
           onChange={e => setPosteFilter(e.target.value)}
-          className="px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none w-full md:w-1/4"
+          className="px-4 py-2 rounded border border-primary focus:outline-none w-full md:w-1/4"
         >
           <option value="">Tous types de poste</option>
           {postesUniques.map(poste => (
@@ -280,7 +280,10 @@ export default function AdminOffresPage() {
             .map((offre) => (
               <div
                 key={offre.id}
-                className={`bg-[#121826] border border-white rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center ${user && postuleStatus[offre.id] === 'yes' ? 'ring-4 ring-green-500' : ''} ${user && postuleStatus[offre.id] === 'no' ? 'ring-4 ring-red-500' : ''}`}
+                className={`rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center border border-primary 
+                  ${user && postuleStatus[offre.id] === 'yes' ? 'bg-success/10 ring-4 ring-success' : ''}
+                  ${user && postuleStatus[offre.id] === 'no' ? 'bg-error/10 ring-4 ring-error' : ''}`}
+                style={!user || !postuleStatus[offre.id] ? {background:'white'} : {}}
               >
                 {editId === offre.id ? (
                   <>
@@ -298,19 +301,19 @@ export default function AdminOffresPage() {
                 ) : (
                   <>
                     <h3 className="text-xl font-semibold">{offre.poste} à {offre.entreprise}</h3>
-                    <p className="text-gray-400 text-sm">Localisation: {offre.localisation}</p>
-                    <p className="text-gray-400 text-sm">Durée: {offre.duree}</p>
-                    <p className="text-gray-400 text-sm">Profil recherché: {offre.profil_recherche}</p>
+                    <p className="text-sm">Localisation: {offre.localisation}</p>
+                    <p className="text-sm">Durée: {offre.duree}</p>
+                    <p className="text-sm">Profil recherché: {offre.profil_recherche}</p>
                     <a
                       href="#"
                       onClick={e => { e.preventDefault(); handleVoirOffre(offre); }}
-                      className={`flex items-center justify-center gap-2 mt-4 px-5 py-2 rounded-full font-bold shadow-lg transition-all duration-200 text-white bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 text-base ${!offre.lien ? 'opacity-50 pointer-events-none grayscale' : ''}`}
+                      className={`flex items-center justify-center gap-2 mt-4 px-5 py-2 rounded-full font-bold shadow-lg transition-all duration-200 button text-base ${!offre.lien ? 'opacity-50 pointer-events-none grayscale' : ''}`}
                       style={{ minWidth: '160px', filter: !offre.lien ? 'grayscale(1)' : 'none' }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 3h7m0 0v7m0-7L10 14m-7 7h7a2 2 0 002-2v-7" /></svg>
                       Voir l'offre
                     </a>
-                    <p className="text-gray-500 text-xs mt-2">Créé le: {new Date(offre.created_at).toLocaleString()}</p>
+                    <p className="text-xs mt-2">Créé le: {new Date(offre.created_at).toLocaleString()}</p>
 
                   </>
                 )}
@@ -321,18 +324,18 @@ export default function AdminOffresPage() {
 
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="bg-gradient-to-br from-blue-700 via-purple-700 to-blue-900 text-white rounded-2xl p-10 shadow-2xl w-full max-w-md relative border-4 border-blue-400 animate-fadeIn">
+          <div className="bg-white text-primary rounded-2xl p-10 shadow-2xl w-full max-w-md relative border-4 border-primary animate-fadeIn">
             <h2 className="text-2xl font-extrabold mb-6 text-center drop-shadow-lg">Avez-vous postulé à cette offre ?</h2>
             <div className="flex justify-center gap-8 mt-8">
               <button
                 onClick={() => handlePopupResponse('yes')}
-                className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold shadow-xl text-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-300"
+                className="px-8 py-4 text-xl font-bold rounded-full shadow-xl transition-all duration-200 bg-success text-white hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-success focus:ring-offset-2"
               >
                 Oui
               </button>
               <button
                 onClick={() => handlePopupResponse('no')}
-                className="bg-red-500 hover:bg-red-600 text-white px-8 py-4 rounded-full font-bold shadow-xl text-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-300"
+                className="px-8 py-4 text-xl font-bold rounded-full shadow-xl transition-all duration-200 bg-error text-white hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-error focus:ring-offset-2"
               >
                 Non
               </button>

@@ -122,62 +122,66 @@ export default function CoursPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen  p-10 text-primary">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-center text-primary">Gestion des cours</h2>
+        <button
+          onClick={() => setShowAddForm(!showAddForm)}
+          className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+        >
+          {showAddForm ? '– Fermer le formulaire' : '➕ Ajouter un cours'}
+        </button>
+      </div>
 
-
-      <div className="p-10">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-center">Gestion des cours</h2>
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
-          >
-            {showAddForm ? '– Fermer le formulaire' : '➕ Ajouter un cours'}
-          </button>
-        </div>
-
-        {showAddForm && (
-          <div className="mb-8">
+      {showAddForm && (
+        <div className="mb-8 flex justify-center">
+          <div className="bg-gray-100 border border-primary shadow-md rounded-2xl p-8 w-full max-w-lg">
             <AddItemPage
               table="cours"
               title="Ajouter un cours"
               fields={courseFields}
               onSubmit={handleAddCourse}
               onCancel={() => setShowAddForm(false)}
+              inputClassName="bg-white border border-primary text-primary rounded-lg px-4 py-2 focus:border-accent mb-4 w-full"
+              labelClassName="text-primary font-semibold mb-2"
+              buttonClassName="bg-primary text-white rounded-lg font-semibold px-6 py-2 mt-4 hover:bg-accent transition"
             />
           </div>
-        )}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {courses.map((course) => (
-            <div
-              key={course.id}
-              className="bg-[#121826] border border-white rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
-            >
-              <div className="w-16 h-16 rounded-full overflow-hidden mb-4">
-                <img
-                  src={course.image_url}
-                  alt={course.title}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <h4 
-                className="font-semibold text-base text-white cursor-pointer hover:text-blue-400"
-                onClick={() => router.push(`/admin/cours/${course.id}`)}
-              >
-                {course.title}
-              </h4>
-              <div className="mt-2">
-                <button
-                  onClick={() => router.push(`/admin/cours/${course.id}`)}
-                  className="text-blue-400 hover:text-blue-300"
-                >
-                  Gérer les ressources
-                </button>
-              </div>
-            </div>
-          ))}
         </div>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {courses.map((course) => (
+          <div
+            key={course.id}
+            className="bg-white border border-primary rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+          >
+            <div className="w-16 h-16 rounded-full overflow-hidden mb-4">
+              <img
+                src={course.image_url}
+                alt={course.title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <h4 
+              className="font-semibold text-base mb-2 cursor-pointer text-primary hover:underline"
+              onClick={() => router.push(`/admin/cours/${course.id}`)}
+            >
+              {course.title}
+            </h4>
+            {course.description && (
+              <p className="text-sm mb-2 text-primary">{course.description}</p>
+            )}
+            <div className="mt-2">
+              <button
+                onClick={() => router.push(`/admin/cours/${course.id}`)}
+                className="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-accent transition"
+              >
+                Gérer les ressources
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

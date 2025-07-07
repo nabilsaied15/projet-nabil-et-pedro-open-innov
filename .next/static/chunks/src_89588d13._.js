@@ -26,14 +26,12 @@ __turbopack_context__.s({
     "default": (()=>AdminMessages)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/styled-jsx/style.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/supabaseClient.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
-;
 ;
 ;
 ;
@@ -102,15 +100,15 @@ function AdminMessages() {
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-900 text-white",
+        className: "min-h-screen  p-10 text-primary",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "jsx-d83ffd67b3d6329e" + " " + "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12",
+            className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-d83ffd67b3d6329e" + " " + "flex justify-between items-center mb-8",
+                    className: "flex justify-between items-center mb-8",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                            className: "jsx-d83ffd67b3d6329e" + " " + "text-3xl font-bold",
+                            className: "text-3xl font-bold text-primary",
                             children: "Messages des utilisateurs"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/messages/page.js",
@@ -119,7 +117,7 @@ function AdminMessages() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>router.push('/admin'),
-                            className: "jsx-d83ffd67b3d6329e" + " " + "bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors",
+                            className: " hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold transition",
                             children: "Retour au tableau de bord"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/messages/page.js",
@@ -133,13 +131,13 @@ function AdminMessages() {
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-d83ffd67b3d6329e" + " " + "grid grid-cols-1 md:grid-cols-3 gap-8",
+                    className: "grid grid-cols-1 md:grid-cols-3 gap-8",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-d83ffd67b3d6329e" + " " + "bg-gray-800 rounded-xl p-6 border border-gray-700",
+                            className: "bg-gray-100 border border-primary rounded-2xl p-6 shadow-md",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                    className: "jsx-d83ffd67b3d6329e" + " " + "text-xl font-semibold mb-4",
+                                    className: "text-xl font-semibold text-primary mb-4",
                                     children: "Dossiers"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/messages/page.js",
@@ -147,28 +145,29 @@ function AdminMessages() {
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-d83ffd67b3d6329e" + " " + "space-y-2",
+                                    className: "space-y-2",
                                     children: dossiers.map((dossier)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: ()=>handleDossierSelect(dossier),
-                                            className: "jsx-d83ffd67b3d6329e" + " " + `w-full text-left p-3 rounded-lg transition-colors ${selectedDossier?.id === dossier.id ? 'bg-blue-600 text-white' : 'bg-gray-700 hover:bg-gray-600 text-white'}`,
+                                            className: `w-full text-left p-3 rounded-lg font-semibold transition
+                    ${selectedDossier?.id === dossier.id ? 'bg-primary text-white' : ' text-primary border border-primary hover:bg-accent/10'}`,
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "jsx-d83ffd67b3d6329e" + " " + "font-medium",
+                                                    className: "font-medium",
                                                     children: dossier.nom
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/messages/page.js",
-                                                    lineNumber: 108,
+                                                    lineNumber: 105,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "jsx-d83ffd67b3d6329e" + " " + "text-sm opacity-75",
+                                                    className: "text-sm opacity-75",
                                                     children: [
                                                         "Créé le ",
                                                         new Date(dossier.created_at).toLocaleDateString()
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/messages/page.js",
-                                                    lineNumber: 109,
+                                                    lineNumber: 106,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
@@ -189,175 +188,175 @@ function AdminMessages() {
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-d83ffd67b3d6329e" + " " + "md:col-span-2 bg-gray-800 rounded-xl p-6 border border-gray-700",
+                            className: "md:col-span-2 bg-gray-100 border border-primary rounded-2xl p-6 shadow-md",
                             children: selectedDossier ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-d83ffd67b3d6329e" + " " + "flex justify-between items-center mb-4",
+                                        className: "flex justify-between items-center mb-4",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                            className: "jsx-d83ffd67b3d6329e" + " " + "text-xl font-semibold",
+                                            className: "text-xl font-semibold text-primary",
                                             children: [
                                                 "Conversation avec ",
                                                 selectedDossier.nom
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/messages/page.js",
-                                            lineNumber: 122,
+                                            lineNumber: 119,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/messages/page.js",
-                                        lineNumber: 121,
+                                        lineNumber: 118,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-d83ffd67b3d6329e" + " " + "flex flex-col h-[600px] bg-gray-900 rounded-lg",
+                                        className: "flex flex-col h-[600px]  rounded-lg border border-primary",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-d83ffd67b3d6329e" + " " + "flex-1 overflow-y-auto p-4 space-y-4",
+                                                className: "flex-1 overflow-y-auto p-4 space-y-4",
                                                 children: messages.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "jsx-d83ffd67b3d6329e" + " " + "text-center text-gray-400 py-8",
+                                                    className: "text-center text-gray-400 py-8",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "jsx-d83ffd67b3d6329e",
                                                             children: "Aucun message"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/messages/page.js",
-                                                            lineNumber: 130,
+                                                            lineNumber: 127,
                                                             columnNumber: 25
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "jsx-d83ffd67b3d6329e" + " " + "text-sm mt-2",
+                                                            className: "text-sm mt-2",
                                                             children: "Attendez que l'utilisateur envoie un message"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/messages/page.js",
-                                                            lineNumber: 131,
+                                                            lineNumber: 128,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/messages/page.js",
-                                                    lineNumber: 129,
+                                                    lineNumber: 126,
                                                     columnNumber: 23
                                                 }, this) : messages.map((message)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "jsx-d83ffd67b3d6329e" + " " + `w-full flex ${message.is_ai ? 'justify-start' : 'justify-end'}`,
+                                                        className: `w-full flex ${message.is_ai ? 'justify-start' : 'justify-end'}`,
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "jsx-d83ffd67b3d6329e" + " " + `max-w-[80%] p-4 rounded-lg flex flex-col ${message.is_ai ? 'bg-gray-700 text-white rounded-tl-none' : 'bg-blue-600 text-white rounded-tr-none'}`,
+                                                            className: `max-w-[80%] p-4 rounded-lg flex flex-col shadow
+                              ${message.is_ai ? 'bg-primary text-white rounded-tl-none' : 'bg-accent/10 text-primary rounded-tr-none border border-accent'}
+                            `,
                                                             children: [
                                                                 message.is_ai && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "jsx-d83ffd67b3d6329e" + " " + "text-xs font-bold text-blue-300 mb-1 flex items-center gap-1",
+                                                                    className: "text-xs font-bold text-accent mb-1 flex items-center gap-1",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            className: "jsx-d83ffd67b3d6329e" + " " + "inline-block w-4 h-4 bg-blue-500 rounded-full text-center text-white mr-1",
+                                                                            className: "inline-block w-4 h-4 bg-accent rounded-full text-center text-white mr-1",
                                                                             children: "A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/admin/messages/page.js",
-                                                                            lineNumber: 148,
+                                                                            lineNumber: 145,
                                                                             columnNumber: 33
                                                                         }, this),
                                                                         " Admin"
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/app/admin/messages/page.js",
-                                                                    lineNumber: 147,
+                                                                    lineNumber: 144,
                                                                     columnNumber: 31
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                    className: "jsx-d83ffd67b3d6329e" + " " + "text-sm",
+                                                                    className: "text-sm",
                                                                     children: message.message
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/messages/page.js",
-                                                                    lineNumber: 151,
+                                                                    lineNumber: 148,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                    className: "jsx-d83ffd67b3d6329e" + " " + "text-xs opacity-75 mt-2",
+                                                                    className: "text-xs opacity-75 mt-2",
                                                                     children: new Date(message.created_at).toLocaleString()
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/messages/page.js",
-                                                                    lineNumber: 152,
+                                                                    lineNumber: 149,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/messages/page.js",
-                                                            lineNumber: 139,
+                                                            lineNumber: 136,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, message.id, false, {
                                                         fileName: "[project]/src/app/admin/messages/page.js",
-                                                        lineNumber: 135,
+                                                        lineNumber: 132,
                                                         columnNumber: 25
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/messages/page.js",
-                                                lineNumber: 127,
+                                                lineNumber: 124,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-d83ffd67b3d6329e" + " " + "border-t border-gray-700 p-4",
+                                                className: "border-t border-primary p-4 bg-gray-50 rounded-b-lg",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                                                     onSubmit: handleSendMessage,
-                                                    className: "jsx-d83ffd67b3d6329e" + " " + "flex gap-2",
+                                                    className: "flex gap-2",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             type: "text",
                                                             value: newMessage,
                                                             onChange: (e)=>setNewMessage(e.target.value),
                                                             placeholder: "Écrivez votre réponse...",
-                                                            disabled: isSending,
-                                                            className: "jsx-d83ffd67b3d6329e" + " " + "flex-1 bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                            className: "flex-1  border border-primary text-primary rounded-lg px-4 py-2 focus:border-accent",
+                                                            disabled: isSending
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/messages/page.js",
-                                                            lineNumber: 162,
+                                                            lineNumber: 159,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                             type: "submit",
+                                                            className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold transition disabled:opacity-50",
                                                             disabled: !newMessage.trim() || isSending,
-                                                            className: "jsx-d83ffd67b3d6329e" + " " + "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50",
                                                             children: isSending ? 'Envoi...' : 'Envoyer'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/messages/page.js",
-                                                            lineNumber: 170,
+                                                            lineNumber: 167,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/messages/page.js",
-                                                    lineNumber: 161,
+                                                    lineNumber: 158,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/messages/page.js",
-                                                lineNumber: 160,
+                                                lineNumber: 157,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/messages/page.js",
-                                        lineNumber: 126,
+                                        lineNumber: 123,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-d83ffd67b3d6329e" + " " + "text-center text-gray-400 py-8",
+                                className: "text-center text-gray-400 py-8",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "jsx-d83ffd67b3d6329e",
                                     children: "Sélectionnez un dossier pour voir les messages"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/messages/page.js",
-                                    lineNumber: 183,
+                                    lineNumber: 180,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/messages/page.js",
-                                lineNumber: 182,
+                                lineNumber: 179,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/messages/page.js",
-                            lineNumber: 118,
+                            lineNumber: 115,
                             columnNumber: 11
                         }, this)
                     ]
@@ -365,11 +364,7 @@ function AdminMessages() {
                     fileName: "[project]/src/app/admin/messages/page.js",
                     lineNumber: 93,
                     columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                    id: "d83ffd67b3d6329e",
-                    children: ".message-container.jsx-d83ffd67b3d6329e{width:100%;margin-bottom:1rem;display:flex}.message-user.jsx-d83ffd67b3d6329e{justify-content:flex-start}.message-admin.jsx-d83ffd67b3d6329e{justify-content:flex-end}.message-bubble.jsx-d83ffd67b3d6329e{border-radius:.5rem;max-width:80%;padding:1rem;box-shadow:0 1px 2px #0000001a}.message-user-bubble.jsx-d83ffd67b3d6329e{color:#fff;background-color:#374151;border-top-left-radius:0}.message-admin-bubble.jsx-d83ffd67b3d6329e{color:#fff;background-color:#2563eb;border-top-right-radius:0}.message-bubble.jsx-d83ffd67b3d6329e p.jsx-d83ffd67b3d6329e{margin:0;line-height:1.5}.message-bubble.jsx-d83ffd67b3d6329e .timestamp.jsx-d83ffd67b3d6329e{opacity:.7;margin-top:.5rem;font-size:.75rem}"
-                }, void 0, false, void 0, this)
+                }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/admin/messages/page.js",

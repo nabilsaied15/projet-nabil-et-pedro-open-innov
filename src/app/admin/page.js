@@ -328,7 +328,7 @@ export default function AdminPage() {
   const entretiens = candidatures.filter(c => c.statut === 'Entretien').length;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-white p-10 text-primary">
       <div className="p-10">
         <h2 className="text-2xl font-bold mb-6 text-center">👑 Panneau d'administration</h2>
 
@@ -336,7 +336,7 @@ export default function AdminPage() {
           <button
             onClick={() => setActiveTab('users')}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
-              activeTab === 'users' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
+              activeTab === 'users' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
             }`}
           >
             Utilisateurs
@@ -344,7 +344,7 @@ export default function AdminPage() {
           <button
             onClick={() => setActiveTab('courses')}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
-              activeTab === 'courses' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
+              activeTab === 'courses' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
             }`}
           >
             Cours
@@ -352,7 +352,7 @@ export default function AdminPage() {
           <button
             onClick={() => setActiveTab('dossiers')}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
-              activeTab === 'dossiers' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
+              activeTab === 'dossiers' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
             }`}
           >
             Dossiers
@@ -361,7 +361,7 @@ export default function AdminPage() {
           <button
             onClick={() => setActiveTab('candidatures')}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
-              activeTab === 'candidatures' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
+              activeTab === 'candidatures' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
             }`}
           >
             Candidatures
@@ -370,7 +370,7 @@ export default function AdminPage() {
           <button
             onClick={() => setActiveTab('contacts')}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
-              activeTab === 'contacts' ? 'bg-blue-400 text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
+              activeTab === 'contacts' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
             }`}
           >
             Contacts
@@ -382,7 +382,7 @@ export default function AdminPage() {
             <div className="flex justify-center mb-6">
               <button
                 onClick={() => setShowAddUserForm(!showAddUserForm)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+                className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
               >
                 {showAddUserForm ? '– Fermer le formulaire' : '➕ Ajouter un utilisateur'}
               </button>
@@ -424,7 +424,7 @@ export default function AdminPage() {
                 </div>
                 <button
                   onClick={handleAddUser}
-                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                  className="mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors"
                 >
                   Ajouter
                 </button>
@@ -507,7 +507,7 @@ export default function AdminPage() {
             <div className="flex justify-center mb-6">
               <button
                 onClick={() => setShowAddCourseForm(!showAddCourseForm)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+                className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
               >
                 {showAddCourseForm ? '– Fermer le formulaire' : '➕ Ajouter un cours'}
               </button>
@@ -534,7 +534,7 @@ export default function AdminPage() {
                 </div>
                 <button
                   onClick={handleAddCourse}
-                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                  className="mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors"
                 >
                   Ajouter
                 </button>
@@ -629,7 +629,7 @@ export default function AdminPage() {
             <div className="flex justify-center mb-6">
               <button
                 onClick={() => setShowAddDossierForm(!showAddDossierForm)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+                className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
               >
                 {showAddDossierForm ? '– Fermer le formulaire' : '➕ Ajouter un dossier'}
               </button>
@@ -656,7 +656,7 @@ export default function AdminPage() {
                 </div>
                 <button
                   onClick={handleAddDossier}
-                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                  className="mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors"
                 >
                   Ajouter
                 </button>
@@ -740,7 +740,7 @@ export default function AdminPage() {
             <div className="flex justify-center mb-6">
               <button
                 onClick={() => setShowAddCandidatureForm(!showAddCandidatureForm)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+                className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
               >
                 {showAddCandidatureForm ? '– Fermer le formulaire' : '➕ Ajouter une candidature'}
               </button>
@@ -804,7 +804,7 @@ export default function AdminPage() {
                 </div>
                 <button
                   onClick={handleAddCandidature}
-                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                  className="mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors"
                 >
                   Ajouter
                 </button>

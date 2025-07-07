@@ -38,17 +38,17 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex justify-between items-center bg-blue-900 text-white px-10 py-5 shadow-xl rounded-b-2xl mb-8 text-lg border-b-4 border-blue-700/40" style={{minHeight:'70px'}}>
+    <nav className="navbar flex justify-between items-center px-10 py-5 mb-8">
       <div className="flex gap-10">
         {links.map(link => (
-          <Link key={link.href} href={link.href} className="!text-white hover:text-orange-300 font-semibold transition-colors px-2 py-1 rounded-lg hover:bg-white/10">
+          <Link key={link.href} href={link.href} className="!text-white hover:text-orange-300 font-semibold transition-colors px-2 py-1 rounded-lg">
             {link.label}
           </Link>
         ))}
       </div>
       <div className="flex items-center gap-6">
         {user && (
-          <span className="flex items-center gap-2 font-semibold">
+          <span className="flex items-center gap-2 font-semibold text-white">
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className="inline-block"><circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" d="M4 20c0-2.21 3.58-4 8-4s8 1.79 8 4"/></svg>
             {user.role === 'admin' ? 'Admin' : user.name}
           </span>

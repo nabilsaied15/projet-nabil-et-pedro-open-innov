@@ -60,14 +60,14 @@ export default function MesOffresPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen">
       <div className="p-10">
         <h2 className="text-2xl font-bold mb-6">Mes offres</h2>
 
@@ -76,7 +76,7 @@ export default function MesOffresPage() {
           <button
             onClick={() => setActiveTab('liked')}
             className={`px-4 py-2 rounded ${
-              activeTab === 'liked' ? 'bg-blue-600' : 'bg-gray-700'
+              activeTab === 'liked' ? 'button' : ''
             }`}
           >
             ❤️ Offres likées
@@ -84,7 +84,7 @@ export default function MesOffresPage() {
           <button
             onClick={() => setActiveTab('saved')}
             className={`px-4 py-2 rounded ${
-              activeTab === 'saved' ? 'bg-blue-600' : 'bg-gray-700'
+              activeTab === 'saved' ? 'button' : ''
             }`}
           >
             💾 Offres sauvegardées
@@ -92,7 +92,7 @@ export default function MesOffresPage() {
           <button
             onClick={() => setActiveTab('interested')}
             className={`px-4 py-2 rounded ${
-              activeTab === 'interested' ? 'bg-blue-600' : 'bg-gray-700'
+              activeTab === 'interested' ? 'button' : ''
             }`}
           >
             ✨ Offres qui m'intéressent
@@ -102,7 +102,7 @@ export default function MesOffresPage() {
         {/* Liste des offres */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {offres.map((offre) => (
-            <div key={offre.id} className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <div key={offre.id} className="rounded-xl p-6 border">
               <h3 className="text-xl font-semibold mb-2">{offre.poste}</h3>
               <p className="text-gray-400 text-sm mb-1">Entreprise : {offre.entreprise}</p>
               <p className="text-gray-400 text-sm mb-1">Localisation : {offre.localisation}</p>

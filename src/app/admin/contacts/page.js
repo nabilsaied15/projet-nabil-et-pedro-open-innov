@@ -375,7 +375,7 @@ function ConfirmModal({ open, onClose, onConfirm, text, loading }) {
   if (!open) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-      <div className="bg-white text-gray-900 rounded-2xl p-8 shadow-xl w-full max-w-md relative">
+      <div className=" text-gray-900 rounded-2xl p-8 shadow-xl w-full max-w-md relative">
         <button
           onClick={onClose}
           className="absolute -top-5 right-4 bg-blue-600 hover:bg-blue-700 text-white text-4xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg border-4 border-white"
@@ -629,18 +629,18 @@ export default function ContactsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <h1 className="text-3xl font-bold mb-6">Gestion des Contacts</h1>
+    <div className="min-h-screen  p-10 text-primary">
+      <h1 className="text-2xl font-bold mb-6">Gestion des Contacts</h1>
       {/* Boutons centrés sur la même ligne */}
       <div className="flex justify-center items-center gap-8 mb-8">
         <button
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold shadow transition-colors"
+          className="button px-4 py-2 rounded-md transition duration-200"
           onClick={() => setShowRdvModal(true)}
         >
           Prendre un RDV
         </button>
         <button
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow transition-colors"
+          className="button px-4 py-2 rounded-md transition duration-200"
           onClick={() => {
             setShowForm(f => !f);
             if (showForm) {
@@ -657,10 +657,10 @@ export default function ContactsPage() {
 
       {/* Modal pour le formulaire d'ajout/modif */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="relative bg-[#1e293b] p-8 rounded-2xl shadow-2xl w-full max-w-md mx-4 animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80">
+          <div className="relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 transition-all duration-300 border-2 border-blue-100">
             <button
-              className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl font-bold"
+              className="absolute top-3 right-3 text-2xl font-bold text-blue-400 hover:text-blue-700 transition"
               type="button"
               onClick={() => { setShowForm(false); setEditingId(null); setForm({ name: '', company: '', email: '', phone: '', role: '', photo_url: '' }); setFile(null); }}
               aria-label="Fermer"
@@ -668,19 +668,16 @@ export default function ContactsPage() {
               ×
             </button>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <input type="text" placeholder="Nom" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className="rounded p-2 bg-[#334155] border border-[#475569] text-white" required />
-              <input type="text" placeholder="Entreprise" value={form.company} onChange={e => setForm(f => ({ ...f, company: e.target.value }))} className="rounded p-2 bg-[#334155] border border-[#475569] text-white" />
-              <input type="text" placeholder="Rôle" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} className="rounded p-2 bg-[#334155] border border-[#475569] text-white" />
-              <input type="email" placeholder="Email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} className="rounded p-2 bg-[#334155] border border-[#475569] text-white" />
-              <input type="text" placeholder="Téléphone" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} className="rounded p-2 bg-[#334155] border border-[#475569] text-white" />
+              <h2 className="text-xl font-bold text-blue-900 text-center mb-4">{editingId ? 'Modifier le contact' : 'Ajouter un contact'}</h2>
+              <input type="text" placeholder="Nom" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition text-primary bg-white" required />
+              <input type="text" placeholder="Entreprise" value={form.company} onChange={e => setForm(f => ({ ...f, company: e.target.value }))} className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition text-primary bg-white" />
+              <input type="text" placeholder="Rôle" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition text-primary bg-white" />
+              <input type="email" placeholder="Email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition text-primary bg-white" />
+              <input type="text" placeholder="Téléphone" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition text-primary bg-white" />
               <input type="file" accept="image/png, image/jpeg" onChange={e => setFile(e.target.files[0])} className="text-sm text-gray-300" />
               {form.photo_url && !file && <img src={form.photo_url} alt="Photo" className="w-16 h-16 object-cover rounded-full mx-auto" />}
-              <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg mt-2" disabled={loading}>
-                {editingId ? 'Enregistrer les modifications' : 'Ajouter le contact'}
-              </button>
-              <button type="button" onClick={() => { setShowForm(false); setEditingId(null); setForm({ name: '', company: '', email: '', phone: '', role: '', photo_url: '' }); setFile(null); }} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 rounded-lg">
-                Annuler
-              </button>
+              <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl mt-2 transition-all duration-200 shadow">{editingId ? 'Enregistrer les modifications' : 'Ajouter le contact'}</button>
+              <button type="button" onClick={() => { setShowForm(false); setEditingId(null); setForm({ name: '', company: '', email: '', phone: '', role: '', photo_url: '' }); setFile(null); }} className="font-bold py-2 rounded-xl text-blue-700 hover:bg-blue-50 transition">Annuler</button>
             </form>
           </div>
         </div>
@@ -690,28 +687,32 @@ export default function ContactsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {contacts.map(contact => (
-          <div key={contact.id} className="bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center">
+          <div key={contact.id} className="rounded-2xl p-6 bg-white border border-primary shadow-md flex flex-col items-center transition hover:shadow-xl">
             {contact.photo_url
               ? <img src={contact.photo_url} alt={contact.name} className="w-16 h-16 rounded-full object-cover mb-4 shadow-md" />
-              : <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-2xl font-bold mb-4 shadow-md">{contact.name?.[0]}</div>
+              : <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-4 shadow-md bg-gray-200 text-primary">{contact.name?.[0]}</div>
             }
-            <div className="text-lg font-semibold mb-1">{contact.name}</div>
-            {contact.role && <div className="mb-1 px-2 py-1 rounded-full bg-blue-700 text-xs font-semibold text-blue-100 inline-block">{contact.role}</div>}
+            <div className="text-lg font-semibold mb-1 text-primary">{contact.name}</div>
+            {contact.role && <div className="mb-1 px-2 py-1 rounded-full text-xs font-semibold inline-block bg-gray-100 text-primary border border-primary">{contact.role}</div>}
             <div className="text-blue-400 text-sm mb-2">{contact.company}</div>
-            <div className="text-gray-300 text-sm mb-1">{contact.email}</div>
-            <div className="text-gray-300 text-sm mb-4">{contact.phone}</div>
+            <div className="text-gray-500 text-sm mb-1">{contact.email}</div>
+            <div className="text-gray-500 text-sm mb-4">{contact.phone}</div>
             <div className="flex gap-2 mt-2 w-full">
-              <button onClick={() => handleEdit(contact)} className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded font-semibold">Modifier</button>
-              <button onClick={() => handleDelete(contact.id)} className="flex-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded font-semibold">Supprimer</button>
+              <button onClick={() => handleEdit(contact)} className="flex-1 flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold">
+                Modifier
+              </button>
+              <button onClick={() => handleDelete(contact.id)} className="flex-1 flex items-center gap-2 bg-white border-2 border-red-400 text-red-500 px-4 py-2 rounded-xl shadow hover:bg-red-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold">
+                Supprimer
+              </button>
             </div>
             <button
-              className="mt-3 w-full bg-purple-700 hover:bg-purple-800 text-white px-3 py-2 rounded font-semibold"
+              className="mt-3 w-full flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold"
               onClick={() => openAvailabilityModal(contact)}
             >
               Ajouter les horaires de disponibilité
             </button>
             <button
-              className="mt-2 w-full bg-blue-700 hover:bg-blue-800 text-white px-3 py-2 rounded font-semibold"
+              className="mt-2 w-full flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold"
               onClick={() => openAvailabilityTextModal(contact)}
             >
               Voir les disponibilités (lettres)
@@ -722,33 +723,25 @@ export default function ContactsPage() {
 
       {/* Modal disponibilité */}
       {showAvailabilityModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="relative bg-[#1e293b] text-white p-8 rounded-2xl shadow-2xl w-full max-w-2xl mx-4 animate-fadeIn border-2 border-blue-800">
-            <button
-              className="absolute top-3 right-3 text-blue-200 hover:text-white text-2xl font-bold"
-              type="button"
-              onClick={closeAvailabilityModal}
-              aria-label="Fermer"
-            >
-              ×
-            </button>
-            <h2 className="text-xl font-bold mb-4 bg-[#2563eb] text-white rounded-lg px-4 py-2 text-center shadow">Disponibilités de {selectedContact?.name}</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80">
+          <div className="relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-2xl mx-4 transition-all duration-300 border-2 border-blue-100">
+            <h2 className="text-xl font-bold text-blue-900 text-center mb-4 rounded-lg px-4 py-2 shadow">Disponibilités de {selectedContact?.name}</h2>
             <div className="overflow-x-auto">
-              <table className="min-w-full border border-[#2563eb] rounded-lg">
+              <table className="min-w-full border border-primary rounded-lg bg-white">
                 <thead>
                   <tr>
-                    <th className="p-2 border-b border-[#2563eb]"></th>
+                    <th className="p-2 border-b border-primary"></th>
                     {HOURS.map(h => (
-                      <th key={h} className="p-2 border-b border-[#2563eb] text-center">{h}h</th>
+                      <th key={h} className="p-2 border-b border-primary text-center">{h}h</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {DAYS.map(day => (
                     <tr key={day}>
-                      <td className="p-2 font-semibold border-b border-[#2563eb]">{day}</td>
+                      <td className="p-2 font-semibold border-b border-primary">{day}</td>
                       {HOURS.map(hour => (
-                        <td key={hour} className="p-2 border-b border-[#2563eb] text-center">
+                        <td key={hour} className="p-2 border-b border-primary text-center">
                           <input
                             type="checkbox"
                             checked={!!availability[day]?.[hour]}
@@ -763,8 +756,8 @@ export default function ContactsPage() {
               </table>
             </div>
             <div className="flex justify-end gap-3 mt-6">
-              <button onClick={closeAvailabilityModal} className="bg-[#334155] hover:bg-[#1e293b] text-white font-bold py-2 px-4 rounded-lg transition">Annuler</button>
-              <button onClick={handleSaveAvailability} className="bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold py-2 px-4 rounded-lg transition">Enregistrer</button>
+              <button onClick={closeAvailabilityModal} className="font-bold py-2 px-4 rounded-xl text-blue-700 hover:bg-blue-50 transition">Fermer</button>
+              <button onClick={handleSaveAvailability} className="font-bold py-2 px-4 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition">Enregistrer</button>
             </div>
           </div>
         </div>
@@ -772,24 +765,16 @@ export default function ContactsPage() {
 
       {/* Modal disponibilité texte */}
       {showAvailabilityTextModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="relative bg-blue-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-md mx-4 animate-fadeIn border-2 border-blue-700">
-            <button
-              className="absolute top-3 right-3 text-blue-200 hover:text-white text-2xl font-bold"
-              type="button"
-              onClick={closeAvailabilityTextModal}
-              aria-label="Fermer"
-            >
-              ×
-            </button>
-            <h2 className="text-xl font-bold mb-4 text-blue-200">Disponibilités de {availabilityTextContact?.name}</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80">
+          <div className="relative bg-white text-blue-900 p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 transition-all duration-300 border-2 border-blue-100">
+            <h2 className="text-xl font-bold text-blue-900 text-center mb-4">Disponibilités de {availabilityTextContact?.name}</h2>
             <CalendarAvailability
               contact={availabilityTextContact}
               availabilityMap={availabilityMap}
               rdvs={rdvs}
             />
             <div className="flex justify-end mt-6">
-              <button onClick={closeAvailabilityTextModal} className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg">Fermer</button>
+              <button onClick={closeAvailabilityTextModal} className="font-bold py-2 px-4 rounded-xl text-blue-700 hover:bg-blue-50 transition">Fermer</button>
             </div>
           </div>
         </div>
@@ -797,17 +782,17 @@ export default function ContactsPage() {
 
       {/* Modal Prendre un RDV */}
       {showRdvModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="relative bg-blue-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-lg mx-4 animate-fadeIn border-2 border-blue-700">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80">
+          <div className="relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg mx-4 transition-all duration-300 border-2 border-blue-100">
             <button
-              className="absolute top-3 right-3 text-blue-200 hover:text-white text-2xl font-bold"
+              className="absolute top-3 right-3 text-2xl font-bold text-blue-400 hover:text-blue-700 transition"
               type="button"
               onClick={() => setShowRdvModal(false)}
               aria-label="Fermer"
             >
               ×
             </button>
-            <h2 className="text-xl font-bold mb-4 text-blue-200">Prendre un rendez-vous</h2>
+            <h2 className="text-xl font-bold text-blue-900 text-center mb-4">Prendre un rendez-vous</h2>
             <div className="mb-4">
               <label className="block font-semibold mb-1">Avec qui ?</label>
               <input
@@ -978,38 +963,38 @@ export default function ContactsPage() {
           <input
             type="text"
             placeholder="Filtrer par contact..."
-            className="p-2 rounded border border-blue-700 bg-blue-950 text-white placeholder-blue-300"
+            className="p-2 rounded border mb-2 placeholder-blue-300"
             value={filterContact}
             onChange={e => setFilterContact(e.target.value)}
           />
           <input
             type="text"
             placeholder="Filtrer par étudiant..."
-            className="p-2 rounded border border-blue-700 bg-blue-950 text-white placeholder-blue-300"
+            className="p-2 rounded border mb-2 placeholder-blue-300"
             value={filterUser}
             onChange={e => setFilterUser(e.target.value)}
           />
         </div>
         <div className="overflow-x-auto rounded-xl shadow-xl">
-          <table className="w-full text-sm text-left border border-blue-700">
-            <thead className="bg-blue-900 text-white">
+          <table className="w-full text-sm text-left border border-primary bg-white rounded-xl overflow-hidden">
+            <thead className="bg-gray-100 text-primary">
               <tr>
-                <th className="px-4 py-2 border-b border-blue-700">Contact</th>
-                <th className="px-4 py-2 border-b border-blue-700">Étudiant</th>
-                <th className="px-4 py-2 border-b border-blue-700">Date</th>
-                <th className="px-4 py-2 border-b border-blue-700">Heure</th>
-                <th className="px-4 py-2 border-b border-blue-700">Motif</th>
+                <th className="px-4 py-2 border-b border-primary">Contact</th>
+                <th className="px-4 py-2 border-b border-primary">Étudiant</th>
+                <th className="px-4 py-2 border-b border-primary">Date</th>
+                <th className="px-4 py-2 border-b border-primary">Heure</th>
+                <th className="px-4 py-2 border-b border-primary">Motif</th>
               </tr>
             </thead>
-            <tbody className="bg-blue-950 text-white">
+            <tbody>
               {rdvs
                 .filter(r => r.contactName?.toLowerCase().includes(filterContact.toLowerCase()))
                 .filter(r => r.userName?.toLowerCase().includes(filterUser.toLowerCase()))
-                .map(r => {
+                .map((r, idx) => {
                   const motif = motifs.find(m => m.id === r.motif_id);
                   const motifLabel = motif?.label === 'Autre' && r.motif_custom ? r.motif_custom : motif?.label;
                   return (
-                    <tr key={r.id} className="hover:bg-blue-800 border-b border-blue-700">
+                    <tr key={r.id} className={`${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-gray-100 border-b border-primary text-gray-700`}>
                       <td className="px-4 py-2">{r.contactName}</td>
                       <td className="px-4 py-2">{r.userName}</td>
                       <td className="px-4 py-2">{r.date}</td>

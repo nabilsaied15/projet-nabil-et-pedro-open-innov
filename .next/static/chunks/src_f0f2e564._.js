@@ -326,9 +326,9 @@ function CourseResourcesPage({ params }) {
     };
     if (loading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "min-h-screen bg-gray-900 text-white flex justify-center items-center",
+            className: "min-h-screen bg-background text-foreground flex justify-center items-center",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"
+                className: "animate-spin rounded-full h-12 w-12 border-b-2 border-accent"
             }, void 0, false, {
                 fileName: "[project]/src/app/cours/[id]/page.js",
                 lineNumber: 358,
@@ -341,12 +341,12 @@ function CourseResourcesPage({ params }) {
         }, this);
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-900 text-white",
+        className: "min-h-screen bg-background text-foreground",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "p-8",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                    className: "text-3xl font-bold mb-8 text-center",
+                    className: "text-3xl font-bold mb-8 text-center text-primary",
                     children: course?.title
                 }, void 0, false, {
                     fileName: "[project]/src/app/cours/[id]/page.js",
@@ -354,7 +354,7 @@ function CourseResourcesPage({ params }) {
                     columnNumber: 9
                 }, this),
                 message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4",
+                    className: "bg-success/10 border border-success text-success px-4 py-3 rounded mb-4",
                     children: message
                 }, void 0, false, {
                     fileName: "[project]/src/app/cours/[id]/page.js",
@@ -362,7 +362,7 @@ function CourseResourcesPage({ params }) {
                     columnNumber: 11
                 }, this),
                 error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4",
+                    className: "bg-error/10 border border-error text-error px-4 py-3 rounded mb-4",
                     children: error
                 }, void 0, false, {
                     fileName: "[project]/src/app/cours/[id]/page.js",
@@ -491,7 +491,7 @@ function CourseResourcesPage({ params }) {
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
                             children: pdfs.map((pdf)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-[#121826] border border-white rounded-2xl p-6 shadow-md hover:shadow-xl transition",
+                                    className: "rounded-2xl p-6 shadow-md hover:shadow-xl transition border border-primary bg-white",
                                     children: [
                                         editingPdfId === pdf.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "mb-4",
@@ -608,7 +608,7 @@ function CourseResourcesPage({ params }) {
                                             href: pdf.pdf_url,
                                             target: "_blank",
                                             rel: "noopener noreferrer",
-                                            className: "text-blue-400 hover:underline mb-4 block",
+                                            className: "text-accent hover:underline mb-4 block",
                                             children: "Voir le PDF"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/cours/[id]/page.js",
@@ -623,7 +623,7 @@ function CourseResourcesPage({ params }) {
                                                         setEditingPdfId(pdf.id);
                                                         setEditPdfTitle(pdf.title);
                                                     },
-                                                    className: "text-blue-400 hover:text-blue-300 transition duration-200",
+                                                    className: "button",
                                                     children: "Modifier"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cours/[id]/page.js",
@@ -632,7 +632,7 @@ function CourseResourcesPage({ params }) {
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                     onClick: ()=>handleDeletePdf(pdf.id),
-                                                    className: "text-red-400 hover:text-red-300 transition duration-200",
+                                                    className: "button-danger",
                                                     children: "Supprimer"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cours/[id]/page.js",
@@ -845,7 +845,7 @@ function CourseResourcesPage({ params }) {
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
                             children: videos.map((video)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-[#121826] border border-white rounded-2xl p-6 shadow-md hover:shadow-xl transition",
+                                    className: "rounded-2xl p-6 shadow-md hover:shadow-xl transition border border-primary bg-white",
                                     children: [
                                         editingVideoId === video.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "mb-4",
@@ -954,7 +954,7 @@ function CourseResourcesPage({ params }) {
                                             href: video.youtube_url,
                                             target: "_blank",
                                             rel: "noopener noreferrer",
-                                            className: "text-blue-400 hover:underline mb-4 block",
+                                            className: "text-accent hover:underline mb-4 block",
                                             children: "Voir la vidéo"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/cours/[id]/page.js",
@@ -970,7 +970,7 @@ function CourseResourcesPage({ params }) {
                                                         setEditVideoTitle(video.title);
                                                         setEditVideoUrl(video.youtube_url);
                                                     },
-                                                    className: "text-blue-400 hover:text-blue-300 transition duration-200",
+                                                    className: "button",
                                                     children: "Modifier"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cours/[id]/page.js",
@@ -979,7 +979,7 @@ function CourseResourcesPage({ params }) {
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                     onClick: ()=>handleDeleteVideo(video.id),
-                                                    className: "text-red-400 hover:text-red-300 transition duration-200",
+                                                    className: "button-danger",
                                                     children: "Supprimer"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cours/[id]/page.js",

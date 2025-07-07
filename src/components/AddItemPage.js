@@ -65,140 +65,66 @@ export default function AddItemPage({ table, onItemAdded }) {
   };
 
   return (
-    <div style={{ padding: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="flex justify-center items-center p-4">
       {user?.role === 'admin' && (
         <form
           onSubmit={handleSubmit}
-          style={{
-            padding: '1.2rem',
-            backgroundColor: '#1f2937',
-            color: 'white',
-            borderRadius: '18px',
-            border: '1px solid #374151',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.1rem',
-            width: '100%',
-            maxWidth: 320,
-            alignItems: 'center',
-          }}
+          className="flex flex-col gap-4 w-full max-w-md bg-white text-primary rounded-3xl border-2 border-blue-100 shadow-2xl p-8"
         >
-          <h2
-            style={{
-              textAlign: 'center',
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
-              color: '#e0e7ff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              marginBottom: '0.5rem',
-            }}
-          >
+          <h2 className="text-xl font-bold text-blue-900 text-center flex items-center justify-center gap-2 mb-2">
             <FaPlus /> Ajouter un cours
           </h2>
-          <div style={{ width: '100%' }}>
-            <label style={{ fontWeight: '600', marginBottom: '0.3rem', display: 'block', textAlign: 'left' }}>
-              Titre du cours
-            </label>
+          <div className="w-full">
+            <label className="font-semibold mb-1 block text-left">Titre du cours</label>
             <input
               type="text"
               placeholder="Ex: React JS"
               value={title}
               onChange={e => setTitle(e.target.value)}
               required
-              style={{
-                padding: '0.5rem',
-                borderRadius: '10px',
-                width: '100%',
-                border: '1px solid #6b7280',
-                backgroundColor: '#111827',
-                color: 'white',
-                fontSize: '0.95rem',
-              }}
+              className="p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
             />
           </div>
-          <div style={{ width: '100%' }}>
-            <label style={{ fontWeight: '600', marginBottom: '0.3rem', display: 'block', textAlign: 'left' }}>
-              Image du cours
-            </label>
+          <div className="w-full">
+            <label className="font-semibold mb-1 block text-left">Image du cours</label>
             <input
               type="file"
               accept="image/*"
               onChange={e => setFile(e.target.files[0])}
               required
-              style={{
-                padding: '0.5rem',
-                borderRadius: '10px',
-                width: '100%',
-                border: '1px solid #6b7280',
-                backgroundColor: '#111827',
-                color: 'white',
-                fontSize: '0.95rem',
-              }}
+              className="p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
             />
           </div>
-          <div style={{ width: '100%' }}>
-            <label style={{ fontWeight: '600', marginBottom: '0.3rem', display: 'block', textAlign: 'left' }}>
-              Nombre de vidéos
-            </label>
+          <div className="w-full">
+            <label className="font-semibold mb-1 block text-left">Nombre de vidéos</label>
             <input
               type="number"
               min="0"
               value={nombreVideos}
               onChange={e => setNombreVideos(e.target.value)}
-              style={{
-                padding: '0.5rem',
-                borderRadius: '10px',
-                width: '100%',
-                border: '1px solid #6b7280',
-                backgroundColor: '#111827',
-                color: 'white',
-                fontSize: '0.95rem',
-              }}
+              className="p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
             />
           </div>
-          <div style={{ width: '100%' }}>
-            <label style={{ fontWeight: '600', marginBottom: '0.3rem', display: 'block', textAlign: 'left' }}>
-              Nombre de PDF
-            </label>
+          <div className="w-full">
+            <label className="font-semibold mb-1 block text-left">Nombre de PDF</label>
             <input
               type="number"
               min="0"
               value={nombrePdfs}
               onChange={e => setNombrePdfs(e.target.value)}
-              style={{
-                padding: '0.5rem',
-                borderRadius: '10px',
-                width: '100%',
-                border: '1px solid #6b7280',
-                backgroundColor: '#111827',
-                color: 'white',
-                fontSize: '0.95rem',
-              }}
+              className="p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
             />
           </div>
           <button
             type="submit"
-            style={{
-              padding: '0.7rem 1.2rem',
-              backgroundColor: '#3b82f6',
-              color: 'white',
-              fontWeight: 'bold',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              width: '100%',
-              transition: 'background-color 0.3s ease',
-            }}
+            className="py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl w-full text-lg transition"
           >
             ➕ Ajouter
           </button>
           {message && (
-            <p style={{ textAlign: 'center', color: '#10b981', fontWeight: 'bold' }}>{message}</p>
+            <div className={message.startsWith('✅') ? 'text-green-600 font-semibold text-center mt-2' : 'text-red-600 font-semibold text-center mt-2'}>
+              {message}
+            </div>
           )}
         </form>
       )}

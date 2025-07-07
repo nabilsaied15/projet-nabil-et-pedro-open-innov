@@ -145,6 +145,11 @@ function MesCandidaturesPage() {
     const [messages, setMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [newMessage, setNewMessage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [isAiResponding, setIsAiResponding] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [popup, setPopup] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
+        show: false,
+        type: '',
+        message: ''
+    });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) {
@@ -259,6 +264,20 @@ function MesCandidaturesPage() {
                 const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].from('candidatures').update(newCandidature).eq('id', editingCandidature.id).select();
                 if (error) throw error;
                 setCandidatures(candidatures.map((c)=>c.id === editingCandidature.id ? data[0] : c));
+                // Afficher la popup si statut Accepté ou Refusé
+                if (data[0].statut === 'Accepté') {
+                    setPopup({
+                        show: true,
+                        type: 'success',
+                        message: 'Candidature acceptée !'
+                    });
+                } else if (data[0].statut === 'Refusé') {
+                    setPopup({
+                        show: true,
+                        type: 'error',
+                        message: 'Candidature refusée. Pleure pas '
+                    });
+                }
             } else {
                 // Création d'une nouvelle candidature
                 const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].from('candidatures').insert([
@@ -272,6 +291,20 @@ function MesCandidaturesPage() {
                     ...candidatures,
                     data[0]
                 ]);
+                // Afficher la popup si statut Accepté ou Refusé
+                if (data[0].statut === 'Accepté') {
+                    setPopup({
+                        show: true,
+                        type: 'success',
+                        message: 'Candidature acceptée !'
+                    });
+                } else if (data[0].statut === 'Refusé') {
+                    setPopup({
+                        show: true,
+                        type: 'error',
+                        message: 'Candidature refusée.'
+                    });
+                }
             }
             setNewCandidature({
                 entreprise: '',
@@ -428,116 +461,162 @@ function MesCandidaturesPage() {
         }
     };
     const filteredCandidatures = candidatures.filter((candidature)=>filterStatut === 'Tous' || candidature.statut === filterStatut);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (popup.show) {
+            const timer = setTimeout(()=>{
+                setPopup({
+                    show: false,
+                    type: '',
+                    message: ''
+                });
+            }, 2000);
+            return ()=>clearTimeout(timer);
+        }
+    }, [
+        popup
+    ]);
     if (loading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "min-h-screen bg-gray-900 flex items-center justify-center",
+            className: "min-h-screen flex items-center justify-center",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"
             }, void 0, false, {
                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                lineNumber: 393,
+                lineNumber: 415,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/mes-candidatures/page.js",
-            lineNumber: 392,
+            lineNumber: 414,
             columnNumber: 7
         }, this);
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "jsx-c07ea14939b02007" + " " + "min-h-screen bg-gray-900 text-white",
+        className: "jsx-27bc374a2354a793" + " " + "min-h-screen",
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-c07ea14939b02007" + " " + "p-10",
+            popup.show && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "jsx-27bc374a2354a793" + " " + "fixed inset-0 flex items-center justify-center z-50",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-c07ea14939b02007" + " " + "flex justify-between items-center mb-8",
+                        className: "jsx-27bc374a2354a793" + " " + `p-8 rounded-xl shadow-lg text-2xl font-bold transition-all
+            ${popup.type === 'success' ? 'bg-green-500 text-white' : ''}
+            ${popup.type === 'error' ? 'bg-red-500 text-white' : ''}
+          `,
+                        children: popup.message
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/mes-candidatures/page.js",
+                        lineNumber: 425,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        onClick: ()=>setPopup({
+                                show: false,
+                                type: '',
+                                message: ''
+                            }),
+                        className: "jsx-27bc374a2354a793" + " " + "fixed inset-0 bg-black opacity-30"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/mes-candidatures/page.js",
+                        lineNumber: 431,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/mes-candidatures/page.js",
+                lineNumber: 424,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "jsx-27bc374a2354a793" + " " + "p-10",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "jsx-27bc374a2354a793" + " " + "flex justify-between items-center mb-8",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-c07ea14939b02007",
+                                className: "jsx-27bc374a2354a793",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                        className: "jsx-c07ea14939b02007" + " " + "text-2xl font-bold",
+                                        className: "jsx-27bc374a2354a793" + " " + "text-2xl font-bold",
                                         children: "Mes Candidatures"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 403,
+                                        lineNumber: 440,
                                         columnNumber: 13
                                     }, this),
                                     currentDossier && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-c07ea14939b02007" + " " + "text-gray-400 mt-2",
+                                        className: "jsx-27bc374a2354a793" + " " + "text-gray-400 mt-2",
                                         children: [
                                             "Dossier : ",
                                             currentDossier.nom
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 405,
+                                        lineNumber: 442,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                lineNumber: 402,
+                                lineNumber: 439,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-c07ea14939b02007" + " " + "flex gap-4",
+                                className: "jsx-27bc374a2354a793" + " " + "flex gap-4",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                         value: filterStatut,
                                         onChange: (e)=>setFilterStatut(e.target.value),
-                                        className: "jsx-c07ea14939b02007" + " " + "bg-gray-700 text-white px-4 py-2 rounded-md border border-gray-600 focus:border-blue-500 focus:outline-none",
+                                        className: "jsx-27bc374a2354a793" + " " + "px-4 py-2 rounded-md border focus:outline-none",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "Tous",
-                                                className: "jsx-c07ea14939b02007",
+                                                className: "jsx-27bc374a2354a793",
                                                 children: "Tous les statuts"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 414,
+                                                lineNumber: 451,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "En attente",
-                                                className: "jsx-c07ea14939b02007",
+                                                className: "jsx-27bc374a2354a793",
                                                 children: "En attente"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 415,
+                                                lineNumber: 452,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "Entretien",
-                                                className: "jsx-c07ea14939b02007",
+                                                className: "jsx-27bc374a2354a793",
                                                 children: "Entretien"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 416,
+                                                lineNumber: 453,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "Refusé",
-                                                className: "jsx-c07ea14939b02007",
+                                                className: "jsx-27bc374a2354a793",
                                                 children: "Refusé"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 417,
+                                                lineNumber: 454,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "Accepté",
-                                                className: "jsx-c07ea14939b02007",
+                                                className: "jsx-27bc374a2354a793",
                                                 children: "Accepté"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 418,
+                                                lineNumber: 455,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 409,
+                                        lineNumber: 446,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -554,49 +633,49 @@ function MesCandidaturesPage() {
                                                 });
                                             }
                                         },
-                                        className: "jsx-c07ea14939b02007" + " " + "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200",
+                                        className: "jsx-27bc374a2354a793" + " " + "button px-4 py-2 rounded-md transition duration-200",
                                         children: showForm ? 'Annuler' : 'Ajouter une candidature'
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 420,
+                                        lineNumber: 457,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                lineNumber: 408,
+                                lineNumber: 445,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                        lineNumber: 401,
+                        lineNumber: 438,
                         columnNumber: 9
                     }, this),
                     showForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-c07ea14939b02007" + " " + "bg-gray-800 rounded-lg p-6 mb-8",
+                        className: "jsx-27bc374a2354a793" + " " + "rounded-lg p-6 mb-8",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "jsx-c07ea14939b02007" + " " + "text-xl font-semibold mb-4",
+                                className: "jsx-27bc374a2354a793" + " " + "text-xl font-semibold mb-4",
                                 children: editingCandidature ? 'Modifier la candidature' : 'Nouvelle Candidature'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                lineNumber: 443,
+                                lineNumber: 480,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                                 onSubmit: handleSubmit,
-                                className: "jsx-c07ea14939b02007" + " " + "space-y-4",
+                                className: "jsx-27bc374a2354a793" + " " + "space-y-4",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007",
+                                        className: "jsx-27bc374a2354a793",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "jsx-c07ea14939b02007" + " " + "block text-sm font-medium text-gray-300 mb-2",
+                                                className: "jsx-27bc374a2354a793" + " " + "block text-sm font-medium text-gray-300 mb-2",
                                                 children: "Entreprise"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 448,
+                                                lineNumber: 485,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -607,27 +686,27 @@ function MesCandidaturesPage() {
                                                         entreprise: e.target.value
                                                     }),
                                                 required: true,
-                                                className: "jsx-c07ea14939b02007" + " " + "w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                                                className: "jsx-27bc374a2354a793" + " " + "w-full p-2 rounded border focus:outline-none"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 451,
+                                                lineNumber: 488,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 447,
+                                        lineNumber: 484,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007",
+                                        className: "jsx-27bc374a2354a793",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "jsx-c07ea14939b02007" + " " + "block text-sm font-medium text-gray-300 mb-2",
+                                                className: "jsx-27bc374a2354a793" + " " + "block text-sm font-medium text-gray-300 mb-2",
                                                 children: "Poste"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 460,
+                                                lineNumber: 497,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -638,27 +717,27 @@ function MesCandidaturesPage() {
                                                         poste: e.target.value
                                                     }),
                                                 required: true,
-                                                className: "jsx-c07ea14939b02007" + " " + "w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                                                className: "jsx-27bc374a2354a793" + " " + "w-full p-2 rounded border focus:outline-none"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 463,
+                                                lineNumber: 500,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 459,
+                                        lineNumber: 496,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007",
+                                        className: "jsx-27bc374a2354a793",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "jsx-c07ea14939b02007" + " " + "block text-sm font-medium text-gray-300 mb-2",
+                                                className: "jsx-27bc374a2354a793" + " " + "block text-sm font-medium text-gray-300 mb-2",
                                                 children: "Date de candidature"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 472,
+                                                lineNumber: 509,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -669,27 +748,27 @@ function MesCandidaturesPage() {
                                                         date_candidature: e.target.value
                                                     }),
                                                 required: true,
-                                                className: "jsx-c07ea14939b02007" + " " + "w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                                                className: "jsx-27bc374a2354a793" + " " + "w-full p-2 rounded border focus:outline-none"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 475,
+                                                lineNumber: 512,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 471,
+                                        lineNumber: 508,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007",
+                                        className: "jsx-27bc374a2354a793",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "jsx-c07ea14939b02007" + " " + "block text-sm font-medium text-gray-300 mb-2",
+                                                className: "jsx-27bc374a2354a793" + " " + "block text-sm font-medium text-gray-300 mb-2",
                                                 children: "Statut"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 484,
+                                                lineNumber: 521,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -699,65 +778,65 @@ function MesCandidaturesPage() {
                                                         statut: e.target.value
                                                     }),
                                                 required: true,
-                                                className: "jsx-c07ea14939b02007" + " " + "w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none",
+                                                className: "jsx-27bc374a2354a793" + " " + "w-full p-2 rounded border focus:outline-none",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                         value: "En attente",
-                                                        className: "jsx-c07ea14939b02007",
+                                                        className: "jsx-27bc374a2354a793",
                                                         children: "En attente"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 493,
+                                                        lineNumber: 530,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                         value: "Entretien",
-                                                        className: "jsx-c07ea14939b02007",
+                                                        className: "jsx-27bc374a2354a793",
                                                         children: "Entretien"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 494,
+                                                        lineNumber: 531,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                         value: "Refusé",
-                                                        className: "jsx-c07ea14939b02007",
+                                                        className: "jsx-27bc374a2354a793",
                                                         children: "Refusé"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 495,
+                                                        lineNumber: 532,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                         value: "Accepté",
-                                                        className: "jsx-c07ea14939b02007",
+                                                        className: "jsx-27bc374a2354a793",
                                                         children: "Accepté"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 496,
+                                                        lineNumber: 533,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 487,
+                                                lineNumber: 524,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 483,
+                                        lineNumber: 520,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007",
+                                        className: "jsx-27bc374a2354a793",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "jsx-c07ea14939b02007" + " " + "block text-sm font-medium text-gray-300 mb-2",
+                                                className: "jsx-27bc374a2354a793" + " " + "block text-sm font-medium text-gray-300 mb-2",
                                                 children: "Notes"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 500,
+                                                lineNumber: 537,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -767,572 +846,569 @@ function MesCandidaturesPage() {
                                                         notes: e.target.value
                                                     }),
                                                 rows: "3",
-                                                className: "jsx-c07ea14939b02007" + " " + "w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                                                className: "jsx-27bc374a2354a793" + " " + "w-full p-2 rounded border focus:outline-none"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 503,
+                                                lineNumber: 540,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 499,
+                                        lineNumber: 536,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         type: "submit",
-                                        className: "jsx-c07ea14939b02007" + " " + "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200",
+                                        className: "jsx-27bc374a2354a793" + " " + "button px-4 py-2 rounded-md transition duration-200",
                                         children: [
                                             editingCandidature ? 'Modifier' : 'Ajouter',
                                             " la candidature"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 510,
+                                        lineNumber: 547,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                lineNumber: 446,
+                                lineNumber: 483,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                        lineNumber: 442,
+                        lineNumber: 479,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-c07ea14939b02007" + " " + "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+                        className: "jsx-27bc374a2354a793" + " " + "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
                         children: filteredCandidatures.map((candidature)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-c07ea14939b02007" + " " + `bg-[#121826] border ${candidature.statut === 'Accepté' ? 'border-green-500 animate-pulse shadow-lg shadow-green-500/20' : 'border-white'} rounded-2xl p-4 shadow-md hover:shadow-xl transition relative overflow-hidden`,
+                                className: "jsx-27bc374a2354a793" + " " + `rounded-2xl p-4 shadow-md hover:shadow-xl transition relative overflow-hidden border border-primary
+                ${candidature.statut === 'Accepté' ? 'bg-green-200 ring-4 ring-success' : ''}
+                ${candidature.statut === 'Refusé' ? 'bg-red-200' : ''}
+                ${candidature.statut !== 'Accepté' && candidature.statut !== 'Refusé' ? 'bg-white' : ''}
+              `,
                                 children: [
-                                    candidature.statut === 'Accepté' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007" + " " + "absolute inset-0 bg-gradient-to-r from-transparent via-green-500/10 to-transparent animate-shine"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 531,
-                                        columnNumber: 17
-                                    }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007" + " " + "flex justify-between items-start mb-2",
+                                        className: "jsx-27bc374a2354a793" + " " + "flex justify-between items-start mb-2",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                className: "jsx-c07ea14939b02007" + " " + "font-semibold text-lg text-white",
+                                                className: "jsx-27bc374a2354a793" + " " + "font-semibold text-lg text-primary",
                                                 children: candidature.entreprise
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 534,
+                                                lineNumber: 568,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-c07ea14939b02007" + " " + "flex gap-2",
+                                                className: "jsx-27bc374a2354a793" + " " + "flex gap-2",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                         onClick: ()=>handleEdit(candidature),
-                                                        className: "jsx-c07ea14939b02007" + " " + "text-blue-400 hover:text-blue-300",
+                                                        className: "jsx-27bc374a2354a793" + " " + "text-blue-400 hover:text-blue-300",
                                                         children: "✏️"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 536,
+                                                        lineNumber: 570,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                         onClick: ()=>handleDelete(candidature.id),
-                                                        className: "jsx-c07ea14939b02007" + " " + "text-red-400 hover:text-red-300",
+                                                        className: "jsx-27bc374a2354a793" + " " + "text-red-400 hover:text-red-300",
                                                         children: "🗑️"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 542,
+                                                        lineNumber: 576,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 535,
+                                                lineNumber: 569,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 533,
+                                        lineNumber: 567,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-c07ea14939b02007" + " " + "text-gray-400 text-sm mb-1",
+                                        className: "jsx-27bc374a2354a793" + " " + "text-sm mb-1",
                                         children: [
                                             "Poste : ",
                                             candidature.poste
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 550,
+                                        lineNumber: 584,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-c07ea14939b02007" + " " + "text-gray-400 text-sm mb-1",
+                                        className: "jsx-27bc374a2354a793" + " " + "text-sm mb-1",
                                         children: [
                                             "Date : ",
                                             new Date(candidature.date_candidature).toLocaleDateString()
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 551,
+                                        lineNumber: 585,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-c07ea14939b02007" + " " + "text-gray-400 text-sm mb-1",
+                                        className: "jsx-27bc374a2354a793" + " " + "text-sm mb-1",
                                         children: [
                                             "Statut : ",
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "jsx-c07ea14939b02007" + " " + `${candidature.statut === 'Accepté' ? 'text-green-400 font-bold animate-bounce' : candidature.statut === 'Refusé' ? 'text-red-400' : candidature.statut === 'Entretien' ? 'text-yellow-400' : 'text-gray-400'}`,
+                                                className: "jsx-27bc374a2354a793" + " " + `${candidature.statut === 'Accepté' ? 'text-green-400 font-bold animate-bounce' : candidature.statut === 'Refusé' ? 'text-red-400' : candidature.statut === 'Entretien' ? 'text-yellow-400' : 'text-gray-400'}`,
                                                 children: candidature.statut
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 555,
+                                                lineNumber: 589,
                                                 columnNumber: 26
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 554,
+                                        lineNumber: 588,
                                         columnNumber: 15
                                     }, this),
                                     candidature.notes && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-c07ea14939b02007" + " " + "text-gray-400 text-sm mt-2 border-t border-gray-700 pt-2",
+                                        className: "jsx-27bc374a2354a793" + " " + "text-sm mt-2 border-t border-primary pt-2",
                                         children: candidature.notes
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 563,
+                                        lineNumber: 597,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, candidature.id, true, {
                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                lineNumber: 522,
+                                lineNumber: 559,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                        lineNumber: 520,
+                        lineNumber: 557,
                         columnNumber: 9
                     }, this),
                     filteredCandidatures.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-c07ea14939b02007" + " " + "text-center py-12",
+                        className: "jsx-27bc374a2354a793" + " " + "text-center py-12",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "jsx-c07ea14939b02007" + " " + "text-gray-400",
+                            className: "jsx-27bc374a2354a793" + " " + "text-gray-400",
                             children: candidatures.length === 0 ? "Aucune candidature enregistrée." : "Aucune candidature ne correspond au filtre sélectionné."
                         }, void 0, false, {
                             fileName: "[project]/src/app/mes-candidatures/page.js",
-                            lineNumber: 573,
+                            lineNumber: 607,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                        lineNumber: 572,
+                        lineNumber: 606,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-c07ea14939b02007" + " " + "mt-12 grid grid-cols-1 md:grid-cols-2 gap-8",
+                        className: "jsx-27bc374a2354a793" + " " + "mt-12 grid grid-cols-1 md:grid-cols-2 gap-8",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-c07ea14939b02007" + " " + "bg-gray-800 rounded-xl p-6 border border-gray-700",
+                                className: "jsx-27bc374a2354a793" + " " + "rounded-xl p-6 border border-primary bg-gray-100",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "jsx-c07ea14939b02007" + " " + "text-xl font-semibold mb-4",
+                                        className: "jsx-27bc374a2354a793" + " " + "text-xl font-semibold mb-4",
                                         children: [
                                             "📄 CV pour ",
                                             currentDossier?.nom
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 585,
+                                        lineNumber: 619,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007" + " " + "space-y-4",
+                                        className: "jsx-27bc374a2354a793" + " " + "space-y-4",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-c07ea14939b02007" + " " + "border-2 border-dashed border-gray-600 rounded-lg p-6 text-center",
+                                                className: "jsx-27bc374a2354a793" + " " + "border-2 border-dashed border-primary rounded-lg p-6 text-center bg-white",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                         type: "file",
                                                         accept: ".pdf,.doc,.docx",
                                                         id: "cv-upload",
                                                         onChange: handleCvUpload,
-                                                        className: "jsx-c07ea14939b02007" + " " + "hidden"
+                                                        className: "jsx-27bc374a2354a793" + " " + "hidden"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 588,
+                                                        lineNumber: 622,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                                         htmlFor: "cv-upload",
-                                                        className: "jsx-c07ea14939b02007" + " " + "cursor-pointer block",
+                                                        className: "jsx-27bc374a2354a793" + " " + "cursor-pointer block",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "jsx-c07ea14939b02007" + " " + "text-gray-400 mb-2",
+                                                                className: "jsx-27bc374a2354a793" + " " + "text-gray-400 mb-2",
                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                                                                     fill: "none",
                                                                     viewBox: "0 0 24 24",
                                                                     stroke: "currentColor",
-                                                                    className: "jsx-c07ea14939b02007" + " " + "mx-auto h-12 w-12",
+                                                                    className: "jsx-27bc374a2354a793" + " " + "mx-auto h-12 w-12",
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                                                                         strokeLinecap: "round",
                                                                         strokeLinejoin: "round",
                                                                         strokeWidth: 2,
                                                                         d: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12",
-                                                                        className: "jsx-c07ea14939b02007"
+                                                                        className: "jsx-27bc374a2354a793"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                        lineNumber: 601,
+                                                                        lineNumber: 635,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                    lineNumber: 600,
+                                                                    lineNumber: 634,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                lineNumber: 599,
+                                                                lineNumber: 633,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "jsx-c07ea14939b02007" + " " + "text-gray-300",
+                                                                className: "jsx-27bc374a2354a793" + " " + "text-gray-300",
                                                                 children: "Cliquez pour sélectionner votre CV"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                lineNumber: 604,
+                                                                lineNumber: 638,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "jsx-c07ea14939b02007" + " " + "text-gray-400 text-sm mt-1",
+                                                                className: "jsx-27bc374a2354a793" + " " + "text-gray-400 text-sm mt-1",
                                                                 children: "Formats acceptés: PDF, DOC, DOCX"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                lineNumber: 605,
+                                                                lineNumber: 639,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 595,
+                                                        lineNumber: 629,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 587,
+                                                lineNumber: 621,
                                                 columnNumber: 15
                                             }, this),
                                             cvFile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-c07ea14939b02007" + " " + "text-sm text-gray-300",
+                                                className: "jsx-27bc374a2354a793" + " " + "text-sm text-primary",
                                                 children: [
                                                     "Fichier sélectionné : ",
                                                     cvFile.name
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 609,
+                                                lineNumber: 643,
                                                 columnNumber: 17
                                             }, this),
                                             cvError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-c07ea14939b02007" + " " + "text-sm text-red-400",
+                                                className: "jsx-27bc374a2354a793" + " " + "text-sm text-error",
                                                 children: cvError
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 614,
+                                                lineNumber: 648,
                                                 columnNumber: 17
                                             }, this),
                                             cvSuccess && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-c07ea14939b02007" + " " + "text-sm text-green-400",
+                                                className: "jsx-27bc374a2354a793" + " " + "text-sm text-success",
                                                 children: cvSuccess
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 619,
+                                                lineNumber: 653,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 onClick: uploadCv,
                                                 disabled: !cvFile || cvUploading,
-                                                className: "jsx-c07ea14939b02007" + " " + "w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50",
+                                                className: "jsx-27bc374a2354a793" + " " + "button px-4 py-2 rounded-lg transition-colors disabled:opacity-50",
                                                 children: cvUploading ? 'Téléversement en cours...' : 'Téléverser CV'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 623,
+                                                lineNumber: 657,
                                                 columnNumber: 15
                                             }, this),
                                             uploadedCvs.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-c07ea14939b02007" + " " + "mt-6",
+                                                className: "jsx-27bc374a2354a793" + " " + "mt-6",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                        className: "jsx-c07ea14939b02007" + " " + "text-lg font-semibold mb-3",
+                                                        className: "jsx-27bc374a2354a793" + " " + "text-lg font-semibold mb-3",
                                                         children: "CVs téléversés"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 634,
+                                                        lineNumber: 668,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "jsx-c07ea14939b02007" + " " + "space-y-3",
+                                                        className: "jsx-27bc374a2354a793" + " " + "space-y-3",
                                                         children: uploadedCvs.map((cv)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "jsx-c07ea14939b02007" + " " + "bg-gray-700 rounded-lg p-3 flex items-center justify-between",
+                                                                className: "jsx-27bc374a2354a793" + " " + "bg-gray-200 rounded-lg p-3 flex items-center justify-between border border-primary",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "jsx-c07ea14939b02007" + " " + "flex-1",
+                                                                        className: "jsx-27bc374a2354a793" + " " + "flex-1",
                                                                         children: [
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                className: "jsx-c07ea14939b02007" + " " + "text-sm font-medium",
+                                                                                className: "jsx-27bc374a2354a793" + " " + "text-sm font-medium text-primary",
                                                                                 children: cv.file_name
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                                lineNumber: 639,
+                                                                                lineNumber: 673,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                className: "jsx-c07ea14939b02007" + " " + "text-xs text-gray-400",
+                                                                                className: "jsx-27bc374a2354a793" + " " + "text-xs text-primary/70",
                                                                                 children: [
                                                                                     "Téléversé le ",
                                                                                     new Date(cv.created_at).toLocaleDateString()
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                                lineNumber: 640,
+                                                                                lineNumber: 674,
                                                                                 columnNumber: 27
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                        lineNumber: 638,
+                                                                        lineNumber: 672,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "jsx-c07ea14939b02007" + " " + "flex gap-2",
+                                                                        className: "jsx-27bc374a2354a793" + " " + "flex gap-2",
                                                                         children: [
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                                 onClick: ()=>handleDownloadCv(cv),
                                                                                 title: "Télécharger",
-                                                                                className: "jsx-c07ea14939b02007" + " " + "text-blue-400 hover:text-blue-300",
+                                                                                className: "jsx-27bc374a2354a793" + " " + "text-accent hover:text-accent/80",
                                                                                 children: "⬇️"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                                lineNumber: 645,
+                                                                                lineNumber: 679,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                                 onClick: ()=>handleDeleteCv(cv.id, cv.file_path),
                                                                                 title: "Supprimer",
-                                                                                className: "jsx-c07ea14939b02007" + " " + "text-red-400 hover:text-red-300",
+                                                                                className: "jsx-27bc374a2354a793" + " " + "text-error hover:text-error/80",
                                                                                 children: "🗑️"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                                lineNumber: 652,
+                                                                                lineNumber: 686,
                                                                                 columnNumber: 27
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                        lineNumber: 644,
+                                                                        lineNumber: 678,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, cv.id, true, {
                                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                lineNumber: 637,
+                                                                lineNumber: 671,
                                                                 columnNumber: 23
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 635,
+                                                        lineNumber: 669,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 633,
+                                                lineNumber: 667,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 586,
+                                        lineNumber: 620,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                lineNumber: 584,
+                                lineNumber: 618,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-c07ea14939b02007" + " " + "bg-gray-800 rounded-xl p-6 border border-gray-700",
+                                className: "jsx-27bc374a2354a793" + " " + "rounded-xl p-6 border border-primary bg-gray-100",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "jsx-c07ea14939b02007" + " " + "text-xl font-semibold mb-4",
+                                        className: "jsx-27bc374a2354a793" + " " + "text-xl font-semibold mb-4",
                                         children: [
                                             "💬 Messages pour ",
                                             currentDossier?.nom
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 670,
+                                        lineNumber: 704,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-c07ea14939b02007" + " " + "flex flex-col h-[600px] bg-gray-900 rounded-lg",
+                                        className: "jsx-27bc374a2354a793" + " " + "flex flex-col h-[600px] bg-white rounded-lg border border-primary",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-c07ea14939b02007" + " " + "flex-1 overflow-y-auto p-4 space-y-4",
+                                                className: "jsx-27bc374a2354a793" + " " + "flex-1 overflow-y-auto p-4 space-y-4",
                                                 children: messages.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "jsx-c07ea14939b02007" + " " + "text-center text-gray-400 py-8",
+                                                    className: "jsx-27bc374a2354a793" + " " + "text-center text-primary/60 py-8",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "jsx-c07ea14939b02007",
+                                                            className: "jsx-27bc374a2354a793",
                                                             children: "Aucun message"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                            lineNumber: 675,
+                                                            lineNumber: 709,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "jsx-c07ea14939b02007" + " " + "text-sm mt-2",
+                                                            className: "jsx-27bc374a2354a793" + " " + "text-sm mt-2",
                                                             children: "Envoyez un message pour commencer la conversation"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                            lineNumber: 676,
+                                                            lineNumber: 710,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                    lineNumber: 674,
+                                                    lineNumber: 708,
                                                     columnNumber: 19
                                                 }, this) : messages.map((message)=>{
                                                     // Si le nom de l'utilisateur est 'Admin', afficher à gauche en gris
                                                     // Sinon, afficher à droite en bleu
                                                     const isMessageFromAdmin = message.user_name === 'Admin';
                                                     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "jsx-c07ea14939b02007" + " " + `w-full flex ${isMessageFromAdmin ? 'justify-start' : 'justify-end'}`,
+                                                        className: "jsx-27bc374a2354a793" + " " + `w-full flex ${isMessageFromAdmin ? 'justify-start' : 'justify-end'}`,
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "jsx-c07ea14939b02007" + " " + `max-w-[80%] p-4 rounded-lg ${isMessageFromAdmin ? 'bg-gray-700 text-white rounded-tl-none' : 'bg-blue-600 text-white rounded-tr-none'}`,
+                                                            className: "jsx-27bc374a2354a793" + " " + `max-w-[80%] p-4 rounded-lg border ${isMessageFromAdmin ? 'bg-gray-200 text-primary rounded-tl-none border-primary' : 'bg-accent text-white rounded-tr-none border-accent'}`,
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                    className: "jsx-c07ea14939b02007" + " " + "text-xs font-semibold mb-1",
+                                                                    className: "jsx-27bc374a2354a793" + " " + "text-xs font-semibold mb-1",
                                                                     children: message.user_name || 'Admin'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                    lineNumber: 696,
+                                                                    lineNumber: 730,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                    className: "jsx-c07ea14939b02007" + " " + "text-sm",
+                                                                    className: "jsx-27bc374a2354a793" + " " + "text-sm",
                                                                     children: message.message
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                    lineNumber: 699,
+                                                                    lineNumber: 733,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                    className: "jsx-c07ea14939b02007" + " " + "text-xs opacity-75 mt-2",
+                                                                    className: "jsx-27bc374a2354a793" + " " + "text-xs opacity-75 mt-2",
                                                                     children: new Date(message.created_at).toLocaleString()
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                                    lineNumber: 700,
+                                                                    lineNumber: 734,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                            lineNumber: 689,
+                                                            lineNumber: 723,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, message.id, false, {
                                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                        lineNumber: 685,
+                                                        lineNumber: 719,
                                                         columnNumber: 23
                                                     }, this);
                                                 })
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 672,
+                                                lineNumber: 706,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-c07ea14939b02007" + " " + "border-t border-gray-700 p-4",
+                                                className: "jsx-27bc374a2354a793" + " " + "border-t border-primary p-4 bg-white",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                                                     onSubmit: handleSendMessage,
-                                                    className: "jsx-c07ea14939b02007" + " " + "flex gap-2",
+                                                    className: "jsx-27bc374a2354a793" + " " + "flex gap-2",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             type: "text",
                                                             value: newMessage,
                                                             onChange: (e)=>setNewMessage(e.target.value),
                                                             placeholder: "Écrivez votre message...",
-                                                            className: "jsx-c07ea14939b02007" + " " + "flex-1 bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                            className: "jsx-27bc374a2354a793" + " " + "flex-1 bg-gray-100 text-primary rounded-lg px-4 py-2 border border-primary focus:outline-none focus:ring-2 focus:ring-accent"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                            lineNumber: 711,
+                                                            lineNumber: 745,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                             type: "submit",
                                                             disabled: !newMessage.trim(),
-                                                            className: "jsx-c07ea14939b02007" + " " + "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50",
+                                                            className: "jsx-27bc374a2354a793" + " " + "button px-4 py-2 rounded-lg transition-colors disabled:opacity-50",
                                                             children: "Envoyer"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                            lineNumber: 718,
+                                                            lineNumber: 752,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                    lineNumber: 710,
+                                                    lineNumber: 744,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                                lineNumber: 709,
+                                                lineNumber: 743,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                                        lineNumber: 671,
+                                        lineNumber: 705,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                                lineNumber: 669,
+                                lineNumber: 703,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/mes-candidatures/page.js",
-                        lineNumber: 582,
+                        lineNumber: 616,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/mes-candidatures/page.js",
-                lineNumber: 400,
+                lineNumber: 437,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                id: "d7db64dc67770aea",
+                id: "609041f2f4063bc2",
                 children: "@keyframes shine{0%{transform:translate(-100%)}to{transform:translate(100%)}}.animate-shine{animation:2s infinite shine}"
             }, void 0, false, void 0, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                id: "16e883632c3e993e",
-                children: ".message-container.jsx-c07ea14939b02007{width:100%;margin-bottom:1rem;display:flex}.message-user.jsx-c07ea14939b02007{justify-content:flex-end}.message-admin.jsx-c07ea14939b02007{justify-content:flex-start}.message-bubble.jsx-c07ea14939b02007{border-radius:.5rem;max-width:80%;padding:1rem;box-shadow:0 1px 2px #0000001a}.message-user-bubble.jsx-c07ea14939b02007{color:#fff;background-color:#2563eb;border-top-right-radius:0}.message-admin-bubble.jsx-c07ea14939b02007{color:#fff;background-color:#374151;border-top-left-radius:0}.message-bubble.jsx-c07ea14939b02007 p.jsx-c07ea14939b02007{margin:0;line-height:1.5}.message-bubble.jsx-c07ea14939b02007 .timestamp.jsx-c07ea14939b02007{opacity:.7;margin-top:.5rem;font-size:.75rem}"
+                id: "17cbbdb06ae6c6dd",
+                children: ".message-container.jsx-27bc374a2354a793{width:100%;margin-bottom:1rem;display:flex}.message-user.jsx-27bc374a2354a793{justify-content:flex-end}.message-admin.jsx-27bc374a2354a793{justify-content:flex-start}.message-bubble.jsx-27bc374a2354a793{border-radius:.5rem;max-width:80%;padding:1rem;box-shadow:0 1px 2px #0000001a}.message-user-bubble.jsx-27bc374a2354a793{color:#fff;background-color:#2563eb;border-top-right-radius:0}.message-admin-bubble.jsx-27bc374a2354a793{color:#fff;background-color:#374151;border-top-left-radius:0}.message-bubble.jsx-27bc374a2354a793 p.jsx-27bc374a2354a793{margin:0;line-height:1.5}.message-bubble.jsx-27bc374a2354a793 .timestamp.jsx-27bc374a2354a793{opacity:.7;margin-top:.5rem;font-size:.75rem}"
             }, void 0, false, void 0, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/mes-candidatures/page.js",
-        lineNumber: 399,
+        lineNumber: 421,
         columnNumber: 5
     }, this);
 }

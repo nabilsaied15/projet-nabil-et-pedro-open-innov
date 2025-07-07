@@ -182,7 +182,7 @@ function AdminOffresPage() {
     const postesUniques = Array.from(new Set(offres.map((o)=>o.poste).filter(Boolean)));
     // TODO: Add admin navigation bar here
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-900 text-white p-8",
+        className: "min-h-screen p-8 bg-background text-foreground",
         children: [
             loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                 children: "Chargement..."
@@ -192,7 +192,7 @@ function AdminOffresPage() {
                 columnNumber: 19
             }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                className: "text-red-500",
+                className: "text-error",
                 children: error
             }, void 0, false, {
                 fileName: "[project]/src/app/offres/page.js",
@@ -200,7 +200,7 @@ function AdminOffresPage() {
                 columnNumber: 17
             }, this),
             message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                className: "text-green-500",
+                className: "text-success",
                 children: message
             }, void 0, false, {
                 fileName: "[project]/src/app/offres/page.js",
@@ -209,12 +209,12 @@ function AdminOffresPage() {
             }, this),
             showAddForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                 onSubmit: handleAddOffre,
-                className: "bg-gray-800 p-6 rounded-lg shadow-md mb-8 space-y-4",
+                className: "p-6 rounded-lg shadow-md mb-8 space-y-4 bg-white border border-primary",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                className: "block text-sm font-medium text-gray-300",
+                                className: "block text-sm font-medium text-primary",
                                 children: "Poste"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
@@ -226,7 +226,7 @@ function AdminOffresPage() {
                                 name: "poste",
                                 value: formData.poste,
                                 onChange: handleInputChange,
-                                className: "mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm",
+                                className: "mt-1 block w-full rounded-md border border-primary shadow-sm",
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
@@ -242,7 +242,7 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                className: "block text-sm font-medium text-gray-300",
+                                className: "block text-sm font-medium text-primary",
                                 children: "Entreprise"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
@@ -254,7 +254,7 @@ function AdminOffresPage() {
                                 name: "entreprise",
                                 value: formData.entreprise,
                                 onChange: handleInputChange,
-                                className: "mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm",
+                                className: "mt-1 block w-full rounded-md border border-primary shadow-sm",
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
@@ -270,7 +270,7 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                className: "block text-sm font-medium text-gray-300",
+                                className: "block text-sm font-medium text-primary",
                                 children: "Profil Recherché"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
@@ -282,7 +282,7 @@ function AdminOffresPage() {
                                 name: "profil_recherche",
                                 value: formData.profil_recherche,
                                 onChange: handleInputChange,
-                                className: "mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+                                className: "mt-1 block w-full rounded-md border border-primary shadow-sm"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
                                 lineNumber: 191,
@@ -297,7 +297,7 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                className: "block text-sm font-medium text-gray-300",
+                                className: "block text-sm font-medium text-primary",
                                 children: "Durée"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
@@ -309,7 +309,7 @@ function AdminOffresPage() {
                                 name: "duree",
                                 value: formData.duree,
                                 onChange: handleInputChange,
-                                className: "mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+                                className: "mt-1 block w-full rounded-md border border-primary shadow-sm"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
                                 lineNumber: 201,
@@ -324,7 +324,7 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                className: "block text-sm font-medium text-gray-300",
+                                className: "block text-sm font-medium text-primary",
                                 children: "Localisation"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
@@ -336,7 +336,7 @@ function AdminOffresPage() {
                                 name: "localisation",
                                 value: formData.localisation,
                                 onChange: handleInputChange,
-                                className: "mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+                                className: "mt-1 block w-full rounded-md border border-primary shadow-sm"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
                                 lineNumber: 211,
@@ -351,7 +351,7 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                className: "block text-sm font-medium text-gray-300",
+                                className: "block text-sm font-medium text-primary",
                                 children: "Lien de l'offre"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
@@ -363,7 +363,7 @@ function AdminOffresPage() {
                                 name: "lien",
                                 value: formData.lien,
                                 onChange: handleInputChange,
-                                className: "mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm"
+                                className: "mt-1 block w-full rounded-md border border-primary shadow-sm"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/offres/page.js",
                                 lineNumber: 221,
@@ -378,7 +378,7 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         type: "submit",
                         disabled: loading,
-                        className: "w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:opacity-50",
+                        className: "w-full button",
                         children: loading ? 'Ajout en cours...' : 'Ajouter'
                     }, void 0, false, {
                         fileName: "[project]/src/app/offres/page.js",
@@ -399,7 +399,7 @@ function AdminOffresPage() {
                         placeholder: "Rechercher une offre...",
                         value: search,
                         onChange: (e)=>setSearch(e.target.value),
-                        className: "px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none w-full md:w-1/2"
+                        className: "px-4 py-2 rounded border border-primary focus:outline-none w-full md:w-1/2"
                     }, void 0, false, {
                         fileName: "[project]/src/app/offres/page.js",
                         lineNumber: 236,
@@ -408,7 +408,7 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                         value: niveau,
                         onChange: (e)=>setNiveau(e.target.value),
-                        className: "px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none w-full md:w-1/4",
+                        className: "px-4 py-2 rounded border border-primary focus:outline-none w-full md:w-1/4",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                 value: "",
@@ -451,7 +451,7 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                         value: posteFilter,
                         onChange: (e)=>setPosteFilter(e.target.value),
-                        className: "px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none w-full md:w-1/4",
+                        className: "px-4 py-2 rounded border border-primary focus:outline-none w-full md:w-1/4",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                 value: "",
@@ -501,7 +501,12 @@ function AdminOffresPage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6",
                         children: offres.filter((offre)=>(!search || offre.poste?.toLowerCase().includes(search.toLowerCase()) || offre.entreprise?.toLowerCase().includes(search.toLowerCase()) || offre.profil_recherche?.toLowerCase().includes(search.toLowerCase()) || offre.localisation?.toLowerCase().includes(search.toLowerCase())) && (!niveau || offre.profil_recherche && offre.profil_recherche.toLowerCase().includes(niveau)) && (!posteFilter || offre.poste === posteFilter)).map((offre)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: `bg-[#121826] border border-white rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center ${user && postuleStatus[offre.id] === 'yes' ? 'ring-4 ring-green-500' : ''} ${user && postuleStatus[offre.id] === 'no' ? 'ring-4 ring-red-500' : ''}`,
+                                className: `rounded-2xl p-4 shadow-md hover:shadow-xl transition flex flex-col items-center text-center border border-primary 
+                  ${user && postuleStatus[offre.id] === 'yes' ? 'bg-success/10 ring-4 ring-success' : ''}
+                  ${user && postuleStatus[offre.id] === 'no' ? 'bg-error/10 ring-4 ring-error' : ''}`,
+                                style: !user || !postuleStatus[offre.id] ? {
+                                    background: 'white'
+                                } : {},
                                 children: editId === offre.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -513,7 +518,7 @@ function AdminOffresPage() {
                                             placeholder: "Poste"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 287,
+                                            lineNumber: 290,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -525,7 +530,7 @@ function AdminOffresPage() {
                                             placeholder: "Entreprise"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 288,
+                                            lineNumber: 291,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -537,7 +542,7 @@ function AdminOffresPage() {
                                             placeholder: "Profil recherché"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 289,
+                                            lineNumber: 292,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -549,7 +554,7 @@ function AdminOffresPage() {
                                             placeholder: "Durée"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 290,
+                                            lineNumber: 293,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -561,7 +566,7 @@ function AdminOffresPage() {
                                             placeholder: "Localisation"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 291,
+                                            lineNumber: 294,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -573,7 +578,7 @@ function AdminOffresPage() {
                                             placeholder: "Lien de l'offre"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 292,
+                                            lineNumber: 295,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -585,7 +590,7 @@ function AdminOffresPage() {
                                                     children: "Enregistrer"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/offres/page.js",
-                                                    lineNumber: 294,
+                                                    lineNumber: 297,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -594,13 +599,13 @@ function AdminOffresPage() {
                                                     children: "Annuler"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/offres/page.js",
-                                                    lineNumber: 295,
+                                                    lineNumber: 298,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 293,
+                                            lineNumber: 296,
                                             columnNumber: 21
                                         }, this)
                                     ]
@@ -615,40 +620,40 @@ function AdminOffresPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 300,
+                                            lineNumber: 303,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-400 text-sm",
+                                            className: "text-sm",
                                             children: [
                                                 "Localisation: ",
                                                 offre.localisation
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 301,
+                                            lineNumber: 304,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-400 text-sm",
+                                            className: "text-sm",
                                             children: [
                                                 "Durée: ",
                                                 offre.duree
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 302,
+                                            lineNumber: 305,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-400 text-sm",
+                                            className: "text-sm",
                                             children: [
                                                 "Profil recherché: ",
                                                 offre.profil_recherche
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 303,
+                                            lineNumber: 306,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -657,7 +662,7 @@ function AdminOffresPage() {
                                                 e.preventDefault();
                                                 handleVoirOffre(offre);
                                             },
-                                            className: `flex items-center justify-center gap-2 mt-4 px-5 py-2 rounded-full font-bold shadow-lg transition-all duration-200 text-white bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 text-base ${!offre.lien ? 'opacity-50 pointer-events-none grayscale' : ''}`,
+                                            className: `flex items-center justify-center gap-2 mt-4 px-5 py-2 rounded-full font-bold shadow-lg transition-all duration-200 button text-base ${!offre.lien ? 'opacity-50 pointer-events-none grayscale' : ''}`,
                                             style: {
                                                 minWidth: '160px',
                                                 filter: !offre.lien ? 'grayscale(1)' : 'none'
@@ -676,30 +681,30 @@ function AdminOffresPage() {
                                                         d: "M14 3h7m0 0v7m0-7L10 14m-7 7h7a2 2 0 002-2v-7"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/offres/page.js",
-                                                        lineNumber: 310,
+                                                        lineNumber: 313,
                                                         columnNumber: 137
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/offres/page.js",
-                                                    lineNumber: 310,
+                                                    lineNumber: 313,
                                                     columnNumber: 23
                                                 }, this),
                                                 "Voir l'offre"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 304,
+                                            lineNumber: 307,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-500 text-xs mt-2",
+                                            className: "text-xs mt-2",
                                             children: [
                                                 "Créé le: ",
                                                 new Date(offre.created_at).toLocaleString()
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/offres/page.js",
-                                            lineNumber: 313,
+                                            lineNumber: 316,
                                             columnNumber: 21
                                         }, this)
                                     ]
@@ -723,14 +728,14 @@ function AdminOffresPage() {
             showPopup && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-gradient-to-br from-blue-700 via-purple-700 to-blue-900 text-white rounded-2xl p-10 shadow-2xl w-full max-w-md relative border-4 border-blue-400 animate-fadeIn",
+                    className: "bg-white text-primary rounded-2xl p-10 shadow-2xl w-full max-w-md relative border-4 border-primary animate-fadeIn",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             className: "text-2xl font-extrabold mb-6 text-center drop-shadow-lg",
                             children: "Avez-vous postulé à cette offre ?"
                         }, void 0, false, {
                             fileName: "[project]/src/app/offres/page.js",
-                            lineNumber: 325,
+                            lineNumber: 328,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -738,37 +743,37 @@ function AdminOffresPage() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>handlePopupResponse('yes'),
-                                    className: "bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold shadow-xl text-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-300",
+                                    className: "px-8 py-4 text-xl font-bold rounded-full shadow-xl transition-all duration-200 bg-success text-white hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-success focus:ring-offset-2",
                                     children: "Oui"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/offres/page.js",
-                                    lineNumber: 327,
+                                    lineNumber: 330,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>handlePopupResponse('no'),
-                                    className: "bg-red-500 hover:bg-red-600 text-white px-8 py-4 rounded-full font-bold shadow-xl text-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-300",
+                                    className: "px-8 py-4 text-xl font-bold rounded-full shadow-xl transition-all duration-200 bg-error text-white hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-error focus:ring-offset-2",
                                     children: "Non"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/offres/page.js",
-                                    lineNumber: 333,
+                                    lineNumber: 336,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/offres/page.js",
-                            lineNumber: 326,
+                            lineNumber: 329,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/offres/page.js",
-                    lineNumber: 324,
+                    lineNumber: 327,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/offres/page.js",
-                lineNumber: 323,
+                lineNumber: 326,
                 columnNumber: 9
             }, this)
         ]
@@ -778,7 +783,7 @@ function AdminOffresPage() {
         columnNumber: 5
     }, this);
 }
-_s(AdminOffresPage, "c/2dw51IjyriNxT1++pK5yGgmnE=");
+_s(AdminOffresPage, "/2DFA2zLI4n1zmjeCK2El9NVnYY=");
 _c = AdminOffresPage;
 var _c;
 __turbopack_context__.k.register(_c, "AdminOffresPage");

@@ -354,25 +354,25 @@ export default function CourseResourcesPage({ params }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen">
       <div className="p-8">
-        <h1 className="text-3xl font-bold mb-8 text-center">{course?.title}</h1>
+        <h1 className="font-bold mb-8 text-center">{course?.title}</h1>
 
         {message && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+          <div className="rounded mb-4">
             {message}
           </div>
         )}
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="rounded mb-4">
             {error}
           </div>
         )}
@@ -380,7 +380,7 @@ export default function CourseResourcesPage({ params }) {
         {/* PDFs Section */}
         <div className="mb-12">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-semibold">PDFs du cours</h2>
+            <h2 className="font-semibold">PDFs du cours</h2>
             {user?.role === 'admin' && (
               <button
                 onClick={() => setShowPdfForm(!showPdfForm)}
@@ -392,32 +392,32 @@ export default function CourseResourcesPage({ params }) {
           </div>
 
           {user?.role === 'admin' && showPdfForm && (
-            <form onSubmit={handleAddPdf} className="bg-[#121826] border border-white p-6 rounded-2xl mb-6">
+            <form onSubmit={handleAddPdf} className="p-6 rounded-2xl mb-6">
               <div className="mb-4">
-                <label className="block text-white mb-2">Titre du PDF</label>
+                <label className="block mb-2">Titre du PDF</label>
                 <input
                   type="text"
                   value={newPdf.title}
                   onChange={(e) => setNewPdf({ ...newPdf, title: e.target.value })}
-                  className="w-full p-2 border rounded bg-gray-800 text-white"
+                  className="w-full p-2 border rounded"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-white mb-2">Fichier PDF</label>
+                <label className="block mb-2">Fichier PDF</label>
                 <input
                   type="file"
                   accept=".pdf"
                   onChange={(e) => setNewPdf({ ...newPdf, file: e.target.files[0] })}
-                  className="w-full p-2 border rounded bg-gray-800 text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                  className="w-full p-2 border rounded"
                   required
                 />
-                <p className="text-sm text-gray-400 mt-1">Taille maximale : 10MB</p>
+                <p className="text-sm mt-1">Taille maximale : 10MB</p>
               </div>
               <button
                 type="submit"
                 disabled={uploadingPdf}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition duration-200 disabled:opacity-50"
+                className="rounded-md"
               >
                 {uploadingPdf ? 'Upload en cours...' : 'Ajouter'}
               </button>
@@ -426,34 +426,34 @@ export default function CourseResourcesPage({ params }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pdfs.map((pdf) => (
-              <div key={pdf.id} className="bg-[#121826] border border-white rounded-2xl p-6 shadow-md hover:shadow-xl transition">
+              <div key={pdf.id} className="rounded-2xl p-6 shadow-md hover:shadow-xl transition border border-primary">
                 {editingPdfId === pdf.id ? (
                   <div className="mb-4">
                     <div className="mb-4">
-                      <label className="block text-white mb-2">Titre du PDF</label>
+                      <label className="block mb-2">Titre du PDF</label>
                       <input
                         type="text"
                         value={editPdfTitle}
                         onChange={(e) => setEditPdfTitle(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-800 text-white mb-2"
+                        className="w-full p-2 border rounded mb-2"
                         placeholder="Nouveau titre"
                       />
                     </div>
                     <div className="mb-4">
-                      <label className="block text-white mb-2">Nouveau fichier PDF (optionnel)</label>
+                      <label className="block mb-2">Nouveau fichier PDF (optionnel)</label>
                       <input
                         type="file"
                         accept=".pdf"
                         onChange={(e) => setEditPdfFile(e.target.files[0])}
-                        className="w-full p-2 border rounded bg-gray-800 text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                        className="w-full p-2 border rounded"
                       />
-                      <p className="text-sm text-gray-400 mt-1">Laissez vide pour conserver le fichier actuel</p>
+                      <p className="text-sm mt-1">Laissez vide pour conserver le fichier actuel</p>
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEditPdf(pdf.id)}
                         disabled={uploadingEditPdf}
-                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm disabled:opacity-50"
+                        className="rounded-md text-sm"
                       >
                         {uploadingEditPdf ? 'Modification en cours...' : 'Sauvegarder'}
                       </button>
@@ -463,7 +463,7 @@ export default function CourseResourcesPage({ params }) {
                           setEditPdfTitle('');
                           setEditPdfFile(null);
                         }}
-                        className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded-md text-sm"
+                        className="rounded-md text-sm"
                       >
                         Annuler
                       </button>
@@ -476,7 +476,7 @@ export default function CourseResourcesPage({ params }) {
                   href={pdf.pdf_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:underline mb-4 block"
+                  className="hover:underline mb-4 block"
                 >
                   Voir le PDF
                 </a>
@@ -487,13 +487,13 @@ export default function CourseResourcesPage({ params }) {
                         setEditingPdfId(pdf.id);
                         setEditPdfTitle(pdf.title);
                       }}
-                      className="text-blue-400 hover:text-blue-300 transition duration-200"
+                      className="transition duration-200"
                     >
                       Modifier
                     </button>
                     <button
                       onClick={() => handleDeletePdf(pdf.id)}
-                      className="text-red-400 hover:text-red-300 transition duration-200"
+                      className="transition duration-200"
                     >
                       Supprimer
                     </button>
@@ -507,7 +507,7 @@ export default function CourseResourcesPage({ params }) {
         {/* Videos Section */}
         <div>
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-semibold">Vidéos YouTube</h2>
+            <h2 className="font-semibold">Vidéos YouTube</h2>
             {user?.role === 'admin' && (
               <button
                 onClick={() => setShowVideoForm(!showVideoForm)}
@@ -519,39 +519,39 @@ export default function CourseResourcesPage({ params }) {
           </div>
 
           {user?.role === 'admin' && showVideoForm && (
-            <form onSubmit={handleAddVideo} className="bg-[#121826] border border-gray-700 p-8 rounded-2xl mb-8 shadow-lg hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
-                <span className="text-blue-500">🎥</span> Ajouter une vidéo
+            <form onSubmit={handleAddVideo} className="p-8 rounded-2xl mb-8 shadow-lg hover:shadow-xl transition-all duration-300">
+              <h3 className="font-bold mb-6 flex items-center gap-2">
+                <span>🎥</span> Ajouter une vidéo
               </h3>
               
               <div className="space-y-6">
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2">
                     Titre de la vidéo
                   </label>
                   <input
                     type="text"
                     value={newVideo.title}
                     onChange={(e) => setNewVideo({ ...newVideo, title: e.target.value })}
-                    className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200"
+                    className="w-full p-3 rounded-lg border"
                     placeholder="Ex: Introduction à React"
                     required
                   />
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2">
                     URL YouTube
                   </label>
                   <input
                     type="url"
                     value={newVideo.youtube_url}
                     onChange={(e) => setNewVideo({ ...newVideo, youtube_url: e.target.value })}
-                    className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200"
+                    className="w-full p-3 rounded-lg border"
                     placeholder="https://www.youtube.com/watch?v=..."
                     required
                   />
-                  <p className="mt-2 text-sm text-gray-400">
+                  <p className="mt-2 text-sm">
                     Format accepté : https://www.youtube.com/watch?v=... ou https://youtu.be/...
                   </p>
                 </div>
@@ -559,7 +559,7 @@ export default function CourseResourcesPage({ params }) {
                 <div className="flex gap-4 pt-4">
                   <button
                     type="submit"
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                    className="flex-1 rounded-lg font-medium"
                   >
                     Ajouter la vidéo
                   </button>
@@ -570,7 +570,7 @@ export default function CourseResourcesPage({ params }) {
                       setNewVideo({ title: '', youtube_url: '' });
                       setError('');
                     }}
-                    className="px-6 py-3 rounded-lg font-medium text-gray-300 hover:text-white bg-gray-700 hover:bg-gray-600 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                    className="rounded-lg font-medium"
                   >
                     Annuler
                   </button>
@@ -578,7 +578,7 @@ export default function CourseResourcesPage({ params }) {
               </div>
 
               {error && (
-                <div className="mt-4 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-200">
+                <div className="mt-4 p-4 rounded-lg">
                   {error}
                 </div>
               )}
@@ -587,33 +587,33 @@ export default function CourseResourcesPage({ params }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {videos.map((video) => (
-              <div key={video.id} className="bg-[#121826] border border-white rounded-2xl p-6 shadow-md hover:shadow-xl transition">
+              <div key={video.id} className="rounded-2xl p-6 shadow-md hover:shadow-xl transition border border-primary">
                 {editingVideoId === video.id ? (
                   <div className="mb-4">
                     <div className="mb-4">
-                      <label className="block text-white mb-2">Titre de la vidéo</label>
+                      <label className="block mb-2">Titre de la vidéo</label>
                       <input
                         type="text"
                         value={editVideoTitle}
                         onChange={(e) => setEditVideoTitle(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-800 text-white mb-2"
+                        className="w-full p-2 border rounded mb-2"
                         placeholder="Nouveau titre"
                       />
                     </div>
                     <div className="mb-4">
-                      <label className="block text-white mb-2">URL YouTube</label>
+                      <label className="block mb-2">URL YouTube</label>
                       <input
                         type="url"
                         value={editVideoUrl}
                         onChange={(e) => setEditVideoUrl(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                        className="w-full p-2 border rounded"
                         placeholder="Nouvelle URL YouTube"
                       />
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEditVideo(video.id)}
-                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm"
+                        className="rounded-md text-sm"
                       >
                         Sauvegarder
                       </button>
@@ -623,7 +623,7 @@ export default function CourseResourcesPage({ params }) {
                           setEditVideoTitle('');
                           setEditVideoUrl('');
                         }}
-                        className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded-md text-sm"
+                        className="rounded-md text-sm"
                       >
                         Annuler
                       </button>
@@ -636,7 +636,7 @@ export default function CourseResourcesPage({ params }) {
                   href={video.youtube_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:underline mb-4 block"
+                  className="hover:underline mb-4 block"
                 >
                   Voir la vidéo
                 </a>
@@ -648,13 +648,13 @@ export default function CourseResourcesPage({ params }) {
                         setEditVideoTitle(video.title);
                         setEditVideoUrl(video.youtube_url);
                       }}
-                      className="text-blue-400 hover:text-blue-300 transition duration-200"
+                      className="transition duration-200"
                     >
                       Modifier
                     </button>
                     <button
                       onClick={() => handleDeleteVideo(video.id)}
-                      className="text-red-400 hover:text-red-300 transition duration-200"
+                      className="transition duration-200"
                     >
                       Supprimer
                     </button>

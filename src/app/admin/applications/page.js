@@ -5,7 +5,7 @@ export default function Applications() {
   ];
 
   return (
-    <div className="p-10">
+    <div className="min-h-screen bg-white p-10 text-primary">
       <h2 className="text-xl font-semibold mb-4">Mes candidatures</h2>
       <ul className="space-y-4">
         {candidatures.map((c, i) => (
