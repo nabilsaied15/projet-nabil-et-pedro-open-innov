@@ -285,8 +285,8 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
   }, [initial, open]);
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80">
-      <div className="relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 transition-all duration-300 border-2 border-blue-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 px-2">
+      <div className="relative bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl w-full max-w-md mx-4 transition-all duration-300 border-2 border-blue-100">
         <button
           className="absolute top-3 right-3 text-2xl font-bold text-blue-400 hover:text-blue-700 transition"
           type="button"
@@ -295,69 +295,71 @@ function ContactModal({ open, onClose, onSave, initial, loading }) {
         >
           ×
         </button>
-        <h2 className="text-xl font-bold text-blue-900 text-center mb-4">{initial ? "Modifier le contact" : "Ajouter un contact"}</h2>
-        <input
-          type="text"
-          placeholder="Nom"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Entreprise"
-          value={form.company}
-          onChange={(e) => setForm({ ...form, company: e.target.value })}
-          className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Rôle (ex: RH, Manager, Candidat...)"
-          value={form.role}
-          onChange={(e) => setForm({ ...form, role: e.target.value })}
-          className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Téléphone"
-          value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
-          className="rounded p-2 border w-full mb-2 placeholder-gray-400 transition"
-          required
-        />
-        <div className="mb-4">
+        <h2 className="text-2xl font-bold text-primary text-center mb-4">{initial ? "Modifier le contact" : "Ajouter un contact"}</h2>
+        <form className="space-y-4">
           <input
-            type="file"
-            accept="image/png, image/jpeg"
-            onChange={e => setFile(e.target.files[0])}
-            className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            type="text"
+            placeholder="Nom"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
+            required
           />
-          <div className="text-xs text-gray-400 mt-1">Photo (jpg/png, max 2Mo)</div>
-          {form.photo_url && !file && (
-            <img src={form.photo_url} alt="Photo" className="mt-2 w-20 h-20 object-cover rounded-full mx-auto" />
-          )}
-          {file && (
-            <div className="mt-2 text-xs text-blue-400">{file.name}</div>
-          )}
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-lg transition mb-2"
-          disabled={loading}
-        >
-          {loading ? "Enregistrement..." : initial ? "Enregistrer" : "Ajouter"}
-        </button>
+          <input
+            type="text"
+            placeholder="Entreprise"
+            value={form.company}
+            onChange={(e) => setForm({ ...form, company: e.target.value })}
+            className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Rôle (ex: RH, Manager, Candidat...)"
+            value={form.role}
+            onChange={(e) => setForm({ ...form, role: e.target.value })}
+            className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Téléphone"
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
+            required
+          />
+          <div className="mb-4">
+            <input
+              type="file"
+              accept="image/png, image/jpeg"
+              onChange={e => setFile(e.target.files[0])}
+              className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+            <div className="text-xs text-gray-400 mt-1">Photo (jpg/png, max 2Mo)</div>
+            {form.photo_url && !file && (
+              <img src={form.photo_url} alt="Photo" className="mt-2 w-20 h-20 object-cover rounded-full mx-auto" />
+            )}
+            {file && (
+              <div className="mt-2 text-xs text-blue-400">{file.name}</div>
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-primary hover:bg-accent text-white font-bold py-3 rounded-xl shadow-lg transition mb-2"
+            disabled={loading}
+          >
+            {loading ? "Enregistrement..." : initial ? "Enregistrer" : "Ajouter"}
+          </button>
+        </form>
       </div>
     </div>
   );

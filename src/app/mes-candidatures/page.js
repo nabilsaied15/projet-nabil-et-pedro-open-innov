@@ -434,97 +434,102 @@ export default function MesCandidaturesPage() {
           />
         </div>
       )}
-      <div className="p-10">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-2xl font-bold">Mes Candidatures</h2>
-            {currentDossier && (
-              <p className="text-gray-400 mt-2">Dossier : {currentDossier.nom}</p>
-            )}
+      <div className="px-2 sm:px-4 md:px-8 py-4 max-w-5xl mx-auto w-full">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-primary mb-2 text-center tracking-tight">Mes Candidatures</h2>
+        {currentDossier && (
+          <div className="flex justify-center mb-6">
+            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold shadow-sm border border-accent/20">
+              Dossier : {currentDossier.nom}
+            </span>
           </div>
-          <div className="flex gap-4">
-            <select
-              value={filterStatut}
-              onChange={(e) => setFilterStatut(e.target.value)}
-              className="px-4 py-2 rounded-md border focus:outline-none"
-            >
-              <option value="Tous">Tous les statuts</option>
-              <option value="En attente">En attente</option>
-              <option value="Entretien">Entretien</option>
-              <option value="Refusé">Refusé</option>
-              <option value="Accepté">Accepté</option>
-            </select>
-            <button
-              onClick={() => {
-                setShowForm(!showForm);
-                if (!showForm) {
-                  setEditingCandidature(null);
-                  setNewCandidature({
-                    entreprise: '',
-                    poste: '',
-                    date_candidature: '',
-                    statut: 'En attente',
-                    notes: ''
-                  });
-                }
-              }}
-              className="button px-4 py-2 rounded-md transition duration-200"
-            >
-              {showForm ? 'Annuler' : 'Ajouter une candidature'}
-            </button>
+        )}
+        {/* Ligne statuts + bouton */}
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-8 mt-6 w-full">
+          {/* Statuts à gauche (chips, PAS de select) */}
+          <div className="flex flex-nowrap gap-1 min-w-0 overflow-x-auto no-scrollbar">
+            {['Tous', 'En attente', 'Entretien', 'Refusé', 'Accepté'].map((statut) => (
+              <button
+                key={statut}
+                onClick={() => setFilterStatut(statut)}
+                className={`px-4 py-2 rounded-full font-semibold border-2 shadow-sm transition duration-150 text-sm whitespace-nowrap
+                  ${filterStatut === statut ? 'bg-accent text-white border-accent shadow-md' : 'bg-white text-primary border-primary hover:bg-accent/10'}`}
+              >
+                {statut}
+              </button>
+            ))}
           </div>
+          {/* Bouton à droite */}
+          <button
+            onClick={() => {
+              setShowForm(!showForm);
+              if (!showForm) {
+                setEditingCandidature(null);
+                setNewCandidature({
+                  entreprise: '',
+                  poste: '',
+                  date_candidature: '',
+                  statut: 'En attente',
+                  notes: ''
+                });
+              }
+            }}
+            className="flex-shrink-0 flex items-center justify-center gap-2 bg-primary hover:bg-accent text-white font-bold px-5 py-2 rounded-full shadow-lg transition duration-200 text-base whitespace-nowrap"
+            style={{minWidth:'fit-content'}}
+          >
+            <span className="text-xl">+</span> {showForm ? 'Annuler' : 'Ajouter'}
+          </button>
         </div>
 
         {showForm && (
-          <div className="rounded-lg p-6 mb-8">
-            <h3 className="text-xl font-semibold mb-4">
+          <div className="rounded-3xl p-3 sm:p-6 mb-8 border-2 border-primary bg-white shadow-2xl max-w-xl mx-auto w-full">
+            <h3 className="text-xl font-bold mb-4 text-primary text-center">
               {editingCandidature ? 'Modifier la candidature' : 'Nouvelle Candidature'}
             </h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-primary mb-2">
                   Entreprise
                 </label>
                 <input
                   type="text"
                   value={newCandidature.entreprise}
                   onChange={(e) => setNewCandidature({ ...newCandidature, entreprise: e.target.value })}
-                  className="w-full p-2 rounded border focus:outline-none"
+                  className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-primary mb-2">
                   Poste
                 </label>
                 <input
                   type="text"
                   value={newCandidature.poste}
                   onChange={(e) => setNewCandidature({ ...newCandidature, poste: e.target.value })}
-                  className="w-full p-2 rounded border focus:outline-none"
+                  className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-primary mb-2">
                   Date de candidature
                 </label>
                 <input
                   type="date"
                   value={newCandidature.date_candidature}
                   onChange={(e) => setNewCandidature({ ...newCandidature, date_candidature: e.target.value })}
-                  className="w-full p-2 rounded border focus:outline-none"
+                  className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary focus:border-accent focus:ring-2 focus:ring-accent transition"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-primary mb-2">
                   Statut
                 </label>
                 <select
                   value={newCandidature.statut}
                   onChange={(e) => setNewCandidature({ ...newCandidature, statut: e.target.value })}
-                  className="w-full p-2 rounded border focus:outline-none"
+                  className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary focus:border-accent focus:ring-2 focus:ring-accent transition"
                   required
                 >
                   <option value="En attente">En attente</option>
@@ -534,19 +539,19 @@ export default function MesCandidaturesPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-primary mb-2">
                   Notes
                 </label>
                 <textarea
                   value={newCandidature.notes}
                   onChange={(e) => setNewCandidature({ ...newCandidature, notes: e.target.value })}
-                  className="w-full p-2 rounded border focus:outline-none"
+                  className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
                   rows="3"
                 />
               </div>
               <button
                 type="submit"
-                className="button px-4 py-2 rounded-md transition duration-200"
+                className="w-full bg-accent hover:bg-primary text-white font-bold py-3 px-4 rounded-xl transition duration-200 disabled:opacity-50 shadow"
               >
                 {editingCandidature ? 'Modifier' : 'Ajouter'} la candidature
               </button>
@@ -554,18 +559,17 @@ export default function MesCandidaturesPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-y-6 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {filteredCandidatures.map((candidature) => (
             <div
               key={candidature.id}
-              className={`rounded-2xl p-4 shadow-md hover:shadow-xl transition relative overflow-hidden border border-primary
-                ${candidature.statut === 'Accepté' ? 'bg-green-200 ring-4 ring-success' : ''}
-                ${candidature.statut === 'Refusé' ? 'bg-red-200' : ''}
-                ${candidature.statut !== 'Accepté' && candidature.statut !== 'Refusé' ? 'bg-white' : ''}
+              className={`rounded-3xl p-6 shadow-lg hover:shadow-2xl transition relative overflow-hidden border-2 border-primary bg-white hover:-translate-y-1 duration-200 w-full max-w-full mx-auto
+                ${candidature.statut === 'Accepté' ? 'ring-4 ring-success' : ''}
+                ${candidature.statut === 'Refusé' ? 'ring-2 ring-error' : ''}
               `}
             >
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-lg text-primary">{candidature.entreprise}</h3>
+              <div className="flex justify-between items-start mb-2 gap-2">
+                <h3 className="font-bold text-lg text-primary break-words max-w-[60%]">{candidature.entreprise}</h3>
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEdit(candidature)}
@@ -581,20 +585,18 @@ export default function MesCandidaturesPage() {
                   </button>
                 </div>
               </div>
-              <p className="text-sm mb-1">Poste : {candidature.poste}</p>
-              <p className="text-sm mb-1">
-                Date : {new Date(candidature.date_candidature).toLocaleDateString()}
-              </p>
-              <p className="text-sm mb-1">
-                Statut : <span className={`${
-                  candidature.statut === 'Accepté' ? 'text-green-400 font-bold animate-bounce' :
-                  candidature.statut === 'Refusé' ? 'text-red-400' :
-                  candidature.statut === 'Entretien' ? 'text-yellow-400' :
-                  'text-gray-400'
-                }`}>{candidature.statut}</span>
-              </p>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-primary border border-primary/20">{candidature.poste}</span>
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-primary border border-primary/20">{new Date(candidature.date_candidature).toLocaleDateString()}</span>
+                <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold
+                  ${candidature.statut === 'Accepté' ? 'bg-success/20 text-success border-success' :
+                    candidature.statut === 'Refusé' ? 'bg-error/20 text-error border-error' :
+                    candidature.statut === 'Entretien' ? 'bg-yellow-100 text-yellow-700 border-yellow-300' :
+                    'bg-gray-100 text-primary border-primary/20'}
+                  border`}>{candidature.statut}</span>
+              </div>
               {candidature.notes && (
-                <p className="text-sm mt-2 border-t border-primary pt-2">
+                <p className="text-sm mt-2 border-t border-primary pt-2 text-gray-600">
                   {candidature.notes}
                 </p>
               )}
@@ -613,12 +615,12 @@ export default function MesCandidaturesPage() {
         )}
 
         {/* Section CV et Conversation */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="mt-12 grid grid-cols-1 gap-y-6 md:grid-cols-2 gap-8 w-full">
           {/* Section Téléversement CV */}
-          <div className="rounded-xl p-6 border border-primary bg-gray-100">
-            <h3 className="text-xl font-semibold mb-4">📄 CV pour {currentDossier?.nom}</h3>
+          <div className="rounded-3xl p-3 sm:p-6 border-2 border-primary bg-white shadow-2xl w-full max-w-full mx-auto">
+            <h3 className="text-xl font-bold mb-4 text-primary text-center">📄 CV pour {currentDossier?.nom}</h3>
             <div className="space-y-4">
-              <div className="border-2 border-dashed border-primary rounded-lg p-6 text-center bg-white">
+              <div className="border-2 border-dashed border-primary rounded-2xl p-6 text-center bg-gray-100 w-full max-w-full mx-auto">
                 <input
                   type="file"
                   accept=".pdf,.doc,.docx"
@@ -700,10 +702,10 @@ export default function MesCandidaturesPage() {
           </div>
 
           {/* Section Conversation */}
-          <div className="rounded-xl p-6 border border-primary bg-gray-100">
-            <h3 className="text-xl font-semibold mb-4">💬 Messages pour {currentDossier?.nom}</h3>
-            <div className="flex flex-col h-[600px] bg-white rounded-lg border border-primary">
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="rounded-xl p-3 sm:p-6 border border-primary bg-gray-100 w-full max-w-full mx-auto">
+            <h3 className="text-xl font-semibold mb-4 text-center">💬 Messages pour {currentDossier?.nom}</h3>
+            <div className="flex flex-col h-[400px] sm:h-[600px] bg-white rounded-lg border border-primary w-full max-w-full mx-auto">
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 w-full max-w-full mx-auto">
                 {messages.length === 0 ? (
                   <div className="text-center text-primary/60 py-8">
                     <p>Aucun message</p>
@@ -721,8 +723,8 @@ export default function MesCandidaturesPage() {
                         className={`w-full flex ${isMessageFromAdmin ? 'justify-start' : 'justify-end'}`}
                       >
                         <div
-                          className={`max-w-[80%] p-4 rounded-lg border ${
-                            isMessageFromAdmin
+                          className={`max-w-[80%] p-4 rounded-lg border w-full
+                            ${isMessageFromAdmin
                               ? 'bg-gray-200 text-primary rounded-tl-none border-gray-200'
                               : 'bg-primary text-white rounded-tr-none border-primary'
                           }`}
@@ -730,7 +732,7 @@ export default function MesCandidaturesPage() {
                           <p className="text-xs font-semibold mb-1">
                             {message.user_name || 'Admin'}
                           </p>
-                          <p className="text-sm">{message.message}</p>
+                          <p className="text-sm break-words">{message.message}</p>
                           <p className="text-xs opacity-75 mt-2">
                             {new Date(message.created_at).toLocaleString()}
                           </p>
@@ -740,14 +742,14 @@ export default function MesCandidaturesPage() {
                   })
                 )}
               </div>
-              <div className="border-t border-primary p-4 bg-white">
-                <form onSubmit={handleSendMessage} className="flex gap-2">
+              <div className="border-t border-primary p-4 bg-white w-full max-w-full mx-auto">
+                <form onSubmit={handleSendMessage} className="flex gap-2 w-full max-w-full mx-auto">
                   <input
                     type="text"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     placeholder="Écrivez votre message..."
-                    className="flex-1 bg-gray-100 text-primary rounded-lg px-4 py-2 border border-primary focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="flex-1 bg-gray-100 text-primary rounded-lg px-4 py-2 border border-primary focus:outline-none focus:ring-2 focus:ring-accent w-full max-w-full mx-auto"
                   />
                   <button
                     type="submit"

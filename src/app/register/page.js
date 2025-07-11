@@ -97,19 +97,17 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-[#121826] p-8 rounded-2xl shadow-xl w-full max-w-md">
-        <h1 className="text-2xl font-bold text-white text-center mb-8">Inscription</h1>
-        
+    <div className="min-h-screen flex items-center justify-center bg-[var(--background)] px-2">
+      <div className="bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl w-full max-w-md border-2 border-blue-100">
+        <h1 className="text-3xl font-bold text-primary text-center mb-8">Inscription</h1>
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-center font-semibold">
             {error}
           </div>
         )}
-
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+            <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
               Nom complet
             </label>
             <input
@@ -118,14 +116,13 @@ export default function RegisterPage() {
               type="text"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg border focus:outline-none"
+              className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
               required
               minLength={2}
             />
           </div>
-
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
               Email
             </label>
             <input
@@ -134,13 +131,12 @@ export default function RegisterPage() {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg border focus:outline-none"
+              className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
               required
             />
           </div>
-
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+            <label htmlFor="password" className="block text-sm font-medium text-primary mb-2">
               Mot de passe
             </label>
             <input
@@ -149,15 +145,14 @@ export default function RegisterPage() {
               type="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg border focus:outline-none"
+              className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
               required
               minLength={6}
             />
             <p className="text-sm text-gray-400 mt-1">Le mot de passe doit contenir au moins 6 caractères</p>
           </div>
-
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-primary mb-2">
               Confirmer le mot de passe
             </label>
             <input
@@ -166,25 +161,23 @@ export default function RegisterPage() {
               type="password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg border focus:outline-none"
+              className="w-full p-3 rounded-xl border-2 border-primary bg-gray-100 text-primary placeholder-gray-400 focus:border-accent focus:ring-2 focus:ring-accent transition"
               required
               minLength={6}
             />
           </div>
-
           <button
             type="submit"
             disabled={loading}
-            className="w-full button font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50"
+            className="w-full bg-primary hover:bg-accent text-white font-bold py-3 px-4 rounded-xl transition duration-200 disabled:opacity-50 shadow"
           >
-            {loading ? 'Inscription en cours...' : 'S\'inscrire'}
+            {loading ? 'Inscription en cours...' : "S'inscrire"}
           </button>
         </form>
-
         <div className="mt-6 text-center">
-          <p className="text-gray-400">
+          <p className="text-primary">
             Déjà un compte ?{' '}
-            <a href="/login" className="text-blue-400 hover:underline">
+            <a href="/login" className="text-accent hover:underline font-semibold">
               Se connecter
             </a>
           </p>

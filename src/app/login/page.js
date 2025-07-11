@@ -117,8 +117,8 @@ function LoginForm({ router }) {
 export default function LoginPage() {
   const router = useRouter();
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
-      <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md border-2 border-blue-100">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--background)] px-2">
+      <div className="bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl w-full max-w-md border-2 border-blue-100">
         <h1 className="text-3xl font-bold text-primary text-center mb-8">Connexion</h1>
         <Suspense>
           <LoginForm router={router} />
