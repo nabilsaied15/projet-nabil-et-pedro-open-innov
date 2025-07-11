@@ -382,7 +382,7 @@ export default function MesCandidaturesPage() {
 
       if (userError) {
         console.error('Erreur détaillée lors de l\'envoi du message:', userError);
-        throw new Error(`Erreur lors de l'envoi du message: ${userError.message}`);
+        throw new Error(`Erreur lors de l&apos;envoi du message: ${userError.message}`);
       }
 
       console.log('Message envoyé avec succès:', userMessageData);
@@ -392,7 +392,7 @@ export default function MesCandidaturesPage() {
       setNewMessage('');
     } catch (error) {
       console.error('Erreur complète lors de l\'envoi du message:', error);
-      alert(`Erreur lors de l'envoi du message: ${error.message}`);
+      alert(`Erreur lors de l&apos;envoi du message: ${error.message}`);
     }
   };
 

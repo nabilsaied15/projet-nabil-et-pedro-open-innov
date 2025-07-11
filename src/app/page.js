@@ -60,7 +60,7 @@ export default function Home() {
       </div>
       {/* Citation ou slogan */}
       <div className="mt-8 text-center text-base text-primary italic animate-fade-in">
-        "L'éducation est l'arme la plus puissante pour changer le monde." – Nelson Mandela
+        &quot;L&apos;éducation est l&apos;arme la plus puissante pour changer le monde.&quot; – Nelson Mandela
       </div>
     </main>
   );

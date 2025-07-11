@@ -222,7 +222,7 @@ export default function DossiersPage() {
                             rel="noopener noreferrer"
                             className="text-accent hover:underline text-xs"
                           >
-                            Voir l'offre
+                            Voir l&apos;offre
                           </a>
                         )}
                       </div>

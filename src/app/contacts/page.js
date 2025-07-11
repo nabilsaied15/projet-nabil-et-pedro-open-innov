@@ -267,7 +267,7 @@ function CalendarModal({ open, onClose, contact, onConfirmRdv, rdvs, setRdvs, us
           </div>
         )}
         {selectedDate && (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) && (
-          <div className="mt-4 text-center text-red-400 font-semibold text-lg">On ne travaille pas, c'est le weekend !</div>
+          <div className="mt-4 text-center text-red-400 font-semibold text-lg">On ne travaille pas, c&apos;est le weekend !</div>
         )}
       </div>
     </div>

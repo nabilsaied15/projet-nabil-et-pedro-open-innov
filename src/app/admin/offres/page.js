@@ -309,7 +309,7 @@ export default function AdminOffresPage() {
                       {offre.lien && (
                         <a href={offre.lien} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 mt-4 px-5 py-2 rounded-full font-bold shadow-lg transition-all duration-200 button text-base hover:underline" style={{ minWidth: '160px' }}>
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 3h7m0 0v7m0-7L10 14m-7 7h7a2 2 0 002-2v-7" /></svg>
-                          Voir l'offre
+                          Voir l&apos;offre
                         </a>
                       )}
                       <p className="text-xs mt-2 text-primary">Créé le: {new Date(offre.created_at).toLocaleString()}</p>

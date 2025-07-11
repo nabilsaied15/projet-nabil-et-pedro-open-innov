@@ -4,10 +4,7 @@ import { supabase } from '../lib/supabaseClient';
 import { FaPlus } from 'react-icons/fa'; // Assurez-vous d'avoir react-icons installé
 
 export default function AddItemPage({ table, onItemAdded }) {
-  if (!table) {
-    return <div style={{color: 'red'}}>Erreur : prop "table" manquante dans AddItemPage</div>;
-  }
-
+  // Place all useState and useEffect calls at the top of the component, before any conditions or returns.
   const [title, setTitle] = useState('');
   const [file, setFile] = useState(null);
   const [nombreVideos, setNombreVideos] = useState(0);

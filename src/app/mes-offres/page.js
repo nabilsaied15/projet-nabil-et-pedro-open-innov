@@ -129,7 +129,7 @@ export default function MesOffresPage() {
 
         {offres.length === 0 && (
           <div className="text-center text-gray-400 mt-8">
-            Aucune offre {activeTab === 'liked' ? 'likée' : activeTab === 'saved' ? 'sauvegardée' : 'qui vous intéresse'}
+            Aucune offre {activeTab === 'liked' ? 'lik&eacute;e' : activeTab === 'saved' ? 'sauvegard&eacute;e' : 'qui vous int&eacute;resse'}
           </div>
         )}
       </div>
