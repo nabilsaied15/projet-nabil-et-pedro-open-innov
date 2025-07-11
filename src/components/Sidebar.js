@@ -10,7 +10,7 @@ const menu = [
 
 export default function Sidebar() {
   return (
-    <aside className="h-screen w-64 bg-white border-r border-gray-200 flex flex-col justify-between fixed top-0 left-0 z-30 shadow-xl">
+    <aside className="hidden md:flex h-screen w-64 bg-white border-r border-gray-200 flex-col justify-between fixed top-0 left-0 z-30 shadow-xl">
       <div>
         <div className="flex items-center gap-3 px-6 py-8">
           <span className="text-2xl font-extrabold text-primary">EpsiZone</span>
