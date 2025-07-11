@@ -125,7 +125,7 @@ export default function AdminMessages() {
                     {messages.length === 0 ? (
                       <div className="text-center text-gray-400 py-8">
                         <p>Aucun message</p>
-                        <p className="text-sm mt-2">Attendez que l'utilisateur envoie un message</p>
+                        <p className="text-sm mt-2">Attendez que l&apos;utilisateur envoie un message</p>
                       </div>
                     ) : (
                       messages.map((message) => (
