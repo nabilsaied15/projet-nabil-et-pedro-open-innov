@@ -29,12 +29,6 @@ const courseFields = [
     label: 'Lien du cours',
     type: 'text',
     required: false
-  },
-  {
-    name: 'nombre_videos',
-    label: 'Nombre de vidéos',
-    type: 'number',
-    required: false
   }
 ];
 

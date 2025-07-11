@@ -84,9 +84,7 @@ function AddItemPage({ table, onItemAdded }) {
         const { error } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["supabase"].from(table).insert([
             {
                 title,
-                image_url,
-                nombre_videos: Number(nombreVideos) || 0,
-                nombre_pdfs: Number(nombrePdfs) || 0
+                image_url
             }
         ]);
         if (error) {
@@ -118,14 +116,14 @@ function AddItemPage({ table, onItemAdded }) {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaPlus"], {}, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 75,
+                            lineNumber: 73,
                             columnNumber: 13
                         }, this),
                         " Ajouter un cours"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 74,
+                    lineNumber: 72,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -136,7 +134,7 @@ function AddItemPage({ table, onItemAdded }) {
                             children: "Titre du cours"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 78,
+                            lineNumber: 76,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -148,13 +146,13 @@ function AddItemPage({ table, onItemAdded }) {
                             className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 79,
+                            lineNumber: 77,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 77,
+                    lineNumber: 75,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -165,7 +163,7 @@ function AddItemPage({ table, onItemAdded }) {
                             children: "Image du cours"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 89,
+                            lineNumber: 87,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -176,13 +174,13 @@ function AddItemPage({ table, onItemAdded }) {
                             className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 90,
+                            lineNumber: 88,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 88,
+                    lineNumber: 86,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -193,7 +191,7 @@ function AddItemPage({ table, onItemAdded }) {
                             children: "Nombre de vidéos"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 99,
+                            lineNumber: 97,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -204,13 +202,13 @@ function AddItemPage({ table, onItemAdded }) {
                             className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 100,
+                            lineNumber: 98,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 98,
+                    lineNumber: 96,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -221,7 +219,7 @@ function AddItemPage({ table, onItemAdded }) {
                             children: "Nombre de PDF"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 109,
+                            lineNumber: 107,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -232,13 +230,13 @@ function AddItemPage({ table, onItemAdded }) {
                             className: "p-2 rounded-xl w-full border border-primary bg-white text-primary text-base placeholder-gray-400 focus:border-blue-400 transition"
                         }, void 0, false, {
                             fileName: "[project]/src/components/AddItemPage.js",
-                            lineNumber: 110,
+                            lineNumber: 108,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 108,
+                    lineNumber: 106,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -247,7 +245,7 @@ function AddItemPage({ table, onItemAdded }) {
                     children: "➕ Ajouter"
                 }, void 0, false, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 118,
+                    lineNumber: 116,
                     columnNumber: 11
                 }, this),
                 message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -255,18 +253,18 @@ function AddItemPage({ table, onItemAdded }) {
                     children: message
                 }, void 0, false, {
                     fileName: "[project]/src/components/AddItemPage.js",
-                    lineNumber: 125,
+                    lineNumber: 123,
                     columnNumber: 13
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/AddItemPage.js",
-            lineNumber: 70,
+            lineNumber: 68,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/AddItemPage.js",
-        lineNumber: 68,
+        lineNumber: 66,
         columnNumber: 5
     }, this);
 }

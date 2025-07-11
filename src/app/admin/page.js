@@ -37,6 +37,11 @@ export default function AdminPage() {
   const [messagesCount, setMessagesCount] = useState(0);
   const [addUserMessage, setAddUserMessage] = useState('');
   const [addUserError, setAddUserError] = useState('');
+  // 1. Ajouter un état pour le fichier image
+  const [newCourseImageFile, setNewCourseImageFile] = useState(null);
+  const [newCourseImagePreview, setNewCourseImagePreview] = useState('');
+  const [allRdvs, setAllRdvs] = useState([]);
+  const [searchRdv, setSearchRdv] = useState('');
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -48,6 +53,7 @@ export default function AdminPage() {
       fetchCourses();
       fetchDossiers();
       fetchCandidatures();
+      fetchAllRdvs();
     }
   }, []);
 
@@ -190,12 +196,26 @@ export default function AdminPage() {
   };
 
   const handleAddCourse = async () => {
-    const { title, image_url } = newCourse;
+    const { title } = newCourse;
     if (!title) return alert('Le titre est requis.');
-    const { data, error } = await supabase.from('cours').insert([{ title, image_url }]);
+    let image_url = '';
+    if (newCourseImageFile) {
+      // Upload image to Supabase Storage
+      const fileExt = newCourseImageFile.name.split('.').pop();
+      const fileName = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+      const { data, error } = await supabase.storage.from('uploads').upload(fileName, newCourseImageFile);
+      if (error) {
+        alert('Erreur lors de l\'upload de l\'image');
+        return;
+      }
+      image_url = supabase.storage.from('uploads').getPublicUrl(fileName).data.publicUrl;
+    }
+    const { error } = await supabase.from('cours').insert([{ title, image_url }]);
     if (!error) {
       fetchCourses();
       setNewCourse({ title: '', image_url: '' });
+      setNewCourseImageFile(null);
+      setNewCourseImagePreview('');
       setShowAddCourseForm(false);
     } else {
       alert('Erreur lors de l\'ajout');
@@ -327,20 +347,25 @@ export default function AdminPage() {
   const refusees = candidatures.filter(c => c.statut === 'Refusé').length;
   const entretiens = candidatures.filter(c => c.statut === 'Entretien').length;
 
+  const fetchAllRdvs = async () => {
+    const { data, error } = await supabase.from('rdvs2').select('*');
+    if (!error) setAllRdvs(data || []);
+  };
+
   return (
     <div className="min-h-screen bg-white p-10 text-primary">
       <div className="p-10">
         <h2 className="text-2xl font-bold mb-6 text-center">👑 Panneau d'administration</h2>
 
         <div className="flex justify-center gap-4 mb-6">
-          <button
+            <button
             onClick={() => setActiveTab('users')}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
               activeTab === 'users' ? 'bg-primary text-white shadow' : 'bg-gray-800 text-white hover:bg-gray-700'
             }`}
-          >
+            >
             Utilisateurs
-          </button>
+            </button>
           <button
             onClick={() => setActiveTab('courses')}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
@@ -382,118 +407,98 @@ export default function AdminPage() {
             <div className="flex justify-center mb-6">
               <button
                 onClick={() => setShowAddUserForm(!showAddUserForm)}
-                className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
               >
                 {showAddUserForm ? '– Fermer le formulaire' : '➕ Ajouter un utilisateur'}
               </button>
             </div>
 
             {showAddUserForm && (
-              <div className="bg-gray-800 text-white rounded-xl p-6 mb-6 border border-gray-700">
-                <h4 className="text-lg font-semibold mb-4">Ajouter un utilisateur</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input 
-                    type="text" 
-                    placeholder="Nom" 
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded" 
-                    value={newUser.name} 
-                    onChange={e => setNewUser({ ...newUser, name: e.target.value })} 
-                  />
-                  <input 
-                    type="email" 
-                    placeholder="Email" 
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded" 
-                    value={newUser.email} 
-                    onChange={e => setNewUser({ ...newUser, email: e.target.value })} 
-                  />
-                  <input
-                    type="password"
-                    placeholder="Mot de passe"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    value={newUser.password}
-                    onChange={e => setNewUser({ ...newUser, password: e.target.value })}
-                  />
-                  <select 
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded" 
-                    value={newUser.role} 
-                    onChange={e => setNewUser({ ...newUser, role: e.target.value })}
+              <>
+                <div
+                  className="fixed inset-0 bg-white/80 z-40 flex items-center justify-center"
+                  onClick={() => setShowAddUserForm(false)}
+                />
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div
+                    className="bg-white text-blue-900 rounded-3xl p-8 border-2 border-blue-100 shadow-xl max-w-xl w-full relative animate-fade-in"
+                    onClick={e => e.stopPropagation()}
                   >
-                    <option value="user">user</option>
-                    <option value="admin">admin</option>
-                  </select>
+                    <button
+                      className="absolute top-3 right-3 text-2xl text-blue-400 hover:text-blue-700 font-bold"
+                      onClick={() => setShowAddUserForm(false)}
+                      aria-label="Fermer"
+                    >
+                      ×
+                    </button>
+                    <h4 className="text-2xl font-bold mb-6 text-center">Ajouter un utilisateur</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <input
+                        type="text"
+                        placeholder="Nom"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newUser.name}
+                        onChange={e => setNewUser({ ...newUser, name: e.target.value })}
+                        required
+                      />
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newUser.email}
+                        onChange={e => setNewUser({ ...newUser, email: e.target.value })}
+                        required
+                      />
+                      <input
+                        type="password"
+                        placeholder="Mot de passe"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newUser.password}
+                        onChange={e => setNewUser({ ...newUser, password: e.target.value })}
+                        required
+                      />
+                      <select
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newUser.role}
+                        onChange={e => setNewUser({ ...newUser, role: e.target.value })}
+                      >
+                        <option value="" disabled hidden>Rôle</option>
+                        <option value="user">Utilisateur</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                    </div>
+                    <button
+                      onClick={handleAddUser}
+                      className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 border-2 border-white/10 text-lg"
+                    >
+                      Ajouter
+                    </button>
+                    {addUserMessage && <div className="text-green-600 font-bold mt-4 text-center animate-fade-in">{addUserMessage}</div>}
+                    {addUserError && <div className="text-red-600 font-bold mt-4 text-center animate-fade-in">{addUserError}</div>}
+                  </div>
                 </div>
-                <button
-                  onClick={handleAddUser}
-                  className="mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors"
-                >
-                  Ajouter
-                </button>
-                {addUserMessage && <div className="text-green-400 font-bold mt-2">{addUserMessage}</div>}
-                {addUserError && <div className="text-red-400 font-bold mt-2">{addUserError}</div>}
-              </div>
+              </>
             )}
 
-            <div className="overflow-x-auto rounded-xl shadow-xl">
-              <table className="w-full text-sm text-left border border-gray-700">
-                <thead className="bg-gray-800 text-white">
+            <div className="overflow-x-auto border-2 border-blue-100 rounded-none">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-blue-50 text-blue-900">
                   <tr>
-                    <th className="px-6 py-3 border-b border-gray-700">ID</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Nom</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Email</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Rôle</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Actions</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">ID</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Nom</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Email</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Rôle</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-gray-900 text-white">
-                  {users.map((u) => (
-                    <tr key={u.id} className="hover:bg-gray-800 border-b border-gray-700">
-                      <td className="px-6 py-4 break-all">{u.id}</td>
-                      <td className="px-6 py-4">
-                        {editingUserId === u.id ? (
-                          <input 
-                            value={u.name || ''} 
-                            onChange={e => handleUserChange(u.id, 'name', e.target.value)} 
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full" 
-                          />
-                        ) : (
-                          <span>{u.name}</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {editingUserId === u.id ? (
-                          <input 
-                            value={u.email || ''} 
-                            onChange={e => handleUserChange(u.id, 'email', e.target.value)} 
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full" 
-                          />
-                        ) : (
-                          <span>{u.email}</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {editingUserId === u.id ? (
-                          <select 
-                            value={u.role} 
-                            onChange={e => handleUserChange(u.id, 'role', e.target.value)} 
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded"
-                          >
-                            <option value="user">user</option>
-                            <option value="admin">admin</option>
-                          </select>
-                        ) : (
-                          <span className="bg-blue-900 text-blue-200 px-3 py-1 rounded-full text-xs">{u.role}</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex gap-3">
-                          {editingUserId === u.id ? (
-                            <button onClick={() => handleSaveUser(u.id)} className="text-green-400 hover:text-green-300 text-sm">💾 Sauvegarder</button>
-                          ) : (
-                            <button onClick={() => setEditingUserId(u.id)} className="text-blue-400 hover:text-blue-300 text-sm">✏️ Modifier</button>
-                          )}
-                          <button onClick={() => handleDeleteUser(u.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors">🗑️ Supprimer</button>
-                        </div>
-                      </td>
+                <tbody>
+                  {users.map((u, idx) => (
+                    <tr key={u.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}>
+                      <td className="px-6 py-4 border-b border-blue-100">{u.id}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingUserId === u.id ? (<input value={u.name || ''} onChange={e => handleUserChange(u.id, 'name', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (<span>{u.name}</span>)}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingUserId === u.id ? (<input value={u.email || ''} onChange={e => handleUserChange(u.id, 'email', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (<span>{u.email}</span>)}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingUserId === u.id ? (<select value={u.role} onChange={e => handleUserChange(u.id, 'role', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded"><option value="user">user</option><option value="admin">admin</option></select>) : (<span className="bg-blue-900 text-blue-200 px-3 py-1 rounded-full text-xs">{u.role}</span>)}</td>
+                      <td className="px-6 py-4 border-b border-blue-100"><div className="flex gap-3">{editingUserId === u.id ? (<button onClick={() => handleSaveUser(u.id)} className="text-green-600 hover:text-green-400 text-sm">💾 Sauvegarder</button>) : (<button onClick={() => setEditingUserId(u.id)} className="text-blue-600 hover:text-blue-400 text-sm">✏️ Modifier</button>)}<button onClick={() => handleDeleteUser(u.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors">🗑️ Supprimer</button></div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -507,92 +512,91 @@ export default function AdminPage() {
             <div className="flex justify-center mb-6">
               <button
                 onClick={() => setShowAddCourseForm(!showAddCourseForm)}
-                className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
               >
                 {showAddCourseForm ? '– Fermer le formulaire' : '➕ Ajouter un cours'}
               </button>
             </div>
 
             {showAddCourseForm && (
-              <div className="bg-gray-800 text-white rounded-xl p-6 mb-6 border border-gray-700">
-                <h4 className="text-lg font-semibold mb-4">Ajouter un cours</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Titre"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    value={newCourse.title}
-                    onChange={e => setNewCourse({ ...newCourse, title: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    placeholder="URL de l'image"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    value={newCourse.image_url}
-                    onChange={e => setNewCourse({ ...newCourse, image_url: e.target.value })}
-                  />
+              <>
+                <div
+                  className="fixed inset-0 bg-white/80 z-40 flex items-center justify-center"
+                  onClick={() => setShowAddCourseForm(false)}
+                />
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div
+                    className="bg-white text-blue-900 rounded-3xl p-8 border-2 border-blue-100 shadow-xl max-w-xl w-full relative animate-fade-in"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <button
+                      className="absolute top-3 right-3 text-2xl text-blue-400 hover:text-blue-700 font-bold"
+                      onClick={() => setShowAddCourseForm(false)}
+                      aria-label="Fermer"
+                    >
+                      ×
+                    </button>
+                    <h4 className="text-2xl font-bold mb-6 text-center">Ajouter un cours</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <input
+                        type="text"
+                        placeholder="Titre"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newCourse.title}
+                        onChange={e => setNewCourse({ ...newCourse, title: e.target.value })}
+                        required
+                      />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        placeholder="Image"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        onChange={e => {
+                          const file = e.target.files[0];
+                          setNewCourseImageFile(file);
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = ev => setNewCourseImagePreview(ev.target.result);
+                            reader.readAsDataURL(file);
+                          } else {
+                            setNewCourseImagePreview('');
+                          }
+                        }}
+                      />
+                      {newCourseImagePreview && (
+                        <div className="relative w-full h-24 rounded-lg overflow-hidden border-2 border-blue-100">
+                          <img src={newCourseImagePreview} alt="Aperçu" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                    </div>
+                    <button
+                      onClick={handleAddCourse}
+                      className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 border-2 border-white/10 text-lg"
+                    >
+                      Ajouter
+                    </button>
+                  </div>
                 </div>
-                <button
-                  onClick={handleAddCourse}
-                  className="mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors"
-                >
-                  Ajouter
-                </button>
-              </div>
+              </>
             )}
 
-            <div className="overflow-x-auto rounded-xl shadow-xl">
-              <table className="w-full text-sm text-left border border-gray-700">
-                <thead className="bg-gray-800 text-white">
+            <div className="overflow-x-auto border-2 border-blue-100 rounded-none">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-blue-50 text-blue-900">
                   <tr>
-                    <th className="px-6 py-3 border-b border-gray-700">ID</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Titre</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Image</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Actions</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">ID</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Titre</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Image</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-gray-900 text-white">
-                  {courses.map((course) => (
-                    <tr key={course.id} className="hover:bg-gray-800 border-b border-gray-700">
-                      <td className="px-6 py-4 break-all">{course.id}</td>
-                      <td className="px-6 py-4">
-                        {editingCourseId === course.id ? (
-                          <input
-                            value={course.title || ''}
-                            onChange={e => handleCourseChange(course.id, 'title', e.target.value)}
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
-                          />
-                        ) : (
-                          <span>{course.title}</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {editingCourseId === course.id ? (
-                          <input
-                            value={course.image_url || ''}
-                            onChange={e => handleCourseChange(course.id, 'image_url', e.target.value)}
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
-                          />
-                        ) : (
-                          course.image_url && (
-                            <img
-                              src={course.image_url}
-                              alt={course.title}
-                              className="w-12 h-12 object-cover rounded"
-                            />
-                          )
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex gap-3">
-                          {editingCourseId === course.id ? (
-                            <button onClick={() => handleSaveCourse(course.id)} className="text-green-400 hover:text-green-300 text-sm">💾 Sauvegarder</button>
-                          ) : (
-                            <button onClick={() => setEditingCourseId(course.id)} className="text-blue-400 hover:text-blue-300 text-sm">✏️ Modifier</button>
-                          )}
-                          <button onClick={() => handleDeleteCourse(course.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors">🗑️ Supprimer</button>
-                        </div>
-                      </td>
+                <tbody>
+                  {courses.map((course, idx) => (
+                    <tr key={course.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}>
+                      <td className="px-6 py-4 border-b border-blue-100">{course.id}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingCourseId === course.id ? (<input value={course.title || ''} onChange={e => handleCourseChange(course.id, 'title', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (<span>{course.title}</span>)}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingCourseId === course.id ? (<input value={course.image_url || ''} onChange={e => handleCourseChange(course.id, 'image_url', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (course.image_url && (<img src={course.image_url} alt={course.title} className="w-12 h-12 object-cover rounded" />))}</td>
+                      <td className="px-6 py-4 border-b border-blue-100"><div className="flex gap-3">{editingCourseId === course.id ? (<button onClick={() => handleSaveCourse(course.id)} className="text-green-600 hover:text-green-400 text-sm">💾 Sauvegarder</button>) : (<button onClick={() => setEditingCourseId(course.id)} className="text-blue-600 hover:text-blue-400 text-sm">✏️ Modifier</button>)}<button onClick={() => handleDeleteCourse(course.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors">🗑️ Supprimer</button></div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -629,103 +633,83 @@ export default function AdminPage() {
             <div className="flex justify-center mb-6">
               <button
                 onClick={() => setShowAddDossierForm(!showAddDossierForm)}
-                className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
               >
                 {showAddDossierForm ? '– Fermer le formulaire' : '➕ Ajouter un dossier'}
               </button>
             </div>
 
             {showAddDossierForm && (
-              <div className="bg-gray-800 text-white rounded-xl p-6 mb-6 border border-gray-700">
-                <h4 className="text-lg font-semibold mb-4">Ajouter un dossier</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Nom du dossier"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    value={newDossier.nom}
-                    onChange={e => setNewDossier({ ...newDossier, nom: e.target.value })}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Mot de passe"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    value={newDossier.mot_de_passe}
-                    onChange={e => setNewDossier({ ...newDossier, mot_de_passe: e.target.value })}
-                  />
+              <>
+                <div
+                  className="fixed inset-0 bg-white/80 z-40 flex items-center justify-center"
+                  onClick={() => setShowAddDossierForm(false)}
+                />
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div
+                    className="bg-white text-blue-900 rounded-3xl p-8 border-2 border-blue-100 shadow-xl max-w-xl w-full relative animate-fade-in"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <button
+                      className="absolute top-3 right-3 text-2xl text-blue-400 hover:text-blue-700 font-bold"
+                      onClick={() => setShowAddDossierForm(false)}
+                      aria-label="Fermer"
+                    >
+                      ×
+                    </button>
+                    <h4 className="text-2xl font-bold mb-6 text-center">Ajouter un dossier</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <input
+                        type="text"
+                        placeholder="Nom du dossier"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newDossier.nom}
+                        onChange={e => setNewDossier({ ...newDossier, nom: e.target.value })}
+                        required
+                      />
+                      <input
+                        type="password"
+                        placeholder="Mot de passe"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newDossier.mot_de_passe}
+                        onChange={e => setNewDossier({ ...newDossier, mot_de_passe: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <button
+                      onClick={handleAddDossier}
+                      className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 border-2 border-white/10 text-lg"
+                    >
+                      Ajouter
+                    </button>
+                  </div>
                 </div>
-                <button
-                  onClick={handleAddDossier}
-                  className="mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors"
-                >
-                  Ajouter
-                </button>
-              </div>
+              </>
             )}
 
-            <div className="overflow-x-auto rounded-xl shadow-xl">
-              <table className="w-full text-sm text-left border border-gray-700">
-                <thead className="bg-gray-800 text-white">
+            <div className="overflow-x-auto border-2 border-blue-100 rounded-none">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-blue-50 text-blue-900">
                   <tr>
-                    <th className="px-6 py-3 border-b border-gray-700">ID</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Nom</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Mot de passe</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Date de création</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Notifications</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Actions</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">ID</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Nom</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Mot de passe</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Date de création</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Notifications</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-gray-900 text-white">
-                  {dossiers.map((dossier) => {
-                    const dossierPending = candidatures.filter(
-                      c => c.dossier_id === dossier.id && c.statut === 'En attente'
-                    ).length;
+                <tbody>
+                  {dossiers.map((dossier, idx) => {
+                    const dossierPending = candidatures.filter(c => c.dossier_id === dossier.id && c.statut === 'En attente').length;
                     return (
-                      <tr key={dossier.id} className="hover:bg-gray-800 border-b border-gray-700">
-                        <td className="px-6 py-4 break-all">{dossier.id}</td>
-                        <td className="px-6 py-4">
-                          {editingDossierId === dossier.id ? (
-                            <input
-                              value={dossier.nom || ''}
-                              onChange={e => handleDossierChange(dossier.id, 'nom', e.target.value)}
-                              className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
-                            />
-                          ) : (
-                            <span>{dossier.nom}</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4">
-                          {editingDossierId === dossier.id ? (
-                            <input
-                              type="text"
-                              value={dossier.mot_de_passe || ''}
-                              onChange={e => handleDossierChange(dossier.id, 'mot_de_passe', e.target.value)}
-                              className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
-                            />
-                          ) : (
-                            <span className="text-green-400">{dossier.mot_de_passe}</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4">
-                          {new Date(dossier.created_at).toLocaleDateString()}
-                        </td>
-                        <td className="px-6 py-4">
-                          {dossierPending > 0 && (
-                            <span className="bg-red-600 text-white text-xs rounded-full px-2 py-0.5">
-                              {dossierPending}
-                            </span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="flex gap-3">
-                            {editingDossierId === dossier.id ? (
-                              <button onClick={() => handleSaveDossier(dossier.id)} className="text-green-400 hover:text-green-300 text-sm">💾 Sauvegarder</button>
-                            ) : (
-                              <button onClick={() => setEditingDossierId(dossier.id)} className="text-blue-400 hover:text-blue-300 text-sm">✏️ Modifier</button>
-                            )}
-                            <button onClick={() => handleDeleteDossier(dossier.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors">🗑️ Supprimer</button>
-                          </div>
-                        </td>
+                      <tr key={dossier.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}>
+                        <td className="px-6 py-4 border-b border-blue-100">{dossier.id}</td>
+                        <td className="px-6 py-4 border-b border-blue-100">{editingDossierId === dossier.id ? (<input value={dossier.nom || ''} onChange={e => handleDossierChange(dossier.id, 'nom', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (<span>{dossier.nom}</span>)}</td>
+                        <td className="px-6 py-4 border-b border-blue-100">{editingDossierId === dossier.id ? (<input type="text" value={dossier.mot_de_passe || ''} onChange={e => handleDossierChange(dossier.id, 'mot_de_passe', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (<span className="text-green-400">{dossier.mot_de_passe}</span>)}</td>
+                        <td className="px-6 py-4 border-b border-blue-100">{new Date(dossier.created_at).toLocaleDateString()}</td>
+                        <td className="px-6 py-4 border-b border-blue-100">{dossierPending > 0 && (<span className="bg-red-600 text-white text-xs rounded-full px-2 py-0.5">{dossierPending}</span>)}</td>
+                        <td className="px-6 py-4 border-b border-blue-100"><div className="flex gap-3">{editingDossierId === dossier.id ? (<button onClick={() => handleSaveDossier(dossier.id)} className="text-green-600 hover:text-green-400 text-sm">💾 Sauvegarder</button>) : (<button onClick={() => setEditingDossierId(dossier.id)} className="text-blue-600 hover:text-blue-400 text-sm">✏️ Modifier</button>)}<button onClick={() => handleDeleteDossier(dossier.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors">🗑️ Supprimer</button></div></td>
                       </tr>
                     );
                   })}
@@ -740,160 +724,122 @@ export default function AdminPage() {
             <div className="flex justify-center mb-6">
               <button
                 onClick={() => setShowAddCandidatureForm(!showAddCandidatureForm)}
-                className="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
+                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors"
               >
                 {showAddCandidatureForm ? '– Fermer le formulaire' : '➕ Ajouter une candidature'}
               </button>
             </div>
 
             {showAddCandidatureForm && (
-              <div className="bg-gray-800 text-white rounded-xl p-6 mb-6 border border-gray-700">
-                <h4 className="text-lg font-semibold mb-4">Ajouter une candidature</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <select
-                    value={newCandidature.dossier_id}
-                    onChange={e => setNewCandidature({ ...newCandidature, dossier_id: e.target.value })}
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    required
+              <>
+                <div
+                  className="fixed inset-0 bg-white/80 z-40 flex items-center justify-center"
+                  onClick={() => setShowAddCandidatureForm(false)}
+                />
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div
+                    className="bg-white text-blue-900 rounded-3xl p-8 border-2 border-blue-100 shadow-xl max-w-xl w-full relative animate-fade-in"
+                    onClick={e => e.stopPropagation()}
                   >
-                    <option value="">Sélectionner un dossier</option>
-                    {dossiers.map(dossier => (
-                      <option key={dossier.id} value={dossier.id}>
-                        {dossier.nom}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Entreprise"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    value={newCandidature.entreprise}
-                    onChange={e => setNewCandidature({ ...newCandidature, entreprise: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Poste"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    value={newCandidature.poste}
-                    onChange={e => setNewCandidature({ ...newCandidature, poste: e.target.value })}
-                  />
-                  <input
-                    type="date"
-                    placeholder="Date de candidature"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                    value={newCandidature.date_candidature}
-                    onChange={e => setNewCandidature({ ...newCandidature, date_candidature: e.target.value })}
-                  />
-                  <select
-                    value={newCandidature.statut}
-                    onChange={e => setNewCandidature({ ...newCandidature, statut: e.target.value })}
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded"
-                  >
-                    <option value="En attente">En attente</option>
-                    <option value="Entretien">Entretien</option>
-                    <option value="Refusé">Refusé</option>
-                    <option value="Accepté">Accepté</option>
-                  </select>
-                  <textarea
-                    placeholder="Notes"
-                    className="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded md:col-span-2"
-                    value={newCandidature.notes}
-                    onChange={e => setNewCandidature({ ...newCandidature, notes: e.target.value })}
-                    rows="3"
-                  />
+                    <button
+                      className="absolute top-3 right-3 text-2xl text-blue-400 hover:text-blue-700 font-bold"
+                      onClick={() => setShowAddCandidatureForm(false)}
+                      aria-label="Fermer"
+                    >
+                      ×
+                    </button>
+                    <h4 className="text-2xl font-bold mb-6 text-center">Ajouter une candidature</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <select
+                        value={newCandidature.dossier_id}
+                        onChange={e => setNewCandidature({ ...newCandidature, dossier_id: e.target.value })}
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        required
+                      >
+                        <option value="" disabled hidden>Sélectionner un dossier</option>
+                        {dossiers.map(dossier => (
+                          <option key={dossier.id} value={dossier.id}>
+                            {dossier.nom}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="text"
+                        placeholder="Entreprise"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newCandidature.entreprise}
+                        onChange={e => setNewCandidature({ ...newCandidature, entreprise: e.target.value })}
+                        required
+                      />
+                      <input
+                        type="text"
+                        placeholder="Poste"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newCandidature.poste}
+                        onChange={e => setNewCandidature({ ...newCandidature, poste: e.target.value })}
+                        required
+                      />
+                      <input
+                        type="date"
+                        placeholder="Date de candidature"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newCandidature.date_candidature}
+                        onChange={e => setNewCandidature({ ...newCandidature, date_candidature: e.target.value })}
+                        required
+                      />
+                      <select
+                        value={newCandidature.statut}
+                        onChange={e => setNewCandidature({ ...newCandidature, statut: e.target.value })}
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                      >
+                        <option value="" disabled hidden>Statut</option>
+                        <option value="En attente">En attente</option>
+                        <option value="Entretien">Entretien</option>
+                        <option value="Refusé">Refusé</option>
+                        <option value="Accepté">Accepté</option>
+                      </select>
+                      <textarea
+                        placeholder="Notes"
+                        className="bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition"
+                        value={newCandidature.notes}
+                        onChange={e => setNewCandidature({ ...newCandidature, notes: e.target.value })}
+                        rows="3"
+                      />
+                    </div>
+                    <button
+                      onClick={handleAddCandidature}
+                      className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 border-2 border-white/10 text-lg"
+                    >
+                      Ajouter
+                    </button>
+                  </div>
                 </div>
-                <button
-                  onClick={handleAddCandidature}
-                  className="mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors"
-                >
-                  Ajouter
-                </button>
-              </div>
+              </>
             )}
 
-            <div className="overflow-x-auto rounded-xl shadow-xl">
-              <table className="w-full text-sm text-left border border-gray-700">
-                <thead className="bg-gray-800 text-white">
+            <div className="overflow-x-auto border-2 border-blue-100 rounded-none">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-blue-50 text-blue-900">
                   <tr>
-                    <th className="px-6 py-3 border-b border-gray-700">ID</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Dossier</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Entreprise</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Poste</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Date</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Statut</th>
-                    <th className="px-6 py-3 border-b border-gray-700">Actions</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">ID</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Dossier</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Entreprise</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Poste</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Date</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Statut</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-gray-900 text-white">
-                  {candidatures.map((candidature) => (
-                    <tr key={candidature.id} className="hover:bg-gray-800 border-b border-gray-700">
-                      <td className="px-6 py-4 break-all">{candidature.id}</td>
-                      <td className="px-6 py-4">{candidature.dossiers?.nom}</td>
-                      <td className="px-6 py-4">
-                        {editingCandidatureId === candidature.id ? (
-                          <input
-                            value={candidature.entreprise || ''}
-                            onChange={e => handleCandidatureChange(candidature.id, 'entreprise', e.target.value)}
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
-                          />
-                        ) : (
-                          <span>{candidature.entreprise}</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {editingCandidatureId === candidature.id ? (
-                          <input
-                            value={candidature.poste || ''}
-                            onChange={e => handleCandidatureChange(candidature.id, 'poste', e.target.value)}
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
-                          />
-                        ) : (
-                          <span>{candidature.poste}</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {editingCandidatureId === candidature.id ? (
-                          <input
-                            type="date"
-                            value={candidature.date_candidature || ''}
-                            onChange={e => handleCandidatureChange(candidature.id, 'date_candidature', e.target.value)}
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
-                          />
-                        ) : (
-                          <span>{new Date(candidature.date_candidature).toLocaleDateString()}</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {editingCandidatureId === candidature.id ? (
-                          <select
-                            value={candidature.statut}
-                            onChange={e => handleCandidatureChange(candidature.id, 'statut', e.target.value)}
-                            className="bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded"
-                          >
-                            <option value="En attente">En attente</option>
-                            <option value="Entretien">Entretien</option>
-                            <option value="Refusé">Refusé</option>
-                            <option value="Accepté">Accepté</option>
-                          </select>
-                        ) : (
-                          <span className={`${
-                            candidature.statut === 'Accepté' ? 'text-green-400' :
-                            candidature.statut === 'Refusé' ? 'text-red-400' :
-                            candidature.statut === 'Entretien' ? 'text-yellow-400' :
-                            'text-gray-400'
-                          }`}>{candidature.statut}</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex gap-3">
-                          {editingCandidatureId === candidature.id ? (
-                            <button onClick={() => handleSaveCandidature(candidature.id)} className="text-green-400 hover:text-green-300 text-sm">💾 Sauvegarder</button>
-                          ) : (
-                            <button onClick={() => setEditingCandidatureId(candidature.id)} className="text-blue-400 hover:text-blue-300 text-sm">✏️ Modifier</button>
-                          )}
-                          <button onClick={() => handleDeleteCandidature(candidature.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors">🗑️ Supprimer</button>
-                        </div>
-                      </td>
+                <tbody>
+                  {candidatures.map((candidature, idx) => (
+                    <tr key={candidature.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}>
+                      <td className="px-6 py-4 border-b border-blue-100">{candidature.id}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{candidature.dossiers?.nom}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingCandidatureId === candidature.id ? (<input value={candidature.entreprise || ''} onChange={e => handleCandidatureChange(candidature.id, 'entreprise', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (<span>{candidature.entreprise}</span>)}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingCandidatureId === candidature.id ? (<input value={candidature.poste || ''} onChange={e => handleCandidatureChange(candidature.id, 'poste', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (<span>{candidature.poste}</span>)}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingCandidatureId === candidature.id ? (<input type="date" value={candidature.date_candidature || ''} onChange={e => handleCandidatureChange(candidature.id, 'date_candidature', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full" />) : (<span>{new Date(candidature.date_candidature).toLocaleDateString()}</span>)}</td>
+                      <td className="px-6 py-4 border-b border-blue-100">{editingCandidatureId === candidature.id ? (<select value={candidature.statut} onChange={e => handleCandidatureChange(candidature.id, 'statut', e.target.value)} className="bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded"><option value="En attente">En attente</option><option value="Entretien">Entretien</option><option value="Refusé">Refusé</option><option value="Accepté">Accepté</option></select>) : (<span className={`${candidature.statut === 'Accepté' ? 'text-green-600' : candidature.statut === 'Refusé' ? 'text-red-600' : candidature.statut === 'Entretien' ? 'text-yellow-600' : 'text-gray-600'}`}>{candidature.statut}</span>)}</td>
+                      <td className="px-6 py-4 border-b border-blue-100"><div className="flex gap-3">{editingCandidatureId === candidature.id ? (<button onClick={() => handleSaveCandidature(candidature.id)} className="text-green-600 hover:text-green-400 text-sm">💾 Sauvegarder</button>) : (<button onClick={() => setEditingCandidatureId(candidature.id)} className="text-blue-600 hover:text-blue-400 text-sm">✏️ Modifier</button>)}<button onClick={() => handleDeleteCandidature(candidature.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors">🗑️ Supprimer</button></div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -903,10 +849,42 @@ export default function AdminPage() {
         )}
 
         {activeTab === 'contacts' && (
-          <div className="p-8 bg-gray-800 rounded-xl shadow-xl text-white text-center">
-            <h2 className="text-2xl font-bold mb-4">Mes Contacts</h2>
-            <p className="text-gray-300 mb-8">Gérez ici vos contacts professionnels, ajoutez, recherchez et visualisez les informations de vos partenaires, entreprises ou intervenants.</p>
-            <div className="text-gray-400 italic">(Aucun contact pour le moment)</div>
+          <div className="w-full">
+            <h2 className="text-2xl font-bold mb-6 text-blue-900 text-center">Tous les rendez-vous</h2>
+            <input
+              type="text"
+              placeholder="Rechercher par nom de contact..."
+              className="mb-8 p-3 border-2 border-blue-100 rounded-xl w-full max-w-md mx-auto block text-blue-900 placeholder-blue-300 focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
+              value={searchRdv || ''}
+              onChange={e => setSearchRdv(e.target.value)}
+            />
+            <div className="overflow-x-auto border-2 border-blue-100 rounded-none">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-blue-50 text-blue-900">
+                  <tr>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Contact</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Date</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Heure</th>
+                    <th className="px-6 py-3 border-b border-blue-100 font-bold text-base">Pris par</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allRdvs
+                    .filter(rdv => !searchRdv || (rdv.contactName && rdv.contactName.toLowerCase().includes(searchRdv.toLowerCase())))
+                    .map((rdv, idx) => (
+                      <tr key={rdv.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'}>
+                        <td className="px-6 py-4 border-b border-blue-100">{rdv.contactName}</td>
+                        <td className="px-6 py-4 border-b border-blue-100">{rdv.date}</td>
+                        <td className="px-6 py-4 border-b border-blue-100">{rdv.hour}h</td>
+                        <td className="px-6 py-4 border-b border-blue-100">{rdv.userName || rdv.userEmail}</td>
+                      </tr>
+                    ))}
+                  {allRdvs.length === 0 && (
+                    <tr><td colSpan={4} className="text-center text-gray-400 py-8">Aucun rendez-vous</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 

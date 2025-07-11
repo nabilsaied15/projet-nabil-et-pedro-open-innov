@@ -620,6 +620,15 @@ export default function ContactsPage() {
     setAvailabilityTextContact(null);
   }
 
+  // 1. Ajouter la détection du rôle utilisateur
+  const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    const storedUser = typeof window !== 'undefined' && localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user'))
+      : null;
+    setCurrentUser(storedUser);
+  }, []);
+
   return (
     <div className="min-h-screen p-10">
       <h1 className="text-2xl font-bold mb-6">Gestion des Contacts</h1>
@@ -690,19 +699,25 @@ export default function ContactsPage() {
             <div className="text-gray-500 text-sm mb-1">{contact.email}</div>
             <div className="text-gray-500 text-sm mb-4">{contact.phone}</div>
             <div className="flex gap-2 mt-2 w-full">
-              <button onClick={() => handleEdit(contact)} className="flex-1 flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold">
-                Modifier
-              </button>
-              <button onClick={() => handleDelete(contact.id)} className="flex-1 flex items-center gap-2 bg-white border-2 border-red-400 text-red-500 px-4 py-2 rounded-xl shadow hover:bg-red-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold">
-                Supprimer
-              </button>
+              {currentUser?.role === 'admin' && (
+                <>
+                  <button onClick={() => handleEdit(contact)} className="flex-1 flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold">
+                    Modifier
+                  </button>
+                  <button onClick={() => handleDelete(contact.id)} className="flex-1 flex items-center gap-2 bg-white border-2 border-red-400 text-red-500 px-4 py-2 rounded-xl shadow hover:bg-red-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold">
+                    Supprimer
+                  </button>
+                </>
+              )}
             </div>
-            <button
-              className="mt-3 w-full flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold"
-              onClick={() => openAvailabilityModal(contact)}
-            >
-              Ajouter les horaires de disponibilité
-            </button>
+            {currentUser?.role === 'admin' && (
+              <button
+                className="mt-3 w-full flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold"
+                onClick={() => openAvailabilityModal(contact)}
+              >
+                Ajouter les horaires de disponibilité
+              </button>
+            )}
             <button
               className="mt-2 w-full flex items-center gap-2 bg-white border-2 border-blue-500 text-blue-700 px-4 py-2 rounded-xl shadow hover:bg-blue-500 hover:text-white hover:shadow-lg transition-all duration-200 font-semibold"
               onClick={() => openAvailabilityTextModal(contact)}
@@ -776,14 +791,7 @@ export default function ContactsPage() {
       {showRdvModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80">
           <div className="relative bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg mx-4 transition-all duration-300 border-2 border-blue-100">
-            <button
-              className="absolute top-3 right-3 text-2xl font-bold text-blue-400 hover:text-blue-700 transition"
-              type="button"
-              onClick={() => setShowRdvModal(false)}
-              aria-label="Fermer"
-            >
-              ×
-            </button>
+            {/* Bouton croix supprimé */}
             <h2 className="text-xl font-bold text-blue-900 text-center mb-4">Prendre un rendez-vous</h2>
             <div className="mb-4">
               <label className="block font-semibold mb-1">Avec qui ?</label>
@@ -810,22 +818,10 @@ export default function ContactsPage() {
               <label className="block font-semibold mb-1">Nom de l'étudiant</label>
               <input
                 type="text"
-                className="w-full p-2 rounded border mb-2 placeholder-blue-300"
-                placeholder="Rechercher un utilisateur..."
-                value={rdvSearchUser}
-                onChange={e => setRdvSearchUser(e.target.value)}
+                className="w-full p-2 rounded border mb-2 bg-gray-100 text-gray-700"
+                value={currentUser?.name || ''}
+                readOnly
               />
-              <div className="max-h-32 overflow-y-auto border rounded shadow">
-                {users.filter(u => u.name?.toLowerCase().includes(rdvSearchUser.toLowerCase())).map(u => (
-                  <div
-                    key={u.id}
-                    className={`px-3 py-2 cursor-pointer ${rdvUser?.id === u.id ? 'font-bold' : ''}`}
-                    onClick={() => { setRdvUser(u); setRdvSearchUser(u.name); }}
-                  >
-                    {u.name} ({u.email})
-                  </div>
-                ))}
-              </div>
             </div>
             <div className="mb-4 flex gap-4">
               <div className="flex-1">
@@ -903,7 +899,7 @@ export default function ContactsPage() {
               <button
                 onClick={async () => {
                   setRdvError('');
-                  if (!rdvContact || !rdvUser || !rdvDate || !rdvHour) {
+                  if (!rdvContact || !currentUser || !rdvDate || !rdvHour) {
                     setRdvError('Veuillez remplir tous les champs.');
                     return;
                   }
@@ -922,8 +918,8 @@ export default function ContactsPage() {
                   const { error } = await supabase.from('rdvs2').insert([{
                     contactId: rdvContact.id,
                     contactName: rdvContact.name,
-                    userName: rdvUser.name,
-                    userEmail: rdvUser.email,
+                    userName: currentUser.name,
+                    userEmail: currentUser.email,
                     date: rdvDate,
                     hour: rdvHour,
                     motif_id: selectedMotifId,
@@ -937,7 +933,7 @@ export default function ContactsPage() {
                   // Rafraîchir la liste des RDV
                   const { data: newRdvs } = await supabase.from('rdvs2').select('*');
                   setRdvs(newRdvs || []);
-                  setTimeout(() => { setShowRdvModal(false); setRdvConfirmed(false); setRdvContact(null); setRdvUser(null); setRdvDate(''); setRdvHour(''); setRdvSearchContact(''); setRdvSearchUser(''); setRdvError(''); }, 1200);
+                  setTimeout(() => { setShowRdvModal(false); setRdvConfirmed(false); setRdvContact(null); setRdvDate(''); setRdvHour(''); setRdvSearchContact(''); setRdvError(''); }, 1200);
                 }}
                 className="font-bold py-2 px-4 rounded-lg"
               >
@@ -959,13 +955,6 @@ export default function ContactsPage() {
             value={filterContact}
             onChange={e => setFilterContact(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="Filtrer par étudiant..."
-            className="p-2 rounded border mb-2 placeholder-blue-300"
-            value={filterUser}
-            onChange={e => setFilterUser(e.target.value)}
-          />
         </div>
         <div className="overflow-x-auto rounded-xl shadow-xl">
           <table className="w-full text-sm text-left border border-primary bg-white rounded-xl overflow-hidden">
@@ -981,7 +970,7 @@ export default function ContactsPage() {
             <tbody>
               {rdvs
                 .filter(r => r.contactName?.toLowerCase().includes(filterContact.toLowerCase()))
-                .filter(r => r.userName?.toLowerCase().includes(filterUser.toLowerCase()))
+                .filter(r => !currentUser || r.userEmail === currentUser.email)
                 .map((r, idx) => {
                   const motif = motifs.find(m => m.id === r.motif_id);
                   const motifLabel = motif?.label === 'Autre' && r.motif_custom ? r.motif_custom : motif?.label;

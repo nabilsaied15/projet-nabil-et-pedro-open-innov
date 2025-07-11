@@ -164,6 +164,11 @@ function AdminPage() {
     const [messagesCount, setMessagesCount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const [addUserMessage, setAddUserMessage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [addUserError, setAddUserError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
+    // 1. Ajouter un état pour le fichier image
+    const [newCourseImageFile, setNewCourseImageFile] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [newCourseImagePreview, setNewCourseImagePreview] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
+    const [allRdvs, setAllRdvs] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [searchRdv, setSearchRdv] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const storedUser = JSON.parse(localStorage.getItem('user'));
         if (!storedUser || storedUser.role !== 'admin') {
@@ -174,6 +179,7 @@ function AdminPage() {
             fetchCourses();
             fetchDossiers();
             fetchCandidatures();
+            fetchAllRdvs();
         }
     }, []);
     const fetchUsers = async ()=>{
@@ -319,9 +325,21 @@ function AdminPage() {
         }
     };
     const handleAddCourse = async ()=>{
-        const { title, image_url } = newCourse;
+        const { title } = newCourse;
         if (!title) return alert('Le titre est requis.');
-        const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].from('cours').insert([
+        let image_url = '';
+        if (newCourseImageFile) {
+            // Upload image to Supabase Storage
+            const fileExt = newCourseImageFile.name.split('.').pop();
+            const fileName = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+            const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].storage.from('uploads').upload(fileName, newCourseImageFile);
+            if (error) {
+                alert('Erreur lors de l\'upload de l\'image');
+                return;
+            }
+            image_url = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].storage.from('uploads').getPublicUrl(fileName).data.publicUrl;
+        }
+        const { error } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].from('cours').insert([
             {
                 title,
                 image_url
@@ -333,6 +351,8 @@ function AdminPage() {
                 title: '',
                 image_url: ''
             });
+            setNewCourseImageFile(null);
+            setNewCourseImagePreview('');
             setShowAddCourseForm(false);
         } else {
             alert('Erreur lors de l\'ajout');
@@ -458,6 +478,10 @@ function AdminPage() {
     const acceptees = candidatures.filter((c)=>c.statut === 'Accepté').length;
     const refusees = candidatures.filter((c)=>c.statut === 'Refusé').length;
     const entretiens = candidatures.filter((c)=>c.statut === 'Entretien').length;
+    const fetchAllRdvs = async ()=>{
+        const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].from('rdvs2').select('*');
+        if (!error) setAllRdvs(data || []);
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "min-h-screen bg-white p-10 text-primary",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -468,7 +492,7 @@ function AdminPage() {
                     children: "👑 Panneau d'administration"
                 }, void 0, false, {
                     fileName: "[project]/src/app/admin/page.js",
-                    lineNumber: 333,
+                    lineNumber: 358,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -480,8 +504,8 @@ function AdminPage() {
                             children: "Utilisateurs"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 336,
-                            columnNumber: 11
+                            lineNumber: 361,
+                            columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('courses'),
@@ -489,7 +513,7 @@ function AdminPage() {
                             children: "Cours"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 344,
+                            lineNumber: 369,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -502,13 +526,13 @@ function AdminPage() {
                                     children: dossiersCount
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 359,
+                                    lineNumber: 384,
                                     columnNumber: 35
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 352,
+                            lineNumber: 377,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -521,13 +545,13 @@ function AdminPage() {
                                     children: candidaturesPending
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 368,
+                                    lineNumber: 393,
                                     columnNumber: 41
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 361,
+                            lineNumber: 386,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -536,13 +560,13 @@ function AdminPage() {
                             children: "Contacts"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 370,
+                            lineNumber: 395,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/admin/page.js",
-                    lineNumber: 335,
+                    lineNumber: 360,
                     columnNumber: 9
                 }, this),
                 activeTab === 'users' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -551,320 +575,362 @@ function AdminPage() {
                             className: "flex justify-center mb-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setShowAddUserForm(!showAddUserForm),
-                                className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                                className: "bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
                                 children: showAddUserForm ? '– Fermer le formulaire' : '➕ Ajouter un utilisateur'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/page.js",
-                                lineNumber: 383,
+                                lineNumber: 408,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 382,
+                            lineNumber: 407,
                             columnNumber: 13
                         }, this),
-                        showAddUserForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-gray-800 text-white rounded-xl p-6 mb-6 border border-gray-700",
+                        showAddUserForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                    className: "text-lg font-semibold mb-4",
-                                    children: "Ajouter un utilisateur"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "fixed inset-0 bg-white/80 z-40 flex items-center justify-center",
+                                    onClick: ()=>setShowAddUserForm(false)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 393,
+                                    lineNumber: 418,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "grid grid-cols-1 md:grid-cols-2 gap-4",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            placeholder: "Nom",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newUser.name,
-                                            onChange: (e)=>setNewUser({
-                                                    ...newUser,
-                                                    name: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 395,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "email",
-                                            placeholder: "Email",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newUser.email,
-                                            onChange: (e)=>setNewUser({
-                                                    ...newUser,
-                                                    email: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 402,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "password",
-                                            placeholder: "Mot de passe",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newUser.password,
-                                            onChange: (e)=>setNewUser({
-                                                    ...newUser,
-                                                    password: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 409,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newUser.role,
-                                            onChange: (e)=>setNewUser({
-                                                    ...newUser,
-                                                    role: e.target.value
-                                                }),
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                    value: "user",
-                                                    children: "user"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 421,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                    value: "admin",
-                                                    children: "admin"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 422,
-                                                    columnNumber: 21
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 416,
-                                            columnNumber: 19
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
+                                    className: "fixed inset-0 z-50 flex items-center justify-center",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "bg-white text-blue-900 rounded-3xl p-8 border-2 border-blue-100 shadow-xl max-w-xl w-full relative animate-fade-in",
+                                        onClick: (e)=>e.stopPropagation(),
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: "absolute top-3 right-3 text-2xl text-blue-400 hover:text-blue-700 font-bold",
+                                                onClick: ()=>setShowAddUserForm(false),
+                                                "aria-label": "Fermer",
+                                                children: "×"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 427,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                className: "text-2xl font-bold mb-6 text-center",
+                                                children: "Ajouter un utilisateur"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 434,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "text",
+                                                        placeholder: "Nom",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newUser.name,
+                                                        onChange: (e)=>setNewUser({
+                                                                ...newUser,
+                                                                name: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 436,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "email",
+                                                        placeholder: "Email",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newUser.email,
+                                                        onChange: (e)=>setNewUser({
+                                                                ...newUser,
+                                                                email: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 444,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "password",
+                                                        placeholder: "Mot de passe",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newUser.password,
+                                                        onChange: (e)=>setNewUser({
+                                                                ...newUser,
+                                                                password: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 452,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newUser.role,
+                                                        onChange: (e)=>setNewUser({
+                                                                ...newUser,
+                                                                role: e.target.value
+                                                            }),
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "",
+                                                                disabled: true,
+                                                                hidden: true,
+                                                                children: "Rôle"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 465,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "user",
+                                                                children: "Utilisateur"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 466,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "admin",
+                                                                children: "Admin"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 467,
+                                                                columnNumber: 25
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 460,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 435,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: handleAddUser,
+                                                className: "mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 border-2 border-white/10 text-lg",
+                                                children: "Ajouter"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 470,
+                                                columnNumber: 21
+                                            }, this),
+                                            addUserMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "text-green-600 font-bold mt-4 text-center animate-fade-in",
+                                                children: addUserMessage
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 476,
+                                                columnNumber: 40
+                                            }, this),
+                                            addUserError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "text-red-600 font-bold mt-4 text-center animate-fade-in",
+                                                children: addUserError
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 477,
+                                                columnNumber: 38
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/admin/page.js",
+                                        lineNumber: 423,
+                                        columnNumber: 19
+                                    }, this)
+                                }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 394,
+                                    lineNumber: 422,
                                     columnNumber: 17
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: handleAddUser,
-                                    className: "mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors",
-                                    children: "Ajouter"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 425,
-                                    columnNumber: 17
-                                }, this),
-                                addUserMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-green-400 font-bold mt-2",
-                                    children: addUserMessage
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 431,
-                                    columnNumber: 36
-                                }, this),
-                                addUserError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-red-400 font-bold mt-2",
-                                    children: addUserError
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 432,
-                                    columnNumber: 34
                                 }, this)
                             ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 392,
-                            columnNumber: 15
-                        }, this),
+                        }, void 0, true),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "overflow-x-auto rounded-xl shadow-xl",
+                            className: "overflow-x-auto border-2 border-blue-100 rounded-none",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                                className: "w-full text-sm text-left border border-gray-700",
+                                className: "w-full text-sm text-left",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                                        className: "bg-gray-800 text-white",
+                                        className: "bg-blue-50 text-blue-900",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "ID"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 440,
+                                                    lineNumber: 487,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Nom"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 441,
+                                                    lineNumber: 488,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Email"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 442,
+                                                    lineNumber: 489,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Rôle"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 443,
+                                                    lineNumber: 490,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Actions"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 444,
+                                                    lineNumber: 491,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 439,
+                                            lineNumber: 486,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/page.js",
-                                        lineNumber: 438,
+                                        lineNumber: 485,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                                        className: "bg-gray-900 text-white",
-                                        children: users.map((u)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                className: "hover:bg-gray-800 border-b border-gray-700",
+                                        children: users.map((u, idx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                className: idx % 2 === 0 ? 'bg-white' : 'bg-blue-50',
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4 break-all",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: u.id
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 450,
+                                                        lineNumber: 497,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingUserId === u.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             value: u.name || '',
                                                             onChange: (e)=>handleUserChange(u.id, 'name', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 453,
-                                                            columnNumber: 27
+                                                            lineNumber: 498,
+                                                            columnNumber: 101
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: u.name
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 459,
-                                                            columnNumber: 27
+                                                            lineNumber: 498,
+                                                            columnNumber: 285
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 451,
+                                                        lineNumber: 498,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingUserId === u.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             value: u.email || '',
                                                             onChange: (e)=>handleUserChange(u.id, 'email', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 464,
-                                                            columnNumber: 27
+                                                            lineNumber: 499,
+                                                            columnNumber: 101
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: u.email
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 470,
-                                                            columnNumber: 27
+                                                            lineNumber: 499,
+                                                            columnNumber: 287
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 462,
+                                                        lineNumber: 499,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingUserId === u.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                                             value: u.role,
                                                             onChange: (e)=>handleUserChange(u.id, 'role', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded",
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                     value: "user",
                                                                     children: "user"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 480,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 500,
+                                                                    columnNumber: 266
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                     value: "admin",
                                                                     children: "admin"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 481,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 500,
+                                                                    columnNumber: 300
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 475,
-                                                            columnNumber: 27
+                                                            lineNumber: 500,
+                                                            columnNumber: 101
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "bg-blue-900 text-blue-200 px-3 py-1 rounded-full text-xs",
                                                             children: u.role
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 484,
-                                                            columnNumber: 27
+                                                            lineNumber: 500,
+                                                            columnNumber: 350
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 473,
+                                                        lineNumber: 500,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "flex gap-3",
                                                             children: [
                                                                 editingUserId === u.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>handleSaveUser(u.id),
-                                                                    className: "text-green-400 hover:text-green-300 text-sm",
+                                                                    className: "text-green-600 hover:text-green-400 text-sm",
                                                                     children: "💾 Sauvegarder"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 490,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 501,
+                                                                    columnNumber: 129
                                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setEditingUserId(u.id),
-                                                                    className: "text-blue-400 hover:text-blue-300 text-sm",
+                                                                    className: "text-blue-600 hover:text-blue-400 text-sm",
                                                                     children: "✏️ Modifier"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 492,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 501,
+                                                                    columnNumber: 258
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>handleDeleteUser(u.id),
@@ -872,40 +938,40 @@ function AdminPage() {
                                                                     children: "🗑️ Supprimer"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 494,
-                                                                    columnNumber: 27
+                                                                    lineNumber: 501,
+                                                                    columnNumber: 381
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 488,
-                                                            columnNumber: 25
+                                                            lineNumber: 501,
+                                                            columnNumber: 74
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 487,
+                                                        lineNumber: 501,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, u.id, true, {
                                                 fileName: "[project]/src/app/admin/page.js",
-                                                lineNumber: 449,
+                                                lineNumber: 496,
                                                 columnNumber: 21
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/page.js",
-                                        lineNumber: 447,
+                                        lineNumber: 494,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/page.js",
-                                lineNumber: 437,
+                                lineNumber: 484,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 436,
+                            lineNumber: 483,
                             columnNumber: 13
                         }, this)
                     ]
@@ -916,213 +982,266 @@ function AdminPage() {
                             className: "flex justify-center mb-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setShowAddCourseForm(!showAddCourseForm),
-                                className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                                className: "bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
                                 children: showAddCourseForm ? '– Fermer le formulaire' : '➕ Ajouter un cours'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/page.js",
-                                lineNumber: 508,
+                                lineNumber: 513,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 507,
+                            lineNumber: 512,
                             columnNumber: 13
                         }, this),
-                        showAddCourseForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-gray-800 text-white rounded-xl p-6 mb-6 border border-gray-700",
+                        showAddCourseForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                    className: "text-lg font-semibold mb-4",
-                                    children: "Ajouter un cours"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "fixed inset-0 bg-white/80 z-40 flex items-center justify-center",
+                                    onClick: ()=>setShowAddCourseForm(false)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 518,
+                                    lineNumber: 523,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "grid grid-cols-1 md:grid-cols-2 gap-4",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            placeholder: "Titre",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newCourse.title,
-                                            onChange: (e)=>setNewCourse({
-                                                    ...newCourse,
-                                                    title: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 520,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            placeholder: "URL de l'image",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newCourse.image_url,
-                                            onChange: (e)=>setNewCourse({
-                                                    ...newCourse,
-                                                    image_url: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 527,
-                                            columnNumber: 19
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 519,
-                                    columnNumber: 17
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: handleAddCourse,
-                                    className: "mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors",
-                                    children: "Ajouter"
+                                    className: "fixed inset-0 z-50 flex items-center justify-center",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "bg-white text-blue-900 rounded-3xl p-8 border-2 border-blue-100 shadow-xl max-w-xl w-full relative animate-fade-in",
+                                        onClick: (e)=>e.stopPropagation(),
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: "absolute top-3 right-3 text-2xl text-blue-400 hover:text-blue-700 font-bold",
+                                                onClick: ()=>setShowAddCourseForm(false),
+                                                "aria-label": "Fermer",
+                                                children: "×"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 532,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                className: "text-2xl font-bold mb-6 text-center",
+                                                children: "Ajouter un cours"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 539,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "text",
+                                                        placeholder: "Titre",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newCourse.title,
+                                                        onChange: (e)=>setNewCourse({
+                                                                ...newCourse,
+                                                                title: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 541,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "file",
+                                                        accept: "image/*",
+                                                        placeholder: "Image",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        onChange: (e)=>{
+                                                            const file = e.target.files[0];
+                                                            setNewCourseImageFile(file);
+                                                            if (file) {
+                                                                const reader = new FileReader();
+                                                                reader.onload = (ev)=>setNewCourseImagePreview(ev.target.result);
+                                                                reader.readAsDataURL(file);
+                                                            } else {
+                                                                setNewCourseImagePreview('');
+                                                            }
+                                                        }
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 549,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    newCourseImagePreview && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "relative w-full h-24 rounded-lg overflow-hidden border-2 border-blue-100",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                            src: newCourseImagePreview,
+                                                            alt: "Aperçu",
+                                                            className: "w-full h-full object-cover"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/admin/page.js",
+                                                            lineNumber: 568,
+                                                            columnNumber: 27
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 567,
+                                                        columnNumber: 25
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 540,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: handleAddCourse,
+                                                className: "mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 border-2 border-white/10 text-lg",
+                                                children: "Ajouter"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 572,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/admin/page.js",
+                                        lineNumber: 528,
+                                        columnNumber: 19
+                                    }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 535,
+                                    lineNumber: 527,
                                     columnNumber: 17
                                 }, this)
                             ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 517,
-                            columnNumber: 15
-                        }, this),
+                        }, void 0, true),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "overflow-x-auto rounded-xl shadow-xl",
+                            className: "overflow-x-auto border-2 border-blue-100 rounded-none",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                                className: "w-full text-sm text-left border border-gray-700",
+                                className: "w-full text-sm text-left",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                                        className: "bg-gray-800 text-white",
+                                        className: "bg-blue-50 text-blue-900",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "ID"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 548,
+                                                    lineNumber: 587,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Titre"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 549,
+                                                    lineNumber: 588,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Image"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 550,
+                                                    lineNumber: 589,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Actions"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 551,
+                                                    lineNumber: 590,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 547,
+                                            lineNumber: 586,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/page.js",
-                                        lineNumber: 546,
+                                        lineNumber: 585,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                                        className: "bg-gray-900 text-white",
-                                        children: courses.map((course)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                className: "hover:bg-gray-800 border-b border-gray-700",
+                                        children: courses.map((course, idx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                className: idx % 2 === 0 ? 'bg-white' : 'bg-blue-50',
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4 break-all",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: course.id
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 557,
+                                                        lineNumber: 596,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingCourseId === course.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             value: course.title || '',
                                                             onChange: (e)=>handleCourseChange(course.id, 'title', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 560,
-                                                            columnNumber: 27
+                                                            lineNumber: 597,
+                                                            columnNumber: 108
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: course.title
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 566,
-                                                            columnNumber: 27
+                                                            lineNumber: 597,
+                                                            columnNumber: 306
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 558,
+                                                        lineNumber: 597,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingCourseId === course.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             value: course.image_url || '',
                                                             onChange: (e)=>handleCourseChange(course.id, 'image_url', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 571,
-                                                            columnNumber: 27
+                                                            lineNumber: 598,
+                                                            columnNumber: 108
                                                         }, this) : course.image_url && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                                             src: course.image_url,
                                                             alt: course.title,
                                                             className: "w-12 h-12 object-cover rounded"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 578,
-                                                            columnNumber: 29
+                                                            lineNumber: 598,
+                                                            columnNumber: 335
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 569,
+                                                        lineNumber: 598,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "flex gap-3",
                                                             children: [
                                                                 editingCourseId === course.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>handleSaveCourse(course.id),
-                                                                    className: "text-green-400 hover:text-green-300 text-sm",
+                                                                    className: "text-green-600 hover:text-green-400 text-sm",
                                                                     children: "💾 Sauvegarder"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 589,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 599,
+                                                                    columnNumber: 136
                                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setEditingCourseId(course.id),
-                                                                    className: "text-blue-400 hover:text-blue-300 text-sm",
+                                                                    className: "text-blue-600 hover:text-blue-400 text-sm",
                                                                     children: "✏️ Modifier"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 591,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 599,
+                                                                    columnNumber: 272
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>handleDeleteCourse(course.id),
@@ -1130,40 +1249,40 @@ function AdminPage() {
                                                                     children: "🗑️ Supprimer"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 593,
-                                                                    columnNumber: 27
+                                                                    lineNumber: 599,
+                                                                    columnNumber: 402
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 587,
-                                                            columnNumber: 25
+                                                            lineNumber: 599,
+                                                            columnNumber: 74
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 586,
+                                                        lineNumber: 599,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, course.id, true, {
                                                 fileName: "[project]/src/app/admin/page.js",
-                                                lineNumber: 556,
+                                                lineNumber: 595,
                                                 columnNumber: 21
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/page.js",
-                                        lineNumber: 554,
+                                        lineNumber: 593,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/page.js",
-                                lineNumber: 545,
+                                lineNumber: 584,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 544,
+                            lineNumber: 583,
                             columnNumber: 13
                         }, this)
                     ]
@@ -1181,37 +1300,12 @@ function AdminPage() {
                                             children: totalDossiers
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 608,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "text-sm",
-                                            children: "Dossiers"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 609,
-                                            columnNumber: 17
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 607,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-yellow-600 text-white rounded-lg p-4 text-center shadow",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "text-lg font-bold",
-                                            children: enAttente
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
                                             lineNumber: 612,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "text-sm",
-                                            children: "En attente"
+                                            children: "Dossiers"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.js",
                                             lineNumber: 613,
@@ -1224,11 +1318,11 @@ function AdminPage() {
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-green-700 text-white rounded-lg p-4 text-center shadow",
+                                    className: "bg-yellow-600 text-white rounded-lg p-4 text-center shadow",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "text-lg font-bold",
-                                            children: acceptees
+                                            children: enAttente
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.js",
                                             lineNumber: 616,
@@ -1236,7 +1330,7 @@ function AdminPage() {
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "text-sm",
-                                            children: "Acceptées"
+                                            children: "En attente"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.js",
                                             lineNumber: 617,
@@ -1249,11 +1343,11 @@ function AdminPage() {
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-red-700 text-white rounded-lg p-4 text-center shadow",
+                                    className: "bg-green-700 text-white rounded-lg p-4 text-center shadow",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "text-lg font-bold",
-                                            children: refusees
+                                            children: acceptees
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.js",
                                             lineNumber: 620,
@@ -1261,7 +1355,7 @@ function AdminPage() {
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "text-sm",
-                                            children: "Refusées"
+                                            children: "Acceptées"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.js",
                                             lineNumber: 621,
@@ -1274,11 +1368,11 @@ function AdminPage() {
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-purple-700 text-white rounded-lg p-4 text-center shadow col-span-2 md:col-span-1",
+                                    className: "bg-red-700 text-white rounded-lg p-4 text-center shadow",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "text-lg font-bold",
-                                            children: entretiens
+                                            children: refusees
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.js",
                                             lineNumber: 624,
@@ -1286,7 +1380,7 @@ function AdminPage() {
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "text-sm",
-                                            children: "Entretiens"
+                                            children: "Refusées"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.js",
                                             lineNumber: 625,
@@ -1297,265 +1391,321 @@ function AdminPage() {
                                     fileName: "[project]/src/app/admin/page.js",
                                     lineNumber: 623,
                                     columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "bg-purple-700 text-white rounded-lg p-4 text-center shadow col-span-2 md:col-span-1",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "text-lg font-bold",
+                                            children: entretiens
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/page.js",
+                                            lineNumber: 628,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "text-sm",
+                                            children: "Entretiens"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/page.js",
+                                            lineNumber: 629,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/admin/page.js",
+                                    lineNumber: 627,
+                                    columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 606,
+                            lineNumber: 610,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex justify-center mb-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setShowAddDossierForm(!showAddDossierForm),
-                                className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                                className: "bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
                                 children: showAddDossierForm ? '– Fermer le formulaire' : '➕ Ajouter un dossier'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/page.js",
-                                lineNumber: 630,
+                                lineNumber: 634,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 629,
+                            lineNumber: 633,
                             columnNumber: 13
                         }, this),
-                        showAddDossierForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-gray-800 text-white rounded-xl p-6 mb-6 border border-gray-700",
+                        showAddDossierForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                    className: "text-lg font-semibold mb-4",
-                                    children: "Ajouter un dossier"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "fixed inset-0 bg-white/80 z-40 flex items-center justify-center",
+                                    onClick: ()=>setShowAddDossierForm(false)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 640,
+                                    lineNumber: 644,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "grid grid-cols-1 md:grid-cols-2 gap-4",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            placeholder: "Nom du dossier",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newDossier.nom,
-                                            onChange: (e)=>setNewDossier({
-                                                    ...newDossier,
-                                                    nom: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 642,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "password",
-                                            placeholder: "Mot de passe",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newDossier.mot_de_passe,
-                                            onChange: (e)=>setNewDossier({
-                                                    ...newDossier,
-                                                    mot_de_passe: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 649,
-                                            columnNumber: 19
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 641,
-                                    columnNumber: 17
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: handleAddDossier,
-                                    className: "mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors",
-                                    children: "Ajouter"
+                                    className: "fixed inset-0 z-50 flex items-center justify-center",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "bg-white text-blue-900 rounded-3xl p-8 border-2 border-blue-100 shadow-xl max-w-xl w-full relative animate-fade-in",
+                                        onClick: (e)=>e.stopPropagation(),
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: "absolute top-3 right-3 text-2xl text-blue-400 hover:text-blue-700 font-bold",
+                                                onClick: ()=>setShowAddDossierForm(false),
+                                                "aria-label": "Fermer",
+                                                children: "×"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 653,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                className: "text-2xl font-bold mb-6 text-center",
+                                                children: "Ajouter un dossier"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 660,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "text",
+                                                        placeholder: "Nom du dossier",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newDossier.nom,
+                                                        onChange: (e)=>setNewDossier({
+                                                                ...newDossier,
+                                                                nom: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 662,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "password",
+                                                        placeholder: "Mot de passe",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newDossier.mot_de_passe,
+                                                        onChange: (e)=>setNewDossier({
+                                                                ...newDossier,
+                                                                mot_de_passe: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 670,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 661,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: handleAddDossier,
+                                                className: "mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 border-2 border-white/10 text-lg",
+                                                children: "Ajouter"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 679,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/admin/page.js",
+                                        lineNumber: 649,
+                                        columnNumber: 19
+                                    }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 657,
+                                    lineNumber: 648,
                                     columnNumber: 17
                                 }, this)
                             ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 639,
-                            columnNumber: 15
-                        }, this),
+                        }, void 0, true),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "overflow-x-auto rounded-xl shadow-xl",
+                            className: "overflow-x-auto border-2 border-blue-100 rounded-none",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                                className: "w-full text-sm text-left border border-gray-700",
+                                className: "w-full text-sm text-left",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                                        className: "bg-gray-800 text-white",
+                                        className: "bg-blue-50 text-blue-900",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "ID"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 670,
+                                                    lineNumber: 694,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Nom"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 671,
+                                                    lineNumber: 695,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Mot de passe"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 672,
+                                                    lineNumber: 696,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Date de création"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 673,
+                                                    lineNumber: 697,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Notifications"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 674,
+                                                    lineNumber: 698,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "Actions"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 675,
+                                                    lineNumber: 699,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 669,
+                                            lineNumber: 693,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/page.js",
-                                        lineNumber: 668,
+                                        lineNumber: 692,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                                        className: "bg-gray-900 text-white",
-                                        children: dossiers.map((dossier)=>{
+                                        children: dossiers.map((dossier, idx)=>{
                                             const dossierPending = candidatures.filter((c)=>c.dossier_id === dossier.id && c.statut === 'En attente').length;
                                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                className: "hover:bg-gray-800 border-b border-gray-700",
+                                                className: idx % 2 === 0 ? 'bg-white' : 'bg-blue-50',
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4 break-all",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: dossier.id
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 685,
+                                                        lineNumber: 707,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingDossierId === dossier.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             value: dossier.nom || '',
                                                             onChange: (e)=>handleDossierChange(dossier.id, 'nom', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 688,
-                                                            columnNumber: 29
+                                                            lineNumber: 708,
+                                                            columnNumber: 112
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: dossier.nom
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 694,
-                                                            columnNumber: 29
+                                                            lineNumber: 708,
+                                                            columnNumber: 309
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 686,
+                                                        lineNumber: 708,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingDossierId === dossier.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             type: "text",
                                                             value: dossier.mot_de_passe || '',
                                                             onChange: (e)=>handleDossierChange(dossier.id, 'mot_de_passe', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 699,
-                                                            columnNumber: 29
+                                                            lineNumber: 709,
+                                                            columnNumber: 112
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "text-green-400",
                                                             children: dossier.mot_de_passe
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 706,
-                                                            columnNumber: 29
+                                                            lineNumber: 709,
+                                                            columnNumber: 339
                                                         }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 697,
-                                                        columnNumber: 25
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
-                                                        children: new Date(dossier.created_at).toLocaleDateString()
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
                                                         lineNumber: 709,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
+                                                        children: new Date(dossier.created_at).toLocaleDateString()
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 710,
+                                                        columnNumber: 25
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: dossierPending > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "bg-red-600 text-white text-xs rounded-full px-2 py-0.5",
                                                             children: dossierPending
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 714,
-                                                            columnNumber: 29
+                                                            lineNumber: 711,
+                                                            columnNumber: 100
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 712,
+                                                        lineNumber: 711,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "flex gap-3",
                                                             children: [
                                                                 editingDossierId === dossier.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>handleSaveDossier(dossier.id),
-                                                                    className: "text-green-400 hover:text-green-300 text-sm",
+                                                                    className: "text-green-600 hover:text-green-400 text-sm",
                                                                     children: "💾 Sauvegarder"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 722,
-                                                                    columnNumber: 31
+                                                                    lineNumber: 712,
+                                                                    columnNumber: 140
                                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setEditingDossierId(dossier.id),
-                                                                    className: "text-blue-400 hover:text-blue-300 text-sm",
+                                                                    className: "text-blue-600 hover:text-blue-400 text-sm",
                                                                     children: "✏️ Modifier"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 724,
-                                                                    columnNumber: 31
+                                                                    lineNumber: 712,
+                                                                    columnNumber: 278
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>handleDeleteDossier(dossier.id),
@@ -1563,41 +1713,41 @@ function AdminPage() {
                                                                     children: "🗑️ Supprimer"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 726,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 712,
+                                                                    columnNumber: 410
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 720,
-                                                            columnNumber: 27
+                                                            lineNumber: 712,
+                                                            columnNumber: 76
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 719,
+                                                        lineNumber: 712,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, dossier.id, true, {
                                                 fileName: "[project]/src/app/admin/page.js",
-                                                lineNumber: 684,
+                                                lineNumber: 706,
                                                 columnNumber: 23
                                             }, this);
                                         })
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/page.js",
-                                        lineNumber: 678,
+                                        lineNumber: 702,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/page.js",
-                                lineNumber: 667,
+                                lineNumber: 691,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 666,
+                            lineNumber: 690,
                             columnNumber: 13
                         }, this)
                     ]
@@ -1608,428 +1758,472 @@ function AdminPage() {
                             className: "flex justify-center mb-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setShowAddCandidatureForm(!showAddCandidatureForm),
-                                className: "bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
+                                className: "bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow transition-colors",
                                 children: showAddCandidatureForm ? '– Fermer le formulaire' : '➕ Ajouter une candidature'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/page.js",
-                                lineNumber: 741,
+                                lineNumber: 725,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 740,
+                            lineNumber: 724,
                             columnNumber: 13
                         }, this),
-                        showAddCandidatureForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-gray-800 text-white rounded-xl p-6 mb-6 border border-gray-700",
+                        showAddCandidatureForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                    className: "text-lg font-semibold mb-4",
-                                    children: "Ajouter une candidature"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "fixed inset-0 bg-white/80 z-40 flex items-center justify-center",
+                                    onClick: ()=>setShowAddCandidatureForm(false)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 751,
+                                    lineNumber: 735,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "grid grid-cols-1 md:grid-cols-2 gap-4",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                                            value: newCandidature.dossier_id,
-                                            onChange: (e)=>setNewCandidature({
-                                                    ...newCandidature,
-                                                    dossier_id: e.target.value
-                                                }),
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            required: true,
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                    value: "",
-                                                    children: "Sélectionner un dossier"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 759,
-                                                    columnNumber: 21
-                                                }, this),
-                                                dossiers.map((dossier)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                        value: dossier.id,
-                                                        children: dossier.nom
-                                                    }, dossier.id, false, {
+                                    className: "fixed inset-0 z-50 flex items-center justify-center",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "bg-white text-blue-900 rounded-3xl p-8 border-2 border-blue-100 shadow-xl max-w-xl w-full relative animate-fade-in",
+                                        onClick: (e)=>e.stopPropagation(),
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: "absolute top-3 right-3 text-2xl text-blue-400 hover:text-blue-700 font-bold",
+                                                onClick: ()=>setShowAddCandidatureForm(false),
+                                                "aria-label": "Fermer",
+                                                children: "×"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 744,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                className: "text-2xl font-bold mb-6 text-center",
+                                                children: "Ajouter une candidature"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 751,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                        value: newCandidature.dossier_id,
+                                                        onChange: (e)=>setNewCandidature({
+                                                                ...newCandidature,
+                                                                dossier_id: e.target.value
+                                                            }),
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        required: true,
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "",
+                                                                disabled: true,
+                                                                hidden: true,
+                                                                children: "Sélectionner un dossier"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 759,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            dossiers.map((dossier)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                    value: dossier.id,
+                                                                    children: dossier.nom
+                                                                }, dossier.id, false, {
+                                                                    fileName: "[project]/src/app/admin/page.js",
+                                                                    lineNumber: 761,
+                                                                    columnNumber: 27
+                                                                }, this))
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 761,
+                                                        lineNumber: 753,
                                                         columnNumber: 23
-                                                    }, this))
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 753,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            placeholder: "Entreprise",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newCandidature.entreprise,
-                                            onChange: (e)=>setNewCandidature({
-                                                    ...newCandidature,
-                                                    entreprise: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 766,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            placeholder: "Poste",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newCandidature.poste,
-                                            onChange: (e)=>setNewCandidature({
-                                                    ...newCandidature,
-                                                    poste: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 773,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "date",
-                                            placeholder: "Date de candidature",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            value: newCandidature.date_candidature,
-                                            onChange: (e)=>setNewCandidature({
-                                                    ...newCandidature,
-                                                    date_candidature: e.target.value
-                                                })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 780,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                                            value: newCandidature.statut,
-                                            onChange: (e)=>setNewCandidature({
-                                                    ...newCandidature,
-                                                    statut: e.target.value
-                                                }),
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                    value: "En attente",
-                                                    children: "En attente"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 792,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                    value: "Entretien",
-                                                    children: "Entretien"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 793,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                    value: "Refusé",
-                                                    children: "Refusé"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 794,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                    value: "Accepté",
-                                                    children: "Accepté"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 795,
-                                                    columnNumber: 21
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 787,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
-                                            placeholder: "Notes",
-                                            className: "bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded md:col-span-2",
-                                            value: newCandidature.notes,
-                                            onChange: (e)=>setNewCandidature({
-                                                    ...newCandidature,
-                                                    notes: e.target.value
-                                                }),
-                                            rows: "3"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 797,
-                                            columnNumber: 19
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 752,
-                                    columnNumber: 17
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: handleAddCandidature,
-                                    className: "mt-4 bg-primary hover:bg-accent text-white px-4 py-2 rounded transition-colors",
-                                    children: "Ajouter"
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "text",
+                                                        placeholder: "Entreprise",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newCandidature.entreprise,
+                                                        onChange: (e)=>setNewCandidature({
+                                                                ...newCandidature,
+                                                                entreprise: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 766,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "text",
+                                                        placeholder: "Poste",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newCandidature.poste,
+                                                        onChange: (e)=>setNewCandidature({
+                                                                ...newCandidature,
+                                                                poste: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 774,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "date",
+                                                        placeholder: "Date de candidature",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newCandidature.date_candidature,
+                                                        onChange: (e)=>setNewCandidature({
+                                                                ...newCandidature,
+                                                                date_candidature: e.target.value
+                                                            }),
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 782,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                        value: newCandidature.statut,
+                                                        onChange: (e)=>setNewCandidature({
+                                                                ...newCandidature,
+                                                                statut: e.target.value
+                                                            }),
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "",
+                                                                disabled: true,
+                                                                hidden: true,
+                                                                children: "Statut"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 795,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "En attente",
+                                                                children: "En attente"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 796,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "Entretien",
+                                                                children: "Entretien"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 797,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "Refusé",
+                                                                children: "Refusé"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 798,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "Accepté",
+                                                                children: "Accepté"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/page.js",
+                                                                lineNumber: 799,
+                                                                columnNumber: 25
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 790,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
+                                                        placeholder: "Notes",
+                                                        className: "bg-blue-50 border-2 border-blue-100 text-blue-900 px-4 py-3 rounded-xl w-full focus:outline-none focus:border-blue-400 transition",
+                                                        value: newCandidature.notes,
+                                                        onChange: (e)=>setNewCandidature({
+                                                                ...newCandidature,
+                                                                notes: e.target.value
+                                                            }),
+                                                        rows: "3"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/page.js",
+                                                        lineNumber: 801,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 752,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: handleAddCandidature,
+                                                className: "mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 border-2 border-white/10 text-lg",
+                                                children: "Ajouter"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 809,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/admin/page.js",
+                                        lineNumber: 740,
+                                        columnNumber: 19
+                                    }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.js",
-                                    lineNumber: 805,
+                                    lineNumber: 739,
                                     columnNumber: 17
                                 }, this)
                             ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 750,
-                            columnNumber: 15
-                        }, this),
+                        }, void 0, true),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "overflow-x-auto rounded-xl shadow-xl",
+                            className: "overflow-x-auto border-2 border-blue-100 rounded-none",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                                className: "w-full text-sm text-left border border-gray-700",
+                                className: "w-full text-sm text-left",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                                        className: "bg-gray-800 text-white",
+                                        className: "bg-blue-50 text-blue-900",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
                                                     children: "ID"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 818,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
-                                                    children: "Dossier"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 819,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
-                                                    children: "Entreprise"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 820,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
-                                                    children: "Poste"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 821,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
-                                                    children: "Date"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 822,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
-                                                    children: "Statut"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/admin/page.js",
-                                                    lineNumber: 823,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 border-b border-gray-700",
-                                                    children: "Actions"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/page.js",
                                                     lineNumber: 824,
                                                     columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Dossier"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 825,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Entreprise"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 826,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Poste"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 827,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Date"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 828,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Statut"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 829,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Actions"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 830,
+                                                    columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/page.js",
-                                            lineNumber: 817,
+                                            lineNumber: 823,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/page.js",
-                                        lineNumber: 816,
+                                        lineNumber: 822,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                                        className: "bg-gray-900 text-white",
-                                        children: candidatures.map((candidature)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                className: "hover:bg-gray-800 border-b border-gray-700",
+                                        children: candidatures.map((candidature, idx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                className: idx % 2 === 0 ? 'bg-white' : 'bg-blue-50',
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4 break-all",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: candidature.id
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 830,
+                                                        lineNumber: 836,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: candidature.dossiers?.nom
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 831,
+                                                        lineNumber: 837,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingCandidatureId === candidature.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             value: candidature.entreprise || '',
                                                             onChange: (e)=>handleCandidatureChange(candidature.id, 'entreprise', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 834,
-                                                            columnNumber: 27
+                                                            lineNumber: 838,
+                                                            columnNumber: 118
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: candidature.entreprise
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 840,
-                                                            columnNumber: 27
+                                                            lineNumber: 838,
+                                                            columnNumber: 341
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 832,
+                                                        lineNumber: 838,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingCandidatureId === candidature.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             value: candidature.poste || '',
                                                             onChange: (e)=>handleCandidatureChange(candidature.id, 'poste', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 845,
-                                                            columnNumber: 27
+                                                            lineNumber: 839,
+                                                            columnNumber: 118
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: candidature.poste
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 851,
-                                                            columnNumber: 27
+                                                            lineNumber: 839,
+                                                            columnNumber: 331
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 843,
+                                                        lineNumber: 839,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingCandidatureId === candidature.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                             type: "date",
                                                             value: candidature.date_candidature || '',
                                                             onChange: (e)=>handleCandidatureChange(candidature.id, 'date_candidature', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded w-full"
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 856,
-                                                            columnNumber: 27
+                                                            lineNumber: 840,
+                                                            columnNumber: 118
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: new Date(candidature.date_candidature).toLocaleDateString()
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 863,
-                                                            columnNumber: 27
+                                                            lineNumber: 840,
+                                                            columnNumber: 365
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 854,
+                                                        lineNumber: 840,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: editingCandidatureId === candidature.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                                             value: candidature.statut,
                                                             onChange: (e)=>handleCandidatureChange(candidature.id, 'statut', e.target.value),
-                                                            className: "bg-gray-700 border border-gray-600 text-white px-2 py-1 rounded",
+                                                            className: "bg-gray-100 border border-blue-200 text-blue-900 px-2 py-1 rounded",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                     value: "En attente",
                                                                     children: "En attente"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 873,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 841,
+                                                                    columnNumber: 314
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                     value: "Entretien",
                                                                     children: "Entretien"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 874,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 841,
+                                                                    columnNumber: 360
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                     value: "Refusé",
                                                                     children: "Refusé"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 875,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 841,
+                                                                    columnNumber: 404
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                     value: "Accepté",
                                                                     children: "Accepté"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 876,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 841,
+                                                                    columnNumber: 442
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 868,
-                                                            columnNumber: 27
+                                                            lineNumber: 841,
+                                                            columnNumber: 118
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: `${candidature.statut === 'Accepté' ? 'text-green-400' : candidature.statut === 'Refusé' ? 'text-red-400' : candidature.statut === 'Entretien' ? 'text-yellow-400' : 'text-gray-400'}`,
+                                                            className: `${candidature.statut === 'Accepté' ? 'text-green-600' : candidature.statut === 'Refusé' ? 'text-red-600' : candidature.statut === 'Entretien' ? 'text-yellow-600' : 'text-gray-600'}`,
                                                             children: candidature.statut
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 879,
-                                                            columnNumber: 27
+                                                            lineNumber: 841,
+                                                            columnNumber: 496
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 866,
+                                                        lineNumber: 841,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4",
+                                                        className: "px-6 py-4 border-b border-blue-100",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "flex gap-3",
                                                             children: [
                                                                 editingCandidatureId === candidature.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>handleSaveCandidature(candidature.id),
-                                                                    className: "text-green-400 hover:text-green-300 text-sm",
+                                                                    className: "text-green-600 hover:text-green-400 text-sm",
                                                                     children: "💾 Sauvegarder"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 890,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 842,
+                                                                    columnNumber: 146
                                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setEditingCandidatureId(candidature.id),
-                                                                    className: "text-blue-400 hover:text-blue-300 text-sm",
+                                                                    className: "text-blue-600 hover:text-blue-400 text-sm",
                                                                     children: "✏️ Modifier"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 892,
-                                                                    columnNumber: 29
+                                                                    lineNumber: 842,
+                                                                    columnNumber: 292
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>handleDeleteCandidature(candidature.id),
@@ -2037,75 +2231,200 @@ function AdminPage() {
                                                                     children: "🗑️ Supprimer"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/page.js",
-                                                                    lineNumber: 894,
-                                                                    columnNumber: 27
+                                                                    lineNumber: 842,
+                                                                    columnNumber: 432
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/page.js",
-                                                            lineNumber: 888,
-                                                            columnNumber: 25
+                                                            lineNumber: 842,
+                                                            columnNumber: 74
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/page.js",
-                                                        lineNumber: 887,
+                                                        lineNumber: 842,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, candidature.id, true, {
                                                 fileName: "[project]/src/app/admin/page.js",
-                                                lineNumber: 829,
+                                                lineNumber: 835,
                                                 columnNumber: 21
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/page.js",
-                                        lineNumber: 827,
+                                        lineNumber: 833,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/page.js",
-                                lineNumber: 815,
+                                lineNumber: 821,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 814,
+                            lineNumber: 820,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true),
                 activeTab === 'contacts' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "p-8 bg-gray-800 rounded-xl shadow-xl text-white text-center",
+                    className: "w-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-2xl font-bold mb-4",
-                            children: "Mes Contacts"
+                            className: "text-2xl font-bold mb-6 text-blue-900 text-center",
+                            children: "Tous les rendez-vous"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 907,
+                            lineNumber: 853,
                             columnNumber: 13
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-gray-300 mb-8",
-                            children: "Gérez ici vos contacts professionnels, ajoutez, recherchez et visualisez les informations de vos partenaires, entreprises ou intervenants."
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                            type: "text",
+                            placeholder: "Rechercher par nom de contact...",
+                            className: "mb-8 p-3 border-2 border-blue-100 rounded-xl w-full max-w-md mx-auto block text-blue-900 placeholder-blue-300 focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition",
+                            value: searchRdv || '',
+                            onChange: (e)=>setSearchRdv(e.target.value)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 908,
+                            lineNumber: 854,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-gray-400 italic",
-                            children: "(Aucun contact pour le moment)"
+                            className: "overflow-x-auto border-2 border-blue-100 rounded-none",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                                className: "w-full text-sm text-left",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+                                        className: "bg-blue-50 text-blue-900",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Contact"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 865,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Date"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 866,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Heure"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 867,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 border-b border-blue-100 font-bold text-base",
+                                                    children: "Pris par"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 868,
+                                                    columnNumber: 21
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/admin/page.js",
+                                            lineNumber: 864,
+                                            columnNumber: 19
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/admin/page.js",
+                                        lineNumber: 863,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+                                        children: [
+                                            allRdvs.filter((rdv)=>!searchRdv || rdv.contactName && rdv.contactName.toLowerCase().includes(searchRdv.toLowerCase())).map((rdv, idx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                    className: idx % 2 === 0 ? 'bg-white' : 'bg-blue-50',
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "px-6 py-4 border-b border-blue-100",
+                                                            children: rdv.contactName
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/admin/page.js",
+                                                            lineNumber: 876,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "px-6 py-4 border-b border-blue-100",
+                                                            children: rdv.date
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/admin/page.js",
+                                                            lineNumber: 877,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "px-6 py-4 border-b border-blue-100",
+                                                            children: [
+                                                                rdv.hour,
+                                                                "h"
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/app/admin/page.js",
+                                                            lineNumber: 878,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "px-6 py-4 border-b border-blue-100",
+                                                            children: rdv.userName || rdv.userEmail
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/admin/page.js",
+                                                            lineNumber: 879,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    ]
+                                                }, rdv.id, true, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 875,
+                                                    columnNumber: 23
+                                                }, this)),
+                                            allRdvs.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                    colSpan: 4,
+                                                    className: "text-center text-gray-400 py-8",
+                                                    children: "Aucun rendez-vous"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/page.js",
+                                                    lineNumber: 883,
+                                                    columnNumber: 25
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/page.js",
+                                                lineNumber: 883,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/admin/page.js",
+                                        lineNumber: 871,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/admin/page.js",
+                                lineNumber: 862,
+                                columnNumber: 15
+                            }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/page.js",
-                            lineNumber: 909,
+                            lineNumber: 861,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/admin/page.js",
-                    lineNumber: 906,
+                    lineNumber: 852,
                     columnNumber: 11
                 }, this),
                 isLoading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2114,23 +2433,23 @@ function AdminPage() {
                         className: "animate-spin rounded-full h-12 w-12 border-b-2 border-white"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.js",
-                        lineNumber: 915,
+                        lineNumber: 893,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/admin/page.js",
-                    lineNumber: 914,
+                    lineNumber: 892,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/admin/page.js",
-            lineNumber: 332,
+            lineNumber: 357,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/admin/page.js",
-        lineNumber: 331,
+        lineNumber: 356,
         columnNumber: 5
     }, this);
 }

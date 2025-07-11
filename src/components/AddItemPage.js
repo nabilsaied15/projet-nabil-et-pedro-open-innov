@@ -42,8 +42,6 @@ export default function AddItemPage({ table, onItemAdded }) {
     const { error } = await supabase.from(table).insert([{
       title,
       image_url,
-      nombre_videos: Number(nombreVideos) || 0,
-      nombre_pdfs: Number(nombrePdfs) || 0
     }]);
     if (error) {
       setMessage(`❌ Erreur en base : ${error.message}`);

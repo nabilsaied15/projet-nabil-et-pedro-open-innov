@@ -143,3 +143,13 @@ CREATE TABLE IF NOT EXISTS disponibilites (
 -- Index pour accélérer les recherches par contact et date
 CREATE INDEX IF NOT EXISTS idx_disponibilites_contact_id ON disponibilites(contact_id);
 CREATE INDEX IF NOT EXISTS idx_disponibilites_date ON disponibilites(date);
+
+-- Table personnalisée pour les utilisateurs (ATTENTION : mots de passe en clair, à ne pas utiliser en production)
+CREATE TABLE IF NOT EXISTS users (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    role TEXT DEFAULT 'user',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
+);

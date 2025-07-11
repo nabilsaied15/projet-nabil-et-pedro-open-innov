@@ -723,8 +723,8 @@ export default function MesCandidaturesPage() {
                         <div
                           className={`max-w-[80%] p-4 rounded-lg border ${
                             isMessageFromAdmin
-                              ? 'bg-gray-200 text-primary rounded-tl-none border-primary'
-                              : 'bg-accent text-white rounded-tr-none border-accent'
+                              ? 'bg-gray-200 text-primary rounded-tl-none border-gray-200'
+                              : 'bg-primary text-white rounded-tr-none border-primary'
                           }`}
                         >
                           <p className="text-xs font-semibold mb-1">
