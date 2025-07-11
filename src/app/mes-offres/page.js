@@ -95,7 +95,7 @@ export default function MesOffresPage() {
               activeTab === 'interested' ? 'button' : ''
             }`}
           >
-            ✨ Offres qui m'intéressent
+            ✨ Offres qui m&apos;intéressent
           </button>
         </div>
 
@@ -117,7 +117,7 @@ export default function MesOffresPage() {
                   rel="noopener noreferrer"
                   className="text-blue-400 hover:underline text-sm block mb-2"
                 >
-                  Voir l'offre
+                  Voir l&apos;offre
                 </a>
               )}
               <p className="text-gray-500 text-xs mt-3">

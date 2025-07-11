@@ -217,7 +217,7 @@ export default function AdminOffresPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-primary">Lien de l'offre</label>
+            <label className="block text-sm font-medium text-primary">Lien de l&apos;offre</label>
             <input
               type="url"
               name="lien"
@@ -292,7 +292,7 @@ export default function AdminOffresPage() {
                     <input type="text" name="profil_recherche" value={editData.profil_recherche || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Profil recherché" />
                     <input type="text" name="duree" value={editData.duree || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Durée" />
                     <input type="text" name="localisation" value={editData.localisation || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Localisation" />
-                    <input type="url" name="lien" value={editData.lien || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Lien de l'offre" />
+                    <input type="url" name="lien" value={editData.lien || ''} onChange={handleEditChange} className="mb-2 w-full px-2 py-1 rounded bg-gray-700 text-white border border-gray-600" placeholder="Lien de l&apos;offre" />
                     <div className="flex gap-2 mt-2">
                       <button onClick={handleEditSave} className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded">Enregistrer</button>
                       <button onClick={() => setEditId(null)} className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-1 rounded">Annuler</button>

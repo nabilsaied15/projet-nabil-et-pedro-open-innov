@@ -815,7 +815,7 @@ export default function ContactsPage() {
               </div>
             </div>
             <div className="mb-4">
-              <label className="block font-semibold mb-1">Nom de l'étudiant</label>
+              <label className="block font-semibold mb-1">Nom de l&apos;étudiant</label>
               <input
                 type="text"
                 className="w-full p-2 rounded border mb-2 bg-gray-100 text-gray-700"
