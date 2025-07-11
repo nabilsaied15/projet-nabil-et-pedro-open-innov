@@ -355,7 +355,7 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-white p-10 text-primary">
       <div className="p-10">
-        <h2 className="text-2xl font-bold mb-6 text-center">👑 Panneau d'administration</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">👑 Panneau d&apos;administration</h2>
 
         <div className="flex justify-center gap-4 mb-6">
             <button
